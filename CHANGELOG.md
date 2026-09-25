@@ -6,6 +6,10 @@ Formato de versión `XX.YY` (cambios menores `01.01`, cambios grandes `02.00`).
 > Al publicar una versión nueva, actualiza también `APP_VERSION` y `CHANGES` en `index.html`
 > y `version.json`. Los usuarios verán el aviso «Ha habido cambios» y, al actualizar, las novedades.
 
+## [01.04] - 2026-09-25
+
+- Arrastrar y soltar el Informe de Vida Laboral (PDF) en cualquier parte de la ventana, con aviso visual mientras se arrastra.
+
 ## [01.03] - 2026-09-25
 
 - Nuevo: carga del Informe de Vida Laboral en PDF (pdf.js, lectura local en el dispositivo): rellena fecha de nacimiento y total de días efectivamente computables, sumando los días hasta hoy si el informe es anterior y sigue de alta.

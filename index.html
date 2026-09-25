@@ -153,6 +153,7 @@ details.adv .inner{padding-top:14px}
 .vl-box .btn{width:100%;justify-content:center;height:42px;font-size:13.5px;border-color:transparent;color:var(--navy);font-weight:600}
 .vl-box .hint a{color:var(--navy)}
 .vl-ok{color:var(--green)!important;font-weight:500}
+body.dragging::after{content:"📄  Suelta aquí tu Informe de Vida Laboral (PDF)";position:fixed;inset:12px;z-index:80;display:grid;place-items:center;border:3px dashed var(--gold);border-radius:24px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);font-family:Fraunces,Georgia,serif;font-size:clamp(20px,3vw,30px);color:var(--navy);pointer-events:none;text-align:center;padding:20px}
 .early-sel{display:flex;align-items:center;gap:8px;position:relative;z-index:1}
 .early-sel > span{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .share-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
@@ -476,7 +477,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
       <div class="vl-box">
         <button type="button" class="btn" id="btnVL"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M12 17v-6M9.5 13.5L12 11l2.5 2.5"/></svg><span>Cargar mi Informe de Vida Laboral (PDF)</span></button>
         <input type="file" id="fileVL" accept="application/pdf,.pdf" hidden>
-        <div class="hint">Rellena solo la fecha de nacimiento y los días cotizados. El PDF se lee en tu dispositivo y <b>no se envía a ningún sitio</b>. <a href="https://portal.seg-social.gob.es/wps/portal/importass/importass/Categorias/Vida+laboral+e+informes/Informes+sobre+tu+situacion+laboral/Informe+de+tu+vida+laboral" target="_blank" rel="noopener">Descárgalo aquí</a> (Seguridad Social).</div>
+        <div class="hint">Pulsa el botón o <b>arrastra el PDF</b> a esta ventana. Rellena solo la fecha de nacimiento y los días cotizados. El PDF se lee en tu dispositivo y <b>no se envía a ningún sitio</b>. <a href="https://portal.seg-social.gob.es/wps/portal/importass/importass/Categorias/Vida+laboral+e+informes/Informes+sobre+tu+situacion+laboral/Informe+de+tu+vida+laboral" target="_blank" rel="noopener">Descárgalo aquí</a> (Seguridad Social).</div>
         <div class="hint vl-ok" id="vlNote" hidden></div>
       </div>
 
@@ -679,7 +680,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 
         <div class="tab-panel" data-panel="datos" hidden>
           <h3>La forma más rápida: tu Informe de Vida Laboral</h3>
-          <p>Descarga tu <b>Informe de Vida Laboral</b> en PDF desde la Seguridad Social (con certificado digital, Cl@ve o SMS) y pulsa <b>«Cargar mi Informe de Vida Laboral (PDF)»</b>. La app lee la fecha de nacimiento y el <b>total de días efectivamente computables</b>; si el informe es de días atrás y sigues de alta, suma los días hasta hoy. El PDF se lee en tu dispositivo y <b>no se envía a ningún sitio</b>.</p>
+          <p>Descarga tu <b>Informe de Vida Laboral</b> en PDF desde la Seguridad Social (con certificado digital, Cl@ve o SMS) y pulsa <b>«Cargar mi Informe de Vida Laboral (PDF)»</b> o, en el ordenador, <b>arrastra el PDF</b> a la ventana de la app. La app lee la fecha de nacimiento y el <b>total de días efectivamente computables</b>; si el informe es de días atrás y sigues de alta, suma los días hasta hoy. El PDF se lee en tu dispositivo y <b>no se envía a ningún sitio</b>.</p>
           <p>⚠️ El Informe de Vida Laboral <b>no incluye los días de bonificación por cuidado de hijos</b> (art. 236 LGSS: periodos por nacimiento o adopción con interrupción de la cotización). Si te corresponden, súmalos a mano en «Días cotizados»; los verás en la simulación oficial de «Tu Seguridad Social» («Bonificaciones aplicadas»).</p>
           <p>La app no puede conectarse ella sola a la Seguridad Social con tu certificado: la Seguridad Social no lo permite a aplicaciones externas, y así tus datos nunca pasan por ningún servidor.</p>
           <h3>Datos básicos</h3>
@@ -773,8 +774,11 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 /* ---------- Versión ----------
    Al desplegar: sube APP_VERSION (formato 01.00 → 01.01 cambios menores, 02.00 cambios grandes),
    añade la entrada arriba del todo en CHANGES, y actualiza version.json y CHANGELOG.md con la misma versión. */
-const APP_VERSION = '01.03';
+const APP_VERSION = '01.04';
 const CHANGES = [
+  {v:'01.04', date:'2026-09-25', items:[
+    'En el ordenador ya puedes arrastrar tu Informe de Vida Laboral (PDF) a la ventana de la app, además de usar el botón «Cargar mi Informe de Vida Laboral».'
+  ]},
   {v:'01.03', date:'2026-09-25', items:[
     'Nuevo: carga tu Informe de Vida Laboral en PDF y la app rellena sola tu fecha de nacimiento y tus días cotizados. El PDF se lee en tu dispositivo y no se envía a ningún sitio.',
     'Nuevo: afina tu jubilación anticipada mes a mes (por ejemplo, a los 63 años y 6 meses) y verás cómo baja el coeficiente reductor. Gracias a Paco por la idea.',
@@ -1496,8 +1500,20 @@ async function leerVidaLaboral(file){
   return {nac, fecha, dias, vigente};
 }
 $('#btnVL').onclick = () => $('#fileVL').click();
-$('#fileVL').addEventListener('change', async e => {
-  const file = e.target.files[0]; e.target.value = ''; if(!file) return;
+$('#fileVL').addEventListener('change', e => { const file = e.target.files[0]; e.target.value = ''; if(file) cargarVL(file); });
+// Arrastrar y soltar el PDF en cualquier parte de la ventana
+let dragN = 0;
+const esFichero = e => [...(e.dataTransfer?.types || [])].includes('Files');
+addEventListener('dragenter', e => { if(!esFichero(e)) return; e.preventDefault(); dragN++; document.body.classList.add('dragging'); });
+addEventListener('dragover', e => { if(!esFichero(e)) return; e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; });
+addEventListener('dragleave', e => { if(!esFichero(e)) return; if(--dragN <= 0){ dragN = 0; document.body.classList.remove('dragging'); } });
+addEventListener('drop', e => {
+  if(!esFichero(e)) return; e.preventDefault(); dragN = 0; document.body.classList.remove('dragging');
+  const file = [...e.dataTransfer.files].find(f => f.type==='application/pdf' || /\.pdf$/i.test(f.name));
+  if(file) cargarVL(file); else toast('Suelta un PDF: tu Informe de Vida Laboral');
+});
+async function cargarVL(file){
+  $('#datos').scrollIntoView({behavior:'smooth', block:'start'});
   const btn = $('#btnVL'), lbl = btn.querySelector('span'), txt0 = lbl.textContent;
   btn.classList.add('busy'); lbl.textContent = 'Leyendo el informe…';
   try{
@@ -1517,7 +1533,7 @@ $('#fileVL').addEventListener('change', async e => {
       ? 'Ese PDF no parece un Informe de Vida Laboral de la Seguridad Social. Introduce los datos a mano.'
       : 'No se ha podido leer el PDF. Comprueba tu conexión e inténtalo de nuevo.');
   }finally{ btn.classList.remove('busy'); lbl.textContent = txt0; }
-});
+}
 
 /* ---------- Modo sin conexión (service worker «primero la red») ---------- */
 if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));

@@ -41,7 +41,8 @@ Pensada para compartir con compañeros (médicos del SAS). Autor: **Carlos J. Ga
 - **Ajuste fino de la anticipada** (`#antTune`, `S.antK` = meses que se retrasa desde `EARLY`,
   `antDate()`): mes a mes hasta justo antes de la ordinaria; los meses de adelanto y el coeficiente
   salen de `scenario()`.
-- **Cargar Informe de Vida Laboral (PDF)** (`leerVidaLaboral()`): pdf.js 3.11.174 (cdnjs, SRI; el
+- **Cargar Informe de Vida Laboral (PDF)** (`cargarVL(file)` desde el botón o arrastrando el PDF a
+  la ventana —eventos `drag*`/`drop` en `window`, clase `body.dragging` para el aviso—; `leerVidaLaboral()`): pdf.js 3.11.174 (cdnjs, SRI; el
   worker se descarga con `fetch` + integrity y se lanza desde un blob). Lee del texto de la 1.ª página:
   «al día …» (fecha del informe), «nacido/a el …» y el mayor «N días» tras «efectivamente computables»
   (o tras «durante un total de» si no hay pluriempleo). Si el informe es anterior a hoy y hay alguna
