@@ -6,6 +6,11 @@ Formato de versión `XX.YY` (cambios menores `01.01`, cambios grandes `02.00`).
 > Al publicar una versión nueva, actualiza también `APP_VERSION` y `CHANGES` en `index.html`
 > y `version.json`. Los usuarios verán el aviso «Ha habido cambios» y, al actualizar, las novedades.
 
+## [01.02] - 2026-09-25
+
+- Arreglado «Informe PDF» en el móvil: ahora genera el PDF en el propio dispositivo (jsPDF + html2canvas) y permite guardarlo o compartirlo. Antes usaba la impresión del navegador, que no funciona en el iPhone con la app instalada en la pantalla de inicio.
+- En el ordenador, «Informe PDF» descarga el fichero directamente.
+
 ## [01.01] - 2026-09-25
 
 - Nueva jubilación anticipada involuntaria (despido, ERE, cierre…): hasta 4 años antes con 33 años cotizados, con los coeficientes oficiales del art. 207 LGSS y el tope de pensión máxima reducido un 0,5 % por trimestre. Selector «Anticipada: Voluntaria / Involuntaria».

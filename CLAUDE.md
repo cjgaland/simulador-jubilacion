@@ -22,8 +22,13 @@ Pensada para compartir con compañeros (médicos del SAS). Autor: **Carlos J. Ga
 - Escenarios: anticipada (voluntaria o **involuntaria**, selector `#segEarly`, estado `S.early`),
   ordinaria y demorada +1…+5. Involuntaria: art. 207 LGSS, tabla `COEF_INV` (48 meses × 4 tramos),
   edad legal «de haber seguido cotizando» (`ORDC`), mínimo 33 años, tope = máxima −0,5 %/trimestre.
-- **Informe PDF** (`buildReport()`, `#report`): se imprime solo el informe (clase `report-mode` +
-  `@media print`); también con Ctrl/Cmd+P si hay datos.
+- **Informe PDF** (`buildReport()` → `makePdf()`, `#report`): el PDF se genera en el dispositivo con
+  **jsPDF 2.5.1 + html2canvas 1.4.1** (cdnjs, con SRI, cargados solo al pulsar; el SW los cachea).
+  Ordenador: descarga directa. Móvil: ventana `#dlgPdf` con «Guardar o compartir» (Web Share con
+  fichero; necesita un toque nuevo, por eso va en ventana) y «Descargar». **No usar `window.print()`**:
+  en iPhone con la app instalada en pantalla de inicio no hace nada. Ctrl/Cmd+P sigue imprimiendo
+  solo el informe (clase `report-mode` + `@media print`). El botón de la cabecera (`#btnPrint`) se
+  oculta a ≤420 px por espacio; en móvil se usa el de la tarjeta principal.
 - **Compartir escenario**: enlace `…/#d=<base64url(JSON)>`; al abrirlo se aplican los datos
   (saneados en `cleanShared`), no se guardan y se limpia la URL.
 - **Ejemplos**: `DEMOS` (3 perfiles ficticios que se alternan).
@@ -66,6 +71,9 @@ Cuando Carlos diga **«Despliega»**:
 2. Ejecuta `bash scripts/despliega.sh "Mensaje del commit"`: comprueba que las versiones coinciden,
    hace la **copia de seguridad** local, commit y push a `main`. GitHub Pages publica solo en 1-2 min.
 3. Comprueba que `https://cjgaland.github.io/simulador-jubilacion/version.json` ya da la versión nueva.
+4. **Dale a Carlos un breve report** (siempre que haya commit y/o copia de seguridad): versión,
+   mensaje y hash del commit, nombre de la copia creada y lista actual de `Backup/`, y si la web
+   ya está publicada.
 
 ## Copias de seguridad locales
 Sistema de respaldo local con rotación (carpeta `Backup/`, ignorada en git):

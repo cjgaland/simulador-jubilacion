@@ -149,6 +149,13 @@ details.adv .inner{padding-top:14px}
 .share-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
 .share-row .btn{height:40px;font-size:13.5px}
 #report{display:none}
+#report.capture{display:block;position:absolute;left:-10000px;top:0;width:794px;padding:44px 48px;background:#fff;font-size:14px}
+.pdf-info{margin:14px 0 4px;color:var(--muted);font-size:14px}
+.pdf-info b{color:var(--ink)}
+.pdf-foot{flex-wrap:wrap}
+.pdf-foot .icon-btn{height:40px;padding:0 16px;font-weight:600}
+.btn.busy{opacity:.6;pointer-events:none}
+#btnPdfShare[hidden]{display:none}
 .sc-slider{position:relative;padding:4px 12px 0}
 .sc-slider input{height:40px}
 .sc-slider input::-webkit-slider-runnable-track{height:8px}
@@ -630,7 +637,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
             <li><b>3</b><div><strong>Compara en el gráfico.</strong> Toca una barra para seleccionar ese escenario. Cambia entre <b>Bruto / Neto</b> y entre <b>Al mes / Hasta los 85</b> (total cobrado hasta los 85 años en euros de hoy). La línea dorada discontinua marca la pensión máxima.</div></li>
             <li><b>4</b><div><strong>Revisa el desglose.</strong> Base reguladora, porcentaje por años cotizados, coeficientes reductores o porcentaje por demora, tope de pensión máxima y complementos.</div></li>
             <li><b>5</b><div><strong>Consulta los requisitos.</strong> Tabla de edad ordinaria por año y explicación de cómo se calcula la pensión.</div></li>
-            <li><b>6</b><div><strong>Guarda o comparte el resultado.</strong> <b>«Informe PDF»</b> prepara un informe completo (tus datos, el escenario elegido con su desglose y la comparativa de todas las opciones); en el diálogo de impresión elige <b>«Guardar como PDF»</b>. <b>«Compartir escenario»</b> crea un enlace que abre la misma simulación en otro dispositivo.</div></li>
+            <li><b>6</b><div><strong>Guarda o comparte el resultado.</strong> <b>«Informe PDF»</b> crea un PDF completo (tus datos, el escenario elegido con su desglose y la comparativa de todas las opciones). En el ordenador se descarga; en el móvil pulsa <b>«Guardar o compartir»</b> para guardarlo en Archivos o enviarlo. <b>«Compartir escenario»</b> crea un enlace que abre la misma simulación en otro dispositivo.</div></li>
           </ol>
           <h3>Tipos de jubilación anticipada</h3>
           <ul>
@@ -642,7 +649,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
             <li><b>Guardar</b>: guarda tus datos en este dispositivo para la próxima vez.</li>
             <li><b>Restablecer</b>: vuelve a cargar los datos que guardaste.</li>
             <li><b>Nuevo</b>: vacía el formulario (lo guardado sigue disponible en «Restablecer»).</li>
-            <li><b>Informe PDF</b>: informe completo para guardar como PDF o imprimir.</li>
+            <li><b>Informe PDF</b> (en el ordenador; en el móvil está en la tarjeta «¿Cuándo te quieres jubilar?»): crea el informe completo en PDF.</li>
             <li><b>Luna</b>: cambia entre tema claro y oscuro.</li>
           </ul>
           <div class="tip">🔒 <b>Privacidad:</b> todos los cálculos se hacen en tu navegador. Tus datos no se envían a ningún sitio; si pulsas «Guardar» se quedan solo en este dispositivo. Ojo: el enlace de «Compartir escenario» lleva dentro los datos de la simulación, así que envíalo solo a quien quieras.</div>
@@ -708,6 +715,17 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
   </footer>
 </div>
 <div id="report" aria-hidden="true"></div>
+<dialog class="news" id="dlgPdf" aria-labelledby="pdfTitle">
+  <div class="news-head">
+    <div><small>Informe PDF</small><h2 id="pdfTitle">Tu informe está listo</h2></div>
+    <button class="icon-btn" id="btnPdfClose" aria-label="Cerrar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="news-body"><p class="pdf-info" id="pdfInfo"></p></div>
+  <div class="news-foot pdf-foot">
+    <button class="btn" id="btnPdfDown">Descargar</button>
+    <button class="icon-btn primary" id="btnPdfShare">Guardar o compartir</button>
+  </div>
+</dialog>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="upd" id="upd" role="alert">
   <div class="t"><b>✨ Ha habido cambios</b>Hay una nueva versión de la aplicación<span id="updVer"></span>.</div>
@@ -729,8 +747,12 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 /* ---------- Versión ----------
    Al desplegar: sube APP_VERSION (formato 01.00 → 01.01 cambios menores, 02.00 cambios grandes),
    añade la entrada arriba del todo en CHANGES, y actualiza version.json y CHANGELOG.md con la misma versión. */
-const APP_VERSION = '01.01';
+const APP_VERSION = '01.02';
 const CHANGES = [
+  {v:'01.02', date:'2026-09-25', items:[
+    'Arreglado el botón «Informe PDF» en el móvil: ahora crea el PDF directamente y te deja guardarlo en Archivos o enviarlo por WhatsApp o correo. Antes no hacía nada si tenías la app instalada en la pantalla de inicio del iPhone.',
+    'En el ordenador, «Informe PDF» descarga el fichero directamente.'
+  ]},
   {v:'01.01', date:'2026-09-25', items:[
     'Nueva jubilación anticipada involuntaria (despido, ERE, cierre…): hasta 4 años antes con 33 años cotizados, con los coeficientes oficiales. Elige «Anticipada: Voluntaria / Involuntaria» en «¿Cuándo te quieres jubilar?».',
     'Nuevo «Informe PDF»: un informe completo con tus datos, el escenario elegido, su desglose y la comparativa de todas las opciones, listo para guardar o imprimir.',
@@ -1337,8 +1359,61 @@ let titleBak = document.title;
 function enterReport(){ if(document.body.classList.contains('report-mode')) return; if(buildReport()){ document.body.classList.add('report-mode'); titleBak = document.title; document.title = 'Informe jubilación ' + fShort(TODAY).replaceAll('/','-'); } }
 function exitReport(){ document.body.classList.remove('report-mode'); document.title = titleBak; }
 addEventListener('beforeprint', enterReport); addEventListener('afterprint', exitReport);
-const printReport = () => { enterReport(); window.print(); }; // «report-mode» solo afecta a la impresión; se quita en afterprint
-$('#btnReport').onclick = printReport; $('#btnPrint').onclick = printReport;
+// El PDF se genera en el propio dispositivo (jsPDF + html2canvas, cargados solo al pulsar el botón).
+// No se usa window.print(): en el iPhone con la app instalada en la pantalla de inicio no hace nada.
+const LIBS = [
+  ['https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js','sha384-ZZ1pncU3bQe8y31yfZdMFdSpttDoPmOZg2wguVK9almUodir1PghgT0eY7Mrty8H'],
+  ['https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js','sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk']
+];
+const loadScript = ([src,sri]) => new Promise((ok,ko)=>{ const s=document.createElement('script'); s.src=src; s.integrity=sri; s.crossOrigin='anonymous'; s.onload=ok; s.onerror=ko; document.head.appendChild(s); });
+let libsReady = null;
+const loadLibs = () => libsReady || (libsReady = LIBS.reduce((p,l)=>p.then(()=>loadScript(l)), Promise.resolve()).catch(e=>{ libsReady=null; throw e; }));
+
+async function makePdf(){
+  if(!buildReport()) return null;
+  await loadLibs();
+  if(document.fonts && document.fonts.ready) await document.fonts.ready;
+  const el = $('#report'); el.classList.add('capture');
+  try{
+    const W = el.offsetWidth, pageH = Math.round(W*297/210), top = el.getBoundingClientRect().top;
+    // Cortes de página: nunca en mitad de una fila o de un bloque
+    const cuts = [...el.querySelectorAll('tr, h2, .rp-hl, .rp-alert, .rp-note, .rp-foot, .rp-cols > div')]
+      .map(n=>Math.round(n.getBoundingClientRect().top - top)).filter(y=>y>0).sort((a,b)=>a-b);
+    const H = el.offsetHeight, pages = []; let y = 0;
+    while(y < H){ let end = y + pageH; if(end < H){ const c = cuts.filter(v=>v>y+200 && v<=end).pop(); if(c) end = c; } pages.push([y, Math.min(end,H)]); y = end; }
+    const scale = 2, canvas = await html2canvas(el, {scale, backgroundColor:'#ffffff', useCORS:true, logging:false});
+    const pdf = new jspdf.jsPDF({unit:'mm', format:'a4'}), mmPx = 210/W;
+    pages.forEach(([a,b],i)=>{
+      const part = document.createElement('canvas'); part.width = canvas.width; part.height = Math.round((b-a)*scale);
+      part.getContext('2d').drawImage(canvas, 0, Math.round(a*scale), canvas.width, part.height, 0, 0, canvas.width, part.height);
+      if(i) pdf.addPage();
+      pdf.addImage(part.toDataURL('image/jpeg',0.92), 'JPEG', 0, 0, 210, (b-a)*mmPx);
+    });
+    const name = `Informe jubilación ${fShort(TODAY).replaceAll('/','-')}.pdf`;
+    return new File([pdf.output('blob')], name, {type:'application/pdf'});
+  } finally { el.classList.remove('capture'); }
+}
+let pdfFile = null;
+const downloadPdf = () => { const a = document.createElement('a'); a.href = URL.createObjectURL(pdfFile); a.download = pdfFile.name; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 4000); };
+const canShareFile = f => !!(navigator.canShare && navigator.canShare({files:[f]}));
+async function reportPdf(e){
+  const btn = e.currentTarget, isBtn = btn.classList.contains('btn'), txt = btn.innerHTML;
+  btn.classList.add('busy'); if(isBtn) btn.lastChild.textContent = 'Generando…';
+  try{
+    pdfFile = await makePdf(); if(!pdfFile) return;
+    if(!matchMedia('(pointer:coarse)').matches){ downloadPdf(); toast('Informe PDF descargado ✓'); return; }
+    // Móvil: compartir necesita un toque «fresco», por eso se ofrece en una ventana
+    $('#pdfInfo').innerHTML = `<b>${pdfFile.name}</b> · ${Math.max(1,Math.round(pdfFile.size/1024))} KB<br>${canShareFile(pdfFile) ? 'Pulsa «Guardar o compartir» para guardarlo en Archivos o enviarlo por WhatsApp o correo.' : 'Pulsa «Descargar» para guardarlo en tu dispositivo.'}`;
+    $('#btnPdfShare').hidden = !canShareFile(pdfFile);
+    $('#dlgPdf').showModal();
+  }catch(err){
+    toast('No se ha podido crear el PDF. Comprueba tu conexión e inténtalo de nuevo');
+  }finally{ btn.classList.remove('busy'); btn.innerHTML = txt; }
+}
+$('#btnReport').onclick = reportPdf; $('#btnPrint').onclick = reportPdf;
+$('#btnPdfShare').onclick = async () => { try{ await navigator.share({files:[pdfFile], title:'Informe de jubilación'}); $('#dlgPdf').close(); }catch(e){ if(e.name!=='AbortError') downloadPdf(); } };
+$('#btnPdfDown').onclick = () => { downloadPdf(); $('#dlgPdf').close(); };
+$('#btnPdfClose').onclick = () => $('#dlgPdf').close();
 
 /* ---------- Modo sin conexión (service worker «primero la red») ---------- */
 if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
