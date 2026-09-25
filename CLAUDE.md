@@ -14,8 +14,19 @@ Pensada para compartir con compañeros (médicos del SAS). Autor: **Carlos J. Ga
   Solo carga fuentes de Google Fonts (Fraunces + Inter).
 - Todo se calcula en el navegador; los datos del usuario solo se guardan en su `localStorage`
   (clave `simJubMisDatos`). Nada sale del dispositivo.
-- PWA ligera: `manifest.webmanifest` + iconos. **Sin service worker** (a propósito: evita cachés
-  viejas; el aviso de actualización funciona con `version.json`).
+- PWA: `manifest.webmanifest` + iconos + `sw.js` (service worker **«primero la red»**: con conexión
+  siempre sirve lo último y guarda copia; sin conexión usa la copia). `version.json` nunca se cachea.
+  Si se añaden ficheros nuevos que deban ir offline, añadirlos a `CORE` en `sw.js` y subir `CACHE`.
+
+## Funciones principales
+- Escenarios: anticipada (voluntaria o **involuntaria**, selector `#segEarly`, estado `S.early`),
+  ordinaria y demorada +1…+5. Involuntaria: art. 207 LGSS, tabla `COEF_INV` (48 meses × 4 tramos),
+  edad legal «de haber seguido cotizando» (`ORDC`), mínimo 33 años, tope = máxima −0,5 %/trimestre.
+- **Informe PDF** (`buildReport()`, `#report`): se imprime solo el informe (clase `report-mode` +
+  `@media print`); también con Ctrl/Cmd+P si hay datos.
+- **Compartir escenario**: enlace `…/#d=<base64url(JSON)>`; al abrirlo se aplican los datos
+  (saneados en `cleanShared`), no se guardan y se limpia la URL.
+- **Ejemplos**: `DEMOS` (3 perfiles ficticios que se alternan).
 
 ## Estructura de la página
 Cabecera (tema, Nuevo, Restablecer, Guardar, Imprimir) → **Portada** (icono grande, título,
@@ -31,8 +42,8 @@ sobre degradado azul marino (`favicon.svg`; PNG generados desde él).
 
 ## Reglas
 - **No cambiar los cálculos** (bloque «Normativa» y `scenario()` del JS) sin que Carlos lo pida.
-- **Nunca datos reales de Carlos** en el código: el botón «Ver un ejemplo» (`DEMO`) usa una persona
-  ficticia (1967, 13.150 días, 2 hijos). El repo es público.
+- **Nunca datos reales de Carlos** en el código ni en el historial de git: el repo es público.
+  (El 25/09/2026 se reescribió el historial para eliminarlos.) Los ejemplos son siempre ficticios.
 - Textos en español de España.
 
 ## Versionado
@@ -72,6 +83,4 @@ esquinas redondeadas) para `apple-touch-icon.png`, `icon-192.png` e `icon-512.pn
 Chrome headless se cuelga; funciona un script Swift con `NSImage` (lee SVG nativo) → PNG.
 
 ## Ideas pendientes (propuestas a Carlos)
-- Jubilación anticipada involuntaria (hasta 4 años antes, 33 cotizados).
-- Compartir escenario por enlace o exportar a PDF con formato de informe.
-- Modo offline con service worker (valorar frente al riesgo de cachés viejas).
+- (Hechas en 01.01: anticipada involuntaria, informe PDF, compartir por enlace, modo sin conexión.)

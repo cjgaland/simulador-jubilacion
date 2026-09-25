@@ -8,7 +8,9 @@ Introduces tus datos (fecha de nacimiento, días cotizados según tu Informe de 
 
 - Tu **fecha de jubilación ordinaria** y la edad a la que la alcanzas.
 - Tu **pensión bruta mensual** (14 pagas) y una estimación del neto tras la retención de IRPF.
-- Las alternativas de **jubilación anticipada voluntaria** y **demorada** (de +1 a +5 años), con sus coeficientes reductores o porcentajes adicionales.
+- Las alternativas de **jubilación anticipada** (voluntaria o involuntaria) y **demorada** (de +1 a +5 años), con sus coeficientes reductores o porcentajes adicionales.
+- Un **informe en PDF** listo para guardar o imprimir, y un enlace para **compartir** la simulación.
+- Funciona también **sin conexión** una vez abierta.
 - Una **línea temporal**, un gráfico comparativo de todas las opciones y el **desglose** completo del cálculo.
 
 Incluye la normativa vigente en 2026 (Ley 27/2011, RDL 2/2023, Ley 21/2021): pensión máxima, complemento por demora, complemento de brecha de género por hijos, etc.
