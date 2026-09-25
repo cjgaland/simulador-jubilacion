@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1f3a5f"/>
+      <stop offset="1" stop-color="#12243d"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c9a56a"/>
+      <stop offset="1" stop-color="#a8844d"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <!-- esfera -->
+  <circle cx="256" cy="256" r="150" fill="none" stroke="#f3ead9" stroke-opacity=".22" stroke-width="16"/>
+  <!-- marcas horarias -->
+  <g stroke="#f3ead9" stroke-opacity=".55" stroke-width="8" stroke-linecap="round">
+    <path d="M256 128v14M384 256h-14M256 384v-14M128 256h14"/>
+  </g>
+  <!-- línea temporal: arco dorado de progreso (12 → 8) -->
+  <path d="M256 106 A150 150 0 1 1 126.1 331" fill="none" stroke="url(#gold)" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="126.1" cy="331" r="17" fill="#a8844d" stroke="#f3ead9" stroke-width="6"/>
+  <!-- agujas -->
+  <path d="M256 176v80l52 34" fill="none" stroke="#f3ead9" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="256" cy="256" r="13" fill="#a8844d"/>
+</svg>

@@ -1,0 +1,11 @@
+# Copias de seguridad locales (nunca al repositorio)
+Backup/
+
+# Sistema y editor
+.DS_Store
+.claude/settings.local.json
+
+# Datos personales / secretos
+*.csv
+.env
+.env.*

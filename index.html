@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f5f2ec">
+<title>Simulador de Jubilación</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Jubilación">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f2ec; --surface:#fffdf9; --surface-2:#f8f4ec; --ink:#1b2130; --muted:#6a7080; --line:#e6dfd2;
+  --navy:#1f3a5f; --navy-soft:#e8eef6; --gold:#a8844d; --gold-soft:#f3ead9;
+  --green:#3d7a58; --green-soft:#e5f1ea; --red:#a9503a; --red-soft:#f7e6e0;
+  --shadow:0 1px 2px rgba(27,33,48,.04),0 10px 30px rgba(27,33,48,.07);
+  --radius:20px; --c:var(--navy);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e131b; --surface:#151c27; --surface-2:#1a2230; --ink:#ece7de; --muted:#98a1b1; --line:#283346;
+    --navy:#9bbce6; --navy-soft:#1c2a3d; --gold:#d5b37b; --gold-soft:#2a2418;
+    --green:#7cc39a; --green-soft:#16281f; --red:#e39a84; --red-soft:#2d1a16;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1a2230; --ink:#ece7de; --muted:#98a1b1; --line:#283346;
+  --navy:#9bbce6; --navy-soft:#1c2a3d; --gold:#d5b37b; --gold-soft:#2a2418;
+  --green:#7cc39a; --green-soft:#16281f; --red:#e39a84; --red-soft:#2d1a16;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+.serif{font-family:Fraunces,Georgia,serif}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px 60px}
+
+/* header */
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:22px 0 6px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(145deg,#2a4b78,#12243d);display:grid;place-items:center;color:#f3ead9;box-shadow:var(--shadow)}
+.brand small{display:block;color:var(--muted);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
+.brand strong{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:19px}
+.top-actions{display:flex;gap:8px;align-items:center}
+.icon-btn:disabled{opacity:.45;cursor:not-allowed}
+.icon-btn.primary{background:var(--navy);border-color:var(--navy);color:var(--surface)}
+.icon-btn.primary:hover{border-color:var(--navy);filter:brightness(1.1)}
+.icon-btn.saved{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:12px;font-size:13.5px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.3s;z-index:50;max-width:calc(100% - 32px);text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.empty{padding:44px 30px;text-align:center}
+.empty svg.ill{color:var(--gold);margin-bottom:14px}
+.empty h2{font-family:Fraunces,Georgia,serif;font-weight:400;font-size:clamp(24px,3.4vw,32px);margin:0 0 8px}
+.empty p{color:var(--muted);max-width:440px;margin:0 auto 22px}
+.empty ol{list-style:none;padding:0;margin:0 auto 26px;display:grid;gap:10px;max-width:380px;text-align:left}
+.empty li{display:flex;gap:12px;align-items:center;font-size:14px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface-2);transition:.3s}
+.empty li b{flex:0 0 26px;height:26px;border-radius:50%;background:var(--line);color:var(--muted);display:grid;place-items:center;font-size:12px;transition:.3s}
+.empty li.done{border-color:color-mix(in srgb,var(--green) 40%,transparent)}
+.empty li.done b{background:var(--green);color:var(--surface)}
+.empty .actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:12px;height:44px;padding:0 18px;font-size:14px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{border-color:var(--gold)}
+.irpf-chip{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:99px;background:var(--gold-soft);color:var(--gold);margin-top:6px}
+.bars-ctrl{display:flex;gap:8px;flex-wrap:wrap}
+.icon-btn{border:1px solid var(--line);background:var(--surface);border-radius:12px;height:40px;min-width:40px;padding:0 13px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:13px;cursor:pointer;transition:border-color .2s}
+.icon-btn:hover{border-color:var(--gold)}
+.privacy{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--green);background:var(--green-soft);padding:8px 13px;border-radius:99px;white-space:nowrap}
+
+/* layout */
+.grid{display:grid;grid-template-columns:340px minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:960px){.grid{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.results{display:flex;flex-direction:column;gap:22px;min-width:0}
+
+/* form */
+aside.form{padding:24px;position:sticky;top:74px}
+@media (max-width:960px){aside.form{position:static}}
+.step{display:flex;align-items:center;gap:10px;margin:0 0 18px}
+.step b{width:26px;height:26px;border-radius:50%;background:var(--navy);color:var(--surface);display:grid;place-items:center;font-size:12.5px}
+.step h2{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:20px;margin:0}
+.field{margin-bottom:22px}
+.field > label,.lbl{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;font-weight:600;letter-spacing:.02em;margin-bottom:8px}
+.hint{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.45}
+input[type=date],input[type=number]{width:100%;height:46px;border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:0 12px;font-size:15px;transition:.2s;-webkit-appearance:none;appearance:none}
+input[type=number]::-webkit-inner-spin-button{opacity:.4}
+input:focus-visible{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 22%,transparent)}
+.bignum{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.bignum input{font-family:Fraunces,Georgia,serif;font-size:24px;height:52px;font-variant-numeric:tabular-nums}
+.bignum span{color:var(--muted);font-size:13px}
+.pill{white-space:nowrap;flex:none;font-size:12px;font-weight:600;padding:3px 10px;border-radius:99px;background:var(--navy-soft);color:var(--navy);font-variant-numeric:tabular-nums}
+
+/* range */
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:30px;background:transparent;margin:0;cursor:pointer;--p:50%}
+input[type=range]:focus{outline:none}
+input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:99px;background:linear-gradient(to right,var(--c) 0 var(--p),var(--line) var(--p) 100%)}
+input[type=range]::-moz-range-track{height:6px;border-radius:99px;background:var(--line)}
+input[type=range]::-moz-range-progress{height:6px;border-radius:99px;background:var(--c)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:var(--surface);border:2px solid var(--c);margin-top:-9px;box-shadow:0 2px 8px rgba(0,0,0,.18);transition:transform .15s}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--surface);border:2px solid var(--c);box-shadow:0 2px 8px rgba(0,0,0,.18)}
+input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
+input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 5px color-mix(in srgb,var(--gold) 30%,transparent)}
+.scale{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);padding:0 5px;margin-top:2px}
+.kids{display:flex;gap:6px;min-height:28px;align-items:flex-end;margin-bottom:4px;flex-wrap:wrap}
+.kids svg{color:var(--gold);animation:pop .3s ease}
+@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+.kids .none{font-size:13px;color:var(--muted)}
+
+.switch{display:flex;align-items:flex-start;gap:12px;cursor:pointer;margin:4px 0 14px}
+.switch input{position:absolute;opacity:0;pointer-events:none}
+.switch .tg{flex:0 0 40px;height:24px;border-radius:99px;background:var(--line);position:relative;transition:.25s;margin-top:1px}
+.switch .tg::after{content:"";position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:3px;left:3px;transition:.25s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.switch input:checked + .tg{background:var(--navy)}
+.switch input:checked + .tg::after{left:19px}
+.switch input:focus-visible + .tg{box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 30%,transparent)}
+.switch .tx{font-size:13.5px;font-weight:500}
+.switch .tx small{display:block;font-weight:400;color:var(--muted);font-size:12px;margin-top:2px;line-height:1.45}
+
+details.adv{border-top:1px solid var(--line);margin-top:6px}
+details.adv summary{list-style:none;cursor:pointer;padding:16px 0 4px;font-size:13px;font-weight:600;color:var(--muted);display:flex;align-items:center;justify-content:space-between}
+details.adv summary::-webkit-details-marker{display:none}
+details.adv summary::after{content:"";width:8px;height:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);transition:.2s;margin-right:4px}
+details.adv[open] summary::after{transform:rotate(-135deg)}
+details.adv .inner{padding-top:14px}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:3px;margin-bottom:10px}
+.seg button{border:0;background:transparent;color:var(--muted);font-size:13px;font-weight:500;padding:8px;border-radius:9px;cursor:pointer;transition:.2s}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.input-suffix{position:relative}
+.input-suffix span{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;pointer-events:none}
+.input-suffix input{padding-right:40px}
+
+/* main scenario card */
+.main-card{padding:26px 26px 22px;position:relative;overflow:hidden}
+.main-card::before{content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--c) 16%,transparent),transparent 70%);transition:background .4s;pointer-events:none}
+.q{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.q h2{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:21px;margin:0}
+.q .step b{background:var(--gold)}
+.sc-slider{position:relative;padding:4px 12px 0}
+.sc-slider input{height:40px}
+.sc-slider input::-webkit-slider-runnable-track{height:8px}
+.sc-slider input::-webkit-slider-thumb{width:30px;height:30px;margin-top:-11px;border-width:3px}
+.sc-slider input::-moz-range-thumb{width:26px;height:26px;border-width:3px}
+.sc-labels{position:relative;height:36px;margin:0 12px}
+.sc-labels button{position:absolute;transform:translateX(-50%);top:0;border:0;background:none;padding:4px 2px;font-size:12px;color:var(--muted);cursor:pointer;text-align:center;line-height:1.2;white-space:nowrap;transition:color .2s}
+.sc-labels button small{display:block;font-size:10px;opacity:.8}
+.sc-labels button.on{color:var(--ink);font-weight:600}
+.sc-labels button:disabled{opacity:.4;cursor:not-allowed;text-decoration:line-through}
+.sc-labels .st{display:none}
+@media (max-width:560px){.sc-labels button small{display:none}.sc-labels button{font-size:11.5px}.sc-labels .lg{display:none}.sc-labels .st{display:inline}}
+
+.res{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;margin-top:18px;position:relative}
+@media (max-width:640px){.res{grid-template-columns:1fr;gap:18px}}
+.label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:8px}
+.type{font-size:10.5px;letter-spacing:.08em;padding:3px 9px;border-radius:99px;background:color-mix(in srgb,var(--c) 14%,transparent);color:var(--c);transition:.3s}
+.big-date{font-family:Fraunces,Georgia,serif;font-size:clamp(28px,4.2vw,40px);font-weight:400;line-height:1.12;margin:8px 0 6px;letter-spacing:-.01em}
+.big-money{font-family:Fraunces,Georgia,serif;font-size:clamp(34px,5vw,50px);font-weight:500;line-height:1;margin:8px 0 8px;color:var(--c);font-variant-numeric:tabular-nums;transition:color .3s}
+.meta{color:var(--muted);font-size:14px}
+.meta b{color:var(--ink);font-weight:600}
+.delta{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;padding:4px 11px;border-radius:99px;margin-top:10px}
+.delta.up{background:var(--green-soft);color:var(--green)}
+.delta.down{background:var(--red-soft);color:var(--red)}
+.delta.eq{background:var(--navy-soft);color:var(--navy)}
+.alert{border-radius:14px;padding:13px 15px;font-size:13.5px;margin-top:20px;display:flex;gap:12px;align-items:flex-start;line-height:1.5;background:var(--surface-2);border:1px solid var(--line)}
+.alert.gold{background:var(--gold-soft);border-color:transparent}
+.alert.red{background:var(--red-soft);border-color:transparent}
+.alert.green{background:var(--green-soft);border-color:transparent}
+.alert svg{flex:0 0 18px;margin-top:2px;color:var(--c)}
+
+/* timeline */
+.is-empty .needs-data{display:none!important}
+.empty-card{display:none}
+.is-empty .empty-card{display:block}
+.tl-title{display:flex;justify-content:space-between;align-items:baseline;margin:26px 0 4px;font-size:13px;font-weight:600}
+.tl-title span{font-weight:400;color:var(--muted);font-size:12px}
+.timeline{position:relative;height:150px;margin:0 14px;transition:height .3s}
+.tl-layer{position:absolute;inset:0}
+.tl-track{position:absolute;left:0;right:0;height:4px;border-radius:99px;background:var(--line)}
+.tl-zone{position:absolute;height:4px;border-radius:99px;opacity:.35}
+.tl-fill{position:absolute;left:0;height:4px;border-radius:99px;background:linear-gradient(90deg,var(--gold),var(--c));transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.tl-tick{position:absolute;transform:translateX(-50%);font-size:10.5px;color:var(--muted)}
+.tl-tick::before{content:"";position:absolute;left:50%;top:-9px;width:1px;height:5px;background:var(--line)}
+.tl-m{position:absolute;transform:translateX(-50%);text-align:center;white-space:nowrap;font-size:11px;font-weight:600;line-height:1.25}
+.tl-m small{display:block;font-weight:400;color:var(--muted);font-size:10.5px}
+.tl-m i{position:absolute;left:50%;width:1px;background:var(--line);transform:translateX(-50%)}
+.tl-dot{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--surface);border:2px solid var(--muted);transform:translate(-50%,-50%)}
+.tl-pin{position:absolute;transition:left .6s cubic-bezier(.2,.8,.2,1);transform:translateX(-50%);z-index:2}
+.tl-pin .ball{width:22px;height:22px;border-radius:50%;background:var(--c);border:4px solid var(--surface);box-shadow:0 0 0 2px var(--c),0 4px 12px rgba(0,0,0,.18);margin:0 auto;transition:background .3s,box-shadow .3s}
+.tl-pin .flag{margin-top:8px;background:var(--c);color:var(--surface);font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:10px;white-space:nowrap;text-align:center;line-height:1.25;position:relative;transition:background .3s}
+.tl-pin .flag small{display:block;font-weight:400;opacity:.85;font-size:10.5px}
+.tl-pin .flag::before{content:"";position:absolute;top:-5px;left:50%;transform:translateX(-50%) rotate(45deg);width:10px;height:10px;background:inherit}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-radius:14px;overflow:hidden;border:1px solid var(--line);margin-top:10px}
+.stats div{background:var(--surface);padding:12px 14px}
+.stats span{display:block;font-size:11px;color:var(--muted);letter-spacing:.03em;line-height:1.3}
+.stats b{font-size:16px;font-weight:600;font-variant-numeric:tabular-nums}
+@media (max-width:760px){.stats{grid-template-columns:1fr 1fr}}
+
+/* bars */
+.bars-card{padding:22px 26px}
+.bars-head{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.bars-head h2{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:20px;margin:0}
+.bars-head p{margin:2px 0 0;color:var(--muted);font-size:13px}
+.seg.sm{grid-template-columns:auto auto;margin:0}
+.seg.sm button{padding:6px 12px;font-size:12px}
+.bars{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;align-items:end;height:190px;border-bottom:1px solid var(--line);position:relative}
+.bar{position:relative;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;cursor:pointer;border:0;background:none;padding:0}
+.bar i{display:block;width:100%;max-width:54px;border-radius:6px 6px 0 0;background:var(--bc);opacity:.35;transition:height .5s cubic-bezier(.2,.8,.2,1),opacity .25s}
+.bar:hover i{opacity:.6}
+.bar.on i{opacity:1}
+.bar .v{font-size:11.5px;font-weight:600;margin-bottom:6px;white-space:nowrap;font-variant-numeric:tabular-nums;opacity:0;transition:opacity .2s}
+.bar.on .v,.bar:hover .v{opacity:1}
+.bar:disabled{cursor:not-allowed}
+.bar:disabled i{background:repeating-linear-gradient(135deg,var(--line) 0 4px,transparent 4px 8px);opacity:1;height:30%!important}
+.bars-x{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:8px;text-align:center;font-size:11.5px;color:var(--muted)}
+.bars-x .on{color:var(--ink);font-weight:600}
+.capline{position:absolute;left:0;right:0;border-top:1.5px dashed var(--gold);pointer-events:none;transition:bottom .5s}
+.cap-legend{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--muted);margin-top:12px}
+.cap-legend i{width:22px;border-top:1.5px dashed var(--gold)}
+.capline span{position:absolute;left:0;top:-19px;font-size:10.5px;color:var(--gold);background:var(--surface);padding:0 4px}
+@media (max-width:560px){.bars{gap:4px;height:160px}.bars-x{gap:4px;font-size:10.5px}.bar .v{font-size:9.5px}}
+
+/* detail */
+.detail{padding:24px 26px}
+.detail h2{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:20px;margin:0 0 2px}
+.detail .sub{color:var(--muted);font-size:13px;margin:0 0 10px}
+.dl{width:100%;border-collapse:collapse;font-size:14px}
+.dl td{padding:9px 0;border-bottom:1px dashed var(--line);vertical-align:top}
+.dl td:last-child{text-align:right;font-variant-numeric:tabular-nums;font-weight:500;white-space:nowrap;padding-left:12px}
+.dl tr.grp td{border-bottom:0;padding-top:18px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.dl tr.tot td{border-bottom:0;border-top:1.5px solid var(--ink);font-weight:600;font-size:15.5px;padding-top:12px}
+.dl tr.neg td:last-child{color:var(--red)}
+.dl tr.pos td:last-child{color:var(--green)}
+.dl td small{display:block;color:var(--muted);font-size:12px;font-weight:400}
+
+/* info */
+.info{padding:6px 26px}
+.info > details{border-bottom:1px solid var(--line)}
+.info > details:last-of-type{border-bottom:0}
+.info summary{list-style:none;cursor:pointer;padding:16px 0;font-weight:500;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.info summary::-webkit-details-marker{display:none}
+.info summary::after{content:"+";font-size:20px;color:var(--gold);transition:.2s;font-weight:300}
+.info details[open] summary::after{transform:rotate(45deg)}
+.info .body{padding:0 0 18px;color:var(--muted);font-size:14px}
+.info .body b{color:var(--ink)}
+.tbl{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+.tbl th,.tbl td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left}
+.tbl th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.tbl tr.cur td{background:var(--gold-soft);color:var(--ink);font-weight:600}
+.scroll-x{overflow-x:auto}
+.sources{font-size:12px;color:var(--muted);padding:16px 0 20px;border-top:1px solid var(--line);line-height:1.6}
+.sources b{color:var(--ink)}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:30px 10px 0;max-width:760px;margin:0 auto}
+footer .ver{margin-top:10px;font-size:11px;letter-spacing:.04em;opacity:.8}
+footer .ver button{border:0;background:none;padding:0;color:inherit;font-size:inherit;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+footer .ver button:hover{color:var(--gold)}
+
+/* portada */
+.cover{text-align:center;padding:34px 0 30px;display:flex;flex-direction:column;align-items:center}
+.cover-icon{width:112px;height:112px;border-radius:28px;box-shadow:0 2px 4px rgba(18,36,61,.12),0 18px 40px rgba(18,36,61,.22);margin-bottom:22px;overflow:hidden}
+.cover-icon svg{display:block;width:100%;height:100%}
+.cover h1{font-family:Fraunces,Georgia,serif;font-weight:400;font-size:clamp(30px,5vw,50px);line-height:1.08;margin:0 0 14px;letter-spacing:-.01em}
+.cover h1 em{font-style:italic;color:var(--gold)}
+.cover-desc{color:var(--muted);max-width:640px;margin:0 auto 18px;font-size:16px}
+.credit{color:var(--muted);font-size:12.5px;letter-spacing:.02em;margin:18px 0 0;opacity:.85}
+
+/* menú de apartados */
+.secnav{position:sticky;top:0;z-index:30;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:10px 0;margin:0 0 18px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.secnav::-webkit-scrollbar{display:none}
+.secnav a{flex:none;text-decoration:none;color:var(--muted);font-size:13px;font-weight:500;padding:8px 14px;border-radius:99px;border:1px solid transparent;transition:.2s;white-space:nowrap}
+.secnav a:hover{color:var(--ink);border-color:var(--line)}
+.secnav a.on{background:var(--navy);color:var(--surface)}
+.secnav a.off{opacity:.45}
+.card,#datos{scroll-margin-top:72px}
+
+/* ayuda */
+.ayuda{padding:24px 26px}
+.ayuda > .step b{background:var(--gold)}
+.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line);margin:0 0 18px}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:none;border:0;background:none;padding:9px 12px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tabs button.on{color:var(--ink);border-bottom-color:var(--gold)}
+.tab-panel{font-size:14px;color:var(--muted)}
+.tab-panel b,.tab-panel strong{color:var(--ink)}
+.tab-panel h3{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:17px;color:var(--ink);margin:22px 0 8px}
+.tab-panel h3:first-child{margin-top:0}
+.tab-panel p{margin:0 0 10px}
+.tab-panel ul,.tab-panel ol{margin:0 0 12px;padding-left:20px}
+.tab-panel li{margin:4px 0}
+.steps{list-style:none;padding:0!important;display:grid;gap:10px}
+.steps li{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface-2);margin:0}
+.steps li > b{flex:0 0 26px;height:26px;border-radius:50%;background:var(--navy);color:var(--surface);display:grid;place-items:center;font-size:12px}
+.steps li div{flex:1;min-width:0}
+.req{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:99px;margin-left:6px;vertical-align:1px}
+.req.ob{background:var(--navy-soft);color:var(--navy)}
+.req.op{background:var(--gold-soft);color:var(--gold)}
+.tip{border-radius:14px;padding:12px 14px;background:var(--green-soft);color:var(--ink);font-size:13.5px;margin-top:14px}
+.src{list-style:none;padding:0!important}
+.src li{padding:9px 0;border-bottom:1px dashed var(--line);margin:0}
+.src a{color:var(--navy);font-weight:500;text-decoration:none}
+.src a:hover{text-decoration:underline}
+.src small{display:block;font-size:12px}
+
+/* aviso de nueva versión */
+.upd{position:fixed;left:50%;bottom:18px;transform:translate(-50%,30px);opacity:0;pointer-events:none;transition:.35s cubic-bezier(.2,.8,.2,1);z-index:60;width:min(440px,calc(100% - 32px));background:linear-gradient(145deg,#1f3a5f,#12243d);color:#f3ead9;border-radius:16px;box-shadow:0 18px 40px rgba(18,36,61,.35);padding:14px 14px 14px 18px;display:flex;align-items:center;gap:14px}
+.upd.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.upd .t{flex:1;min-width:0;font-size:13px;line-height:1.4;color:#c9d3e1}
+.upd .t b{display:block;color:#f3ead9;font-size:14.5px;font-weight:600}
+.upd button.go{border:0;background:#a8844d;color:#fff;font-weight:600;font-size:13.5px;border-radius:10px;height:38px;padding:0 16px;cursor:pointer;white-space:nowrap}
+.upd button.go:hover{filter:brightness(1.1)}
+.upd button.x{border:0;background:none;color:#c9d3e1;font-size:20px;line-height:1;cursor:pointer;padding:4px}
+
+/* novedades (ventana tras actualizar) */
+dialog.news{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);color:var(--ink);box-shadow:var(--shadow);padding:0;width:min(520px,calc(100% - 32px));max-height:min(80vh,680px);overflow:hidden}
+dialog.news[open]{display:flex;flex-direction:column;animation:newsIn .25s cubic-bezier(.2,.8,.2,1)}
+dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+@keyframes newsIn{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+.news-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:22px 24px 16px;border-bottom:1px solid var(--line)}
+.news-head small{display:block;color:var(--gold);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+.news-head h2{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:22px;margin:2px 0 0}
+.news-body{overflow-y:auto;padding:8px 24px 22px}
+.news-v{position:relative;padding:16px 0 4px 26px}
+.news-v::before{content:"";position:absolute;left:5px;top:24px;bottom:-12px;width:1.5px;background:var(--line)}
+.news-v:last-child::before{display:none}
+.news-v::after{content:"";position:absolute;left:0;top:20px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--gold)}
+.news-v.cur::after{background:var(--gold)}
+.news-v h3{margin:0;font-size:15px;font-weight:600;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.news-v h3 span{font-weight:400;color:var(--muted);font-size:12.5px}
+.news-v h3 em{font-style:normal;font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:99px;background:var(--gold-soft);color:var(--gold)}
+.news-v ul{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:13.5px}
+.news-v li{margin:3px 0}
+.news-foot{display:flex;justify-content:flex-end;gap:8px;padding:14px 24px;border-top:1px solid var(--line)}
+.news-foot .btn{height:40px;font-size:13px}
+#verList .news-v:first-child{padding-top:4px}
+#verList .news-v:first-child::after{top:8px}
+#verList .news-v:first-child::before{top:12px}
+
+@media (max-width:560px){
+  .top-actions{gap:6px}
+  .icon-btn{padding:0 11px}
+  .wrap{padding:0 14px 50px}
+  .brand small,.icon-btn span{display:none}
+  .main-card,.bars-card,.detail{padding:20px 18px}
+  .info{padding:4px 18px}
+  .ayuda{padding:20px 18px}
+  aside.form{padding:20px 18px}
+  .cover{padding:22px 0 24px}
+  .cover-icon{width:92px;height:92px;border-radius:23px}
+  .cover-desc{font-size:15px}
+  .secnav{margin:0 -14px 16px;padding:10px 14px}
+  .timeline{margin:0 8px}
+  .tl-tick.odd{visibility:hidden}
+}
+@media (max-width:420px){
+  header.top{gap:8px}
+  #btnPrint{display:none}
+  .icon-btn{height:38px;min-width:38px;padding:0 10px}
+  .logo{width:36px;height:36px;border-radius:11px}
+  .brand{gap:9px;min-width:0}
+  .brand strong{font-size:15.5px;line-height:1.2;display:block}
+}
+@media print{
+  body{background:#fff}
+  .top-actions,aside.form,.privacy,.seg.sm,dialog.news,footer .ver,.secnav,#ayuda,.upd,.cover-icon,.cover-desc,.credit{display:none!important}
+  .cover{padding:10px 0}
+  .grid{grid-template-columns:1fr}
+  .card{box-shadow:none;break-inside:avoid}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="logo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+      <div><small>Régimen General · Seguridad Social</small><strong>Simulador de Jubilación</strong></div>
+    </div>
+    <div class="top-actions">
+      <button class="icon-btn" id="btnTheme" title="Cambiar tema" aria-label="Cambiar tema claro u oscuro"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="icon-btn" id="btnClear" title="Empezar de cero (vaciar todos los datos)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>Nuevo</span></button>
+      <button class="icon-btn" id="btnReset" title="Volver a mis datos guardados"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg><span>Restablecer</span></button>
+      <button class="icon-btn primary" id="btnSave" title="Guardar mis datos en este dispositivo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v6h8V3M8 21v-7h8v7"/></svg><span id="saveTxt">Guardar</span></button>
+      <button class="icon-btn needs-data" id="btnPrint" onclick="window.print()" title="Imprimir"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2M8 14h8v7H8z"/></svg><span>Imprimir</span></button>
+    </div>
+  </header>
+
+  <section class="cover" id="inicio">
+    <div class="cover-icon" aria-hidden="true"><svg viewBox="0 0 512 512"><defs><linearGradient id="cvBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1f3a5f"/><stop offset="1" stop-color="#12243d"/></linearGradient><linearGradient id="cvGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c9a56a"/><stop offset="1" stop-color="#a8844d"/></linearGradient></defs><rect width="512" height="512" fill="url(#cvBg)"/><circle cx="256" cy="256" r="150" fill="none" stroke="#f3ead9" stroke-opacity=".22" stroke-width="16"/><path d="M256 128v14M384 256h-14M256 384v-14M128 256h14" stroke="#f3ead9" stroke-opacity=".55" stroke-width="8" stroke-linecap="round"/><path d="M256 106 A150 150 0 1 1 126.1 331" fill="none" stroke="url(#cvGold)" stroke-width="16" stroke-linecap="round"/><circle cx="126.1" cy="331" r="17" fill="#a8844d" stroke="#f3ead9" stroke-width="6"/><path d="M256 176v80l52 34" fill="none" stroke="#f3ead9" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><circle cx="256" cy="256" r="13" fill="#a8844d"/></svg></div>
+    <h1 class="serif">¿Cuándo y con cuánto<br>te podrás <em>jubilar</em>?</h1>
+    <p class="cover-desc">Calcula tu fecha de jubilación y tu pensión en el Régimen General de la Seguridad Social con solo tres datos, y compara al instante cuánto cobrarías si te jubilas antes o si decides retrasarlo, según la normativa vigente en 2026.</p>
+    <span class="privacy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Tus datos no salen de tu dispositivo</span>
+    <p class="credit">Creado por Carlos J. Galán Doval – Ver. <span class="js-ver"></span> – 2026</p>
+  </section>
+
+  <nav class="secnav" id="secnav" aria-label="Apartados">
+    <a href="#datos">Datos</a>
+    <a href="#mainCard" data-need>¿Cuándo jubilarte?</a>
+    <a href="#grafico" data-need>Gráfico</a>
+    <a href="#detail" data-need>Desglose</a>
+    <a href="#requisitos">Requisitos</a>
+    <a href="#ayuda">Ayuda</a>
+  </nav>
+
+  <div class="grid">
+    <!-- ============ FORM ============ -->
+    <aside class="card form" id="datos">
+      <div class="step"><b>1</b><h2>Tus datos</h2></div>
+
+      <div class="field">
+        <label for="fNac">Fecha de nacimiento</label>
+        <input type="date" id="fNac" value="">
+      </div>
+
+      <div class="field">
+        <div class="lbl"><label for="fDias">Días cotizados a día de hoy</label><span class="pill" id="pDias"></span></div>
+        <div class="bignum"><input type="number" id="fDias" value="" placeholder="0" min="0" max="18250" step="1" inputmode="numeric"><span>días</span></div>
+        <input type="range" id="rDias" min="0" max="18250" step="1" value="0" aria-label="Días cotizados">
+        <div class="scale"><span>0</span><span>10 años</span><span>20</span><span>30</span><span>40</span><span>50</span></div>
+        <div class="hint">Aparecen en tu <b>Informe de Vida Laboral</b>. Incluye los días de bonificación por hijos o partos.</div>
+      </div>
+
+      <div class="field">
+        <div class="lbl"><label for="rHijos">Número de hijos</label><span class="pill" id="pHijos"></span></div>
+        <div class="kids" id="kids"></div>
+        <input type="range" id="rHijos" min="0" max="6" step="1" value="0" aria-label="Número de hijos">
+        <div class="scale"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
+      </div>
+
+      <label class="switch"><input type="checkbox" id="fBrecha"><span class="tg"></span>
+        <span class="tx">Cobraré el complemento por hijos<small id="brechaHint">Complemento de brecha de género: 36,90 €/mes por hijo (máx. 4). Lo cobra solo uno de los progenitores, normalmente el de menor pensión.</small></span></label>
+
+      <details class="adv">
+        <summary>Ajustes avanzados</summary>
+        <div class="inner">
+          <label class="switch"><input type="checkbox" id="fCont" checked><span class="tg"></span>
+            <span class="tx">Seguiré cotizando hasta jubilarme<small>Se suma cada día desde hoy hasta la fecha de jubilación.</small></span></label>
+
+          <div class="field">
+            <div class="lbl">Base reguladora</div>
+            <div class="seg" id="segBR"><button data-v="est" class="on">Estimar</button><button data-v="man">La conozco</button></div>
+            <div id="boxEst">
+              <div class="input-suffix"><input type="number" id="fBase" value="5101.20" step="0.01" inputmode="decimal" aria-label="Base de cotización mensual"><span>€</span></div>
+              <div class="hint">Tu base de cotización mensual actual. Máxima 2026: 5.101,20 €. Se proyecta un +2 % anual.</div>
+            </div>
+            <div id="boxMan" hidden>
+              <div class="input-suffix"><input type="number" id="fBR" value="" step="0.01" inputmode="decimal" aria-label="Base reguladora"><span>€</span></div>
+              <div class="hint">La de tu simulación oficial, referida a tu fecha ordinaria. Se ajusta ±2 %/año en los demás escenarios.</div>
+            </div>
+          </div>
+
+          <div class="field" style="margin-bottom:6px">
+            <div class="lbl"><label for="rIrpf">Retención IRPF</label><span class="pill" id="pIrpf"></span></div>
+            <input type="range" id="rIrpf" min="0" max="45" step="0.5" value="23" aria-label="Retención IRPF">
+            <div class="hint">Para estimar el neto. Un pensionista con la máxima ronda el 23 %.</div>
+          </div>
+        </div>
+      </details>
+    </aside>
+
+    <!-- ============ RESULTS ============ -->
+    <main class="results">
+      <section class="card empty empty-card">
+        <svg class="ill" width="120" height="44" viewBox="0 0 120 44" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 30h108" opacity=".35"/><circle cx="20" cy="30" r="5"/><circle cx="60" cy="30" r="7" fill="currentColor"/><circle cx="100" cy="30" r="5"/><path d="M60 21V8" opacity=".5"/><path d="M52 8h16" opacity=".5"/></svg>
+        <h2>Empecemos por tus datos</h2>
+        <p>Rellena los datos de la izquierda y verás al momento tu fecha de jubilación, tu pensión y todas las opciones para adelantarla o retrasarla.</p>
+        <ol>
+          <li id="chk1"><b>1</b>Tu fecha de nacimiento</li>
+          <li id="chk2"><b>2</b>Los días cotizados que figuran en tu vida laboral</li>
+          <li id="chk3"><b>3</b>Tu número de hijos <span class="meta">&nbsp;(opcional)</span></li>
+        </ol>
+        <div class="actions"><button class="btn" id="btnDemo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3l14 9-14 9z"/></svg>Ver un ejemplo</button></div>
+      </section>
+      <section class="card main-card needs-data" id="mainCard">
+        <div class="q"><div class="step" style="margin:0"><b>2</b><h2>¿Cuándo te quieres jubilar?</h2></div></div>
+        <div class="sc-slider"><input type="range" id="rSc" min="0" max="6" step="1" value="1" aria-label="Escenario de jubilación"></div>
+        <div class="sc-labels" id="scLabels"></div>
+
+        <div class="res">
+          <div>
+            <div class="label">Fecha de jubilación <span class="type" id="oType"></span></div>
+            <div class="big-date" id="oDate"></div>
+            <div class="meta" id="oAge"></div>
+            <div class="meta" id="oLeft" style="margin-top:3px"></div>
+          </div>
+          <div>
+            <div class="label">Pensión bruta mensual · 14 pagas</div>
+            <div class="big-money" id="oMoney"></div>
+            <div class="meta" id="oMoneySub"></div>
+            <div id="oDelta"></div>
+          </div>
+        </div>
+
+        <div class="alert" id="oAlert"></div>
+
+        <div class="tl-title">Tu línea temporal <span id="tlRange"></span></div>
+        <div class="timeline" id="timeline">
+          <div class="tl-layer" id="tlStatic"></div>
+          <div class="tl-fill" id="tlFill"></div>
+          <div class="tl-pin" id="tlPin"><div class="ball"></div><div class="flag" id="tlFlag"></div></div>
+        </div>
+
+        <div class="stats" id="oStats"></div>
+      </section>
+
+      <section class="card bars-card needs-data" id="grafico">
+        <div class="bars-head">
+          <div><h2>Compara todas las opciones</h2><p id="barsSub">Toca una barra para seleccionarla</p><span class="irpf-chip" id="irpfChip"></span></div>
+          <div class="bars-ctrl">
+            <div class="seg sm" id="segNet"><button data-v="bruto" class="on">Bruto</button><button data-v="neto">Neto</button></div>
+            <div class="seg sm" id="segBars"><button data-v="mes" class="on">Al mes</button><button data-v="tot">Hasta los 85</button></div>
+          </div>
+        </div>
+        <div class="bars" id="bars"></div>
+        <div class="bars-x" id="barsX"></div>
+        <div class="cap-legend" id="capLegend"></div>
+      </section>
+
+      <section class="card detail needs-data" id="detail"></section>
+
+      <section class="card info" id="requisitos">
+        <details>
+          <summary>Requisitos de edad ordinaria por año</summary>
+          <div class="body scroll-x"><table class="tbl" id="tblReq"></table></div>
+        </details>
+        <details>
+          <summary>Cómo se calcula la pensión</summary>
+          <div class="body">
+            <p><b>Base reguladora.</b> En 2026 se aplica la opción más favorable entre: las bases de los últimos 300 meses divididas entre 350, o el nuevo sistema transitorio que descarta los peores meses (en 2026: las 302 mejores bases de 304 meses entre 352,33, hasta llegar en 2037 a 324 de 348 meses entre 378).</p>
+            <p><b>Porcentaje por años cotizados.</b> 50 % con 15 años; el 100 % se alcanza con 36,5 años (2023-2026) y con 37 años desde 2027.</p>
+            <p><b>Tope.</b> La pensión no puede superar la pensión máxima: 3.359,60 €/mes (14 pagas) en 2026. La Seguridad Social la proyecta con un +2 % anual más un 0,115 % adicional.</p>
+            <p><b>Demora.</b> +4 % por cada año completo tras la edad ordinaria y, desde el segundo, +2 % por cada semestre adicional. Si ya cobras la máxima, se paga como complemento que sí supera el tope (hasta el tope de la base de cotización). También puede cobrarse como cantidad única o de forma mixta.</p>
+            <p><b>Anticipada voluntaria.</b> Hasta 2 años antes de tu edad ordinaria, con 35 años cotizados. Coeficientes reductores mensuales según la carrera de cotización (Ley 21/2021). Si la pensión supera el tope, la reducción se aplica sobre la pensión máxima con un régimen transitorio hasta 2033 (aquí aproximado).</p>
+          </div>
+        </details>
+        <details>
+          <summary>Cotización solidaria y MEI (2026)</summary>
+          <div class="body">
+            <p>Lo que cobras por encima de la base máxima (frecuente con guardias) cotiza sin generar derecho a pensión:</p>
+            <table class="tbl">
+              <tr><th>Tramo sobre la base máxima</th><th>Tipo</th><th>Trabajador</th></tr>
+              <tr><td>Hasta +10 % (5.101,21 – 5.611,32 €)</td><td>1,15 %</td><td>0,19 %</td></tr>
+              <tr><td>+10 % a +50 %</td><td>1,25 %</td><td>0,21 %</td></tr>
+              <tr><td>Más de +50 %</td><td>1,46 %</td><td>0,24 %</td></tr>
+            </table>
+            <p style="margin-top:10px">El Mecanismo de Equidad Intergeneracional (MEI) es del 0,9 % en 2026 y llegará al 1,2 % en 2029.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Compatibilidades y otras modalidades</summary>
+          <div class="body">
+            <p><b>Jubilación activa</b>: permite compatibilizar trabajo y pensión (del 45 % al 100 % según la demora). En los Servicios de Salud solo está regulada para <b>Médicos de Familia y Pediatras de AP</b> menores de 70 años (75 % de la pensión).</p>
+            <p><b>Prolongación en el SNS</b>: el personal estatutario puede solicitar seguir en activo, en general, hasta los 70 años.</p>
+            <p><b>Anticipada involuntaria</b>: hasta 4 años antes con 33 años cotizados (no incluida en este simulador).</p>
+            <p><b>Viudedad</b>: se calcula sobre la pensión inicial sin tope (52 % con carácter general).</p>
+          </div>
+        </details>
+        <div class="sources"><b>Fuentes:</b> Ley 27/2011, RDL 2/2023 y Ley 21/2021 · «Jubilación ordinaria del Médico en 2026: cuándo, cómo y cuánto» (Centro de Estudios SIMEG) · Metodología de proyección del simulador oficial de «Tu Seguridad Social» (2 % anual + 0,115 % en la pensión máxima).</div>
+      </section>
+
+      <section class="card ayuda" id="ayuda">
+        <div class="step"><b>?</b><h2>Ayuda</h2></div>
+        <div class="tabs" role="tablist">
+          <button data-tab="uso" class="on" role="tab">Cómo usarla</button>
+          <button data-tab="datos" role="tab">Datos que necesitas</button>
+          <button data-tab="instalar" role="tab">Instalar y actualizar</button>
+          <button data-tab="fuentes" role="tab">Fuentes oficiales</button>
+          <button data-tab="versiones" role="tab">Versiones</button>
+        </div>
+
+        <div class="tab-panel" data-panel="uso">
+          <p>El simulador te dice <b>cuándo</b> podrás jubilarte y <b>con cuánto</b>, y te deja comparar todas las opciones: jubilarte antes (anticipada), a tu edad legal (ordinaria) o retrasarlo hasta cinco años (demorada).</p>
+          <ol class="steps">
+            <li><b>1</b><div><strong>Rellena «Tus datos».</strong> Con tu fecha de nacimiento y tus días cotizados los resultados aparecen al instante. Si solo quieres probar, pulsa <b>«Ver un ejemplo»</b> (datos ficticios).</div></li>
+            <li><b>2</b><div><strong>Elige cuándo jubilarte.</strong> Mueve el deslizador de <b>«¿Cuándo te quieres jubilar?»</b> entre Anticipada, Ordinaria y +1 a +5 años. Verás la fecha, tu edad, la pensión bruta mensual, la diferencia con la ordinaria y tu línea temporal.</div></li>
+            <li><b>3</b><div><strong>Compara en el gráfico.</strong> Toca una barra para seleccionar ese escenario. Cambia entre <b>Bruto / Neto</b> y entre <b>Al mes / Hasta los 85</b> (total cobrado hasta los 85 años en euros de hoy). La línea dorada discontinua marca la pensión máxima.</div></li>
+            <li><b>4</b><div><strong>Revisa el desglose.</strong> Base reguladora, porcentaje por años cotizados, coeficientes reductores o porcentaje por demora, tope de pensión máxima y complementos.</div></li>
+            <li><b>5</b><div><strong>Consulta los requisitos.</strong> Tabla de edad ordinaria por año y explicación de cómo se calcula la pensión.</div></li>
+          </ol>
+          <h3>Botones de la parte superior</h3>
+          <ul>
+            <li><b>Guardar</b>: guarda tus datos en este dispositivo para la próxima vez.</li>
+            <li><b>Restablecer</b>: vuelve a cargar los datos que guardaste.</li>
+            <li><b>Nuevo</b>: vacía el formulario (lo guardado sigue disponible en «Restablecer»).</li>
+            <li><b>Imprimir</b>: imprime el resultado o guárdalo como PDF.</li>
+            <li><b>Luna</b>: cambia entre tema claro y oscuro.</li>
+          </ul>
+          <div class="tip">🔒 <b>Privacidad:</b> todos los cálculos se hacen en tu navegador. Tus datos no se envían a ningún sitio; si pulsas «Guardar» se quedan solo en este dispositivo.</div>
+        </div>
+
+        <div class="tab-panel" data-panel="datos" hidden>
+          <h3>Datos básicos</h3>
+          <ul>
+            <li><b>Fecha de nacimiento</b> <span class="req ob">Obligatorio</span><br>Determina tu edad ordinaria de jubilación y las fechas de cada escenario.</li>
+            <li><b>Días cotizados a día de hoy</b> <span class="req ob">Obligatorio</span><br>Aparecen en tu <b>Informe de Vida Laboral</b>, que puedes descargar al momento en la Sede Electrónica o en Import@ss de la Seguridad Social (ver «Fuentes oficiales»). Incluye los días de bonificación por hijos o partos si te los reconocen.</li>
+            <li><b>Número de hijos</b> <span class="req op">Opcional</span><br>Solo influye si activas <b>«Cobraré el complemento por hijos»</b> (complemento para la reducción de la brecha de género: 36,90 €/mes por hijo en 2026, máximo 4). Lo cobra uno solo de los progenitores, normalmente el de menor pensión.</li>
+          </ul>
+          <h3>Ajustes avanzados <span class="req op">Voluntarios</span></h3>
+          <p>Están en el desplegable «Ajustes avanzados», al final de «Tus datos». Si no los tocas, se usan valores razonables por defecto.</p>
+          <ul>
+            <li><b>Seguiré cotizando hasta jubilarme</b>: suma los días desde hoy hasta la fecha de jubilación. Desactívalo si ya no trabajas.</li>
+            <li><b>Base reguladora · Estimar</b>: introduce tu <b>base de cotización mensual</b> actual (en tu nómina, «base de contingencias comunes»; máxima 2026: 5.101,20 €). Se proyecta con un +2 % anual para estimar tu base reguladora.</li>
+            <li><b>Base reguladora · La conozco</b>: si tienes una simulación oficial de «Tu Seguridad Social», escribe su base reguladora (referida a tu fecha ordinaria). Se ajusta ±2 % por año en los demás escenarios. Es la opción más precisa.</li>
+            <li><b>Retención IRPF</b>: solo sirve para estimar el neto; no cambia el bruto. Un pensionista con la pensión máxima ronda el 23 %.</li>
+          </ul>
+          <div class="tip">💡 <b>Consejo:</b> para afinar al máximo, pide tu simulación en «Tu Seguridad Social», copia la base reguladora en «La conozco» y compara el resultado.</div>
+        </div>
+
+        <div class="tab-panel" data-panel="instalar" hidden>
+          <p>Puedes instalar el simulador como una aplicación en tu móvil, tablet u ordenador, y abrirlo con un toque sin escribir la dirección.</p>
+          <h3>📱 iPhone y iPad (Safari)</h3>
+          <ol><li>Abre la web en <b>Safari</b>.</li><li>Pulsa <b>Compartir</b> (el cuadrado con la flecha hacia arriba).</li><li>Pulsa <b>«Añadir a pantalla de inicio»</b> y luego <b>«Añadir»</b>.</li></ol>
+          <h3>🤖 Android (Chrome)</h3>
+          <ol><li>Abre la web en <b>Chrome</b>.</li><li>Pulsa los <b>tres puntos</b> (⋮) arriba a la derecha.</li><li>Pulsa <b>«Instalar aplicación»</b> o <b>«Añadir a pantalla de inicio»</b>.</li></ol>
+          <h3>💻 Mac y Windows</h3>
+          <p><b>Safari (Mac):</b> menú Archivo → «Añadir al Dock». <b>Chrome o Edge:</b> icono de instalar en la barra de direcciones, a la derecha.</p>
+          <h3>🔄 Actualizaciones</h3>
+          <p>Cuando haya mejoras verás un aviso <b>«Ha habido cambios»</b> con el botón <b>«Actualizar»</b>. Púlsalo y tendrás la última versión al instante, sin reinstalar nada. Después te mostraremos qué ha cambiado.</p>
+        </div>
+
+        <div class="tab-panel" data-panel="fuentes" hidden>
+          <p>El cálculo sigue la normativa y los criterios publicados por la Seguridad Social:</p>
+          <ul class="src">
+            <li><a href="https://www.seg-social.es/wps/portal/wss/internet/Trabajadores/PrestacionesPensionesTrabajadores/10963/28393" target="_blank" rel="noopener">Seguridad Social · Jubilación en el Régimen General</a><small>Requisitos, cuantía y modalidades de jubilación.</small></li>
+            <li><a href="https://www.seg-social.es/wps/portal/wss/internet/Trabajadores/PrestacionesPensionesTrabajadores/10963/28393/28396" target="_blank" rel="noopener">Seguridad Social · Jubilación ordinaria</a><small>Edad, periodo mínimo, base reguladora, porcentajes y demora.</small></li>
+            <li><a href="https://www.seg-social.es/wps/portal/wss/internet/Trabajadores/PrestacionesPensionesTrabajadores/10963/28393/28398" target="_blank" rel="noopener">Seguridad Social · Jubilación anticipada</a><small>Requisitos y coeficientes reductores.</small></li>
+            <li><a href="https://www.seg-social.es/wps/portal/wss/internet/Trabajadores/CotizacionRecaudacionTrabajadores/36537" target="_blank" rel="noopener">Seguridad Social · Bases y tipos de cotización</a><small>Base máxima, cotización solidaria y MEI.</small></li>
+            <li><a href="https://sede.seg-social.gob.es" target="_blank" rel="noopener">Sede Electrónica · Tu Seguridad Social</a><small>Simulador oficial de jubilación e Informe de Vida Laboral.</small></li>
+            <li><a href="https://portal.seg-social.gob.es/wps/portal/importass/importass/tuss" target="_blank" rel="noopener">Import@ss (Tesorería General)</a><small>Descarga del Informe de Vida Laboral.</small></li>
+            <li><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724" target="_blank" rel="noopener">Real Decreto Legislativo 8/2015 · Ley General de la Seguridad Social</a><small>BOE, texto consolidado.</small></li>
+            <li><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2011-13242" target="_blank" rel="noopener">Ley 27/2011</a><small>Edad de jubilación y periodo de cálculo progresivos.</small></li>
+            <li><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2021-21652" target="_blank" rel="noopener">Ley 21/2021</a><small>Coeficientes reductores de la anticipada y complemento por demora.</small></li>
+            <li><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2023-6967" target="_blank" rel="noopener">Real Decreto-ley 2/2023</a><small>Nuevo cálculo de la base reguladora, pensión máxima, cotización solidaria y MEI.</small></li>
+            <li><b>«Jubilación ordinaria del Médico en 2026: cuándo, cómo y cuánto»</b><small>Centro de Estudios SIMEG.</small></li>
+          </ul>
+          <div class="tip" style="background:var(--gold-soft)">⚠️ Simulación <b>orientativa y sin validez oficial</b>. Para una cifra definitiva, solicita tu simulación en «Tu Seguridad Social» o consulta con la asesoría de tu Colegio de Médicos.</div>
+        </div>
+
+        <div class="tab-panel" data-panel="versiones" hidden><div id="verList"></div></div>
+      </section>
+    </main>
+  </div>
+
+  <footer>Simulación orientativa sin validez oficial. Para una cifra definitiva consulta «Tu Seguridad Social» (sede.seg-social.gob.es) o la asesoría de tu Colegio de Médicos.
+    <div class="ver">Ver. <span class="js-ver"></span> · <button type="button" id="lnkNews">Historial de versiones</button></div>
+  </footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="upd" id="upd" role="alert">
+  <div class="t"><b>✨ Ha habido cambios</b>Hay una nueva versión de la aplicación<span id="updVer"></span>.</div>
+  <button class="go" id="btnUpd">Actualizar</button>
+  <button class="x" id="btnUpdX" aria-label="Cerrar">×</button>
+</div>
+<dialog class="news" id="dlgNews" aria-labelledby="newsTitle">
+  <div class="news-head">
+    <div><small>Aplicación actualizada</small><h2 id="newsTitle">Novedades</h2></div>
+    <button class="icon-btn" id="btnNewsClose" aria-label="Cerrar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="news-body" id="newsBody"></div>
+  <div class="news-foot"><button class="btn" id="btnNewsAll">Ver todo el historial</button><button class="icon-btn primary" id="btnNewsOk">Entendido</button></div>
+</dialog>
+
+<script>
+(() => {
+'use strict';
+/* ---------- Versión ----------
+   Al desplegar: sube APP_VERSION (formato 01.00 → 01.01 cambios menores, 02.00 cambios grandes),
+   añade la entrada arriba del todo en CHANGES, y actualiza version.json y CHANGELOG.md con la misma versión. */
+const APP_VERSION = '01.00';
+const CHANGES = [
+  {v:'01.00', date:'2026-09-25', items:[
+    'Primera versión publicada en la web.',
+    'Portada con descripción del simulador y menú de apartados: Datos, ¿Cuándo jubilarte?, Gráfico, Desglose, Requisitos y Ayuda.',
+    'Cálculo de fecha y pensión de jubilación ordinaria, anticipada voluntaria y demorada (hasta +5 años), con comparativa en bruto y neto, línea temporal y desglose detallado.',
+    'Ayuda con guía de uso, datos necesarios, instalación en el móvil, fuentes oficiales de la Seguridad Social y el BOE, e historial de versiones.',
+    'Aviso automático cuando hay una nueva versión, con botón para actualizar.',
+    'Instalable en el móvil como aplicación, con icono propio.'
+  ]}
+];
+const DAY = 864e5;
+const $ = s => document.querySelector(s);
+const U = (y,m,d) => new Date(Date.UTC(y,m,d));
+const parse = s => { if(!s) return null; const [y,m,d] = s.split('-').map(Number); return (y>1900&&m&&d) ? U(y,m-1,d) : null; };
+const dim = (y,m) => new Date(Date.UTC(y,m+1,0)).getUTCDate();
+const addDays = (d,n) => new Date(d.getTime()+n*DAY);
+const addMonths = (d,n) => { const t = d.getUTCMonth()+n, y = d.getUTCFullYear()+Math.floor(t/12), m = ((t%12)+12)%12; return U(y,m,Math.min(d.getUTCDate(),dim(y,m))); };
+const diffDays = (a,b) => Math.round((b-a)/DAY);
+const yf = (a,b) => (b-a)/DAY/365.25;
+const now = new Date(); const TODAY = U(now.getFullYear(), now.getMonth(), now.getDate());
+
+const eur = n => n.toLocaleString('es-ES',{style:'currency',currency:'EUR'});
+const eur0 = n => n.toLocaleString('es-ES',{style:'currency',currency:'EUR',maximumFractionDigits:0});
+const num = n => n.toLocaleString('es-ES');
+const pct = n => n.toLocaleString('es-ES',{maximumFractionDigits:2})+' %';
+const fDate = d => d.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'});
+const fShort = d => d.toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric',timeZone:'UTC'});
+const plural = (n,s,p) => `${n} ${n===1?s:p}`;
+const fMonths = m => { const y = Math.floor(m/12), r = m%12; return `${plural(y,'año','años')}${r?` y ${plural(r,'mes','meses')}`:''}`; };
+const fCot = d => { const y = Math.floor(d/365); const m = Math.floor((d - y*365)/365*12 + 1e-9); return `${plural(y,'año','años')}${m?` y ${plural(m,'mes','meses')}`:''}`; };
+function ageYMD(b,D){
+  let y=D.getUTCFullYear()-b.getUTCFullYear(), m=D.getUTCMonth()-b.getUTCMonth(), d=D.getUTCDate()-b.getUTCDate();
+  if(d<0){ m--; const pm=D.getUTCMonth()-1, py=pm<0?D.getUTCFullYear()-1:D.getUTCFullYear(); d+=dim(py,(pm+12)%12); }
+  if(m<0){ y--; m+=12; }
+  return {y,m,d};
+}
+const fAge = a => `${plural(a.y,'año','años')}${a.m?`, ${plural(a.m,'mes','meses')}`:''}${a.d?` y ${plural(a.d,'día','días')}`:''}`;
+const fAgeShort = a => `${plural(a.y,'año','años')}${a.m?` y ${plural(a.m,'mes','meses')}`:''}`;
+const monthsCeil = (a,b) => { let m=0; while(addMonths(a,m)<b) m++; return m; };
+const monthsFloor = (a,b) => { let m=0; while(addMonths(a,m+1)<=b) m++; return m; };
+
+/* ---------- Normativa ---------- */
+// año -> [meses cotizados para jubilarse a los 65, edad (meses) si no se alcanzan]
+const REQ = {2013:[423,781],2014:[426,782],2015:[429,783],2016:[432,784],2017:[435,785],2018:[438,786],2019:[441,788],2020:[444,790],2021:[447,792],2022:[450,794],2023:[453,796],2024:[456,798],2025:[459,800],2026:[459,802]};
+const req = Y => Y<2013 ? [0,780] : Y>=2027 ? [462,804] : REQ[Y];
+const legalAge = (Y,days) => { const [thr,long] = req(Y); return days >= thr/12*365 - 1e-9 ? 780 : long; };
+function pctYears(Y,days){
+  if(days < 5475) return 0;
+  const mo = Math.max(0, Math.floor((days/365-15)*12 + 1e-9));
+  const s = Y<=2019 ? [163,.21,83,.19] : Y<=2022 ? [106,.21,146,.19] : Y<=2026 ? [49,.21,209,.19] : [248,.19,16,.18];
+  const a = Math.min(mo,s[0]), b = Math.min(Math.max(mo-s[0],0), s[2]);
+  return Math.min(100, 50 + a*s[1] + b*s[3]);
+}
+const COEF = [
+  [0.54,1.09,1.63,2.18,2.72,3.26,4,4.5,5,5.5,6,6.5,7,7.5,8,9,10,11,12,13,15,17,19,21],
+  [0.54,1.09,1.63,2.18,2.72,3.26,4,4.5,5,5.5,6,6.5,7,7.5,8,8.5,9,10,11,12,13,15,17,19],
+  [0.54,1.09,1.63,2.18,2.72,3.26,4,4.5,5,5.5,6,6.5,7,7.5,8,8.5,9,9.5,10,10.5,11,13,15,17],
+  [0.13,0.25,0.5,0.75,1,1.25,1.5,1.75,2,2.25,2.5,2.75,3,3.5,4,4.5,5,5.5,6,6.5,7,9,11,13]
+];
+const coefFor = (days,months) => { const y = days/365, t = y<38.5?0:y<41.5?1:y<44.5?2:3; return COEF[t][Math.min(24,Math.max(1,months))-1]; };
+const coefTope = (Y,months,coef) => { const old = 0.5*Math.ceil(months/3), f = Math.min(1,Math.max(0,(Y-2023)/10)); return old + (coef-old)*f; };
+const maxP = Y => 3359.60*Math.pow(1.02115, Y-2026);
+const topeMes14 = Y => 5101.20*Math.pow(1.02, Y-2026)*12/14;
+const brechaHijo = Y => 36.90*Math.pow(1.02, Y-2026);
+
+/* ---------- Estado ---------- */
+const EMPTY = {fNac:'',fDias:'',fBase:'5101.20',fBR:'',rHijos:'0',rIrpf:'23',fCont:true,fBrecha:false,brMode:'est',sc:1,barMode:'mes',netMode:'bruto'};
+const DEMO  = {fNac:'1967-10-15',fDias:'13150',fBase:'4600.00',fBR:'3950.00',rHijos:'2',rIrpf:'21',fCont:true,fBrecha:false,brMode:'est',sc:1,barMode:'mes',netMode:'bruto'};
+const KEY = 'simJubMisDatos';
+const S = {};
+let ORD=null, EARLY=null, scen=[], lastMoney=null;
+const TYPES = {Anticipada:'var(--red)',Ordinaria:'var(--navy)',Demorada:'var(--green)'};
+const STOPS = [
+  {key:'ant',lab:'Anticipada',short:'Antic.',sm:'máx.'},
+  {key:'ord',lab:'Ordinaria',short:'Ord.',sm:'edad legal'},
+  ...[1,2,3,4,5].map(n=>({key:'d'+n,lab:'+'+n,sm:n===1?'año':'años'}))
+];
+
+function read(){
+  S.birth = parse($('#fNac').value);
+  S.days = Math.max(0, Math.round(+$('#fDias').value || 0));
+  S.cont = $('#fCont').checked;
+  S.base = +$('#fBase').value || 0;
+  S.brMan = +$('#fBR').value || 0;
+  S.hijos = +$('#rHijos').value;
+  S.irpf = +$('#rIrpf').value/100;
+  S.brecha = $('#fBrecha').checked;
+}
+const cot = D => { const dd = diffDays(TODAY,D); return Math.max(0, dd<=0 ? S.days+dd : (S.cont ? S.days+dd : S.days)); };
+const BR = D => S.brMode==='man' ? S.brMan*Math.pow(1.02, yf(ORD,D)) : S.base*Math.pow(1.02, yf(TODAY,D))*0.781;
+function findOrdinary(){
+  let D = addMonths(S.birth,780); if(D<TODAY && legalAge(TODAY.getUTCFullYear(),cot(TODAY))<=monthsFloor(S.birth,TODAY)) {/* ya alcanzada */}
+  const end = addMonths(S.birth,806);
+  while(D<=end){ const L = legalAge(D.getUTCFullYear(), cot(D)); if(D>=addMonths(S.birth,L)) return D; D = addDays(D,1); }
+  return end;
+}
+function findEarly(){
+  let D = addMonths(S.birth,756); if(D<TODAY) D = TODAY;
+  while(D<ORD){ const c = cot(D); if(c>=12775){ const L = legalAge(D.getUTCFullYear(),c); if(D>=addMonths(S.birth,L-24)) return D; } D = addDays(D,1); }
+  return null;
+}
+
+function scenario(D,key){
+  const c = cot(D), Y = D.getUTCFullYear(), L = legalAge(Y,c), legalDate = addMonths(S.birth,L);
+  const r = {key,D,c,Y,L,age:ageYMD(S.birth,D),ok:true,pension:0,comp:0,brecha:0,total:0};
+  if(c < 5475){ r.ok=false; r.type='Ordinaria'; r.reason='Aún no alcanzarías el mínimo de 15 años cotizados.'; return r; }
+  const br = BR(D), p = pctYears(Y,c), mp = maxP(Y), initial = br*p/100;
+  Object.assign(r,{br,pct:p,mp,initial,months:0,coef:0,coefT:0,demM:0,pctDem:0,capped:false,loss:0});
+  if(D < legalDate){
+    r.type='Anticipada'; r.months = monthsCeil(D,legalDate);
+    r.coef = coefFor(c,r.months); r.coefT = coefTope(Y,r.months,r.coef);
+    r.reduced = initial*(1-r.coef/100); r.limitEarly = mp*(1-r.coefT/100);
+    r.pension = Math.min(r.reduced, r.limitEarly); r.capped = r.reduced > r.limitEarly;
+  } else {
+    r.demM = monthsFloor(ORD,D); const yrs = Math.floor(r.demM/12);
+    r.pctDem = yrs*4 + (yrs>=1 && r.demM%12>=6 ? 2 : 0);
+    r.type = r.demM>=12 ? 'Demorada' : 'Ordinaria';
+    if(initial>=mp){ r.pension=mp; r.capped=initial>mp; r.comp=mp*r.pctDem/100; }
+    else { const raw = br*(p+r.pctDem)/100; if(raw<=mp) r.pension=raw; else { r.pension=mp; r.comp=raw-mp; } }
+    const tp = topeMes14(Y); if(r.pension+r.comp>tp) r.comp = Math.max(0,tp-r.pension);
+    r.loss = initial>mp ? initial-mp : 0;
+  }
+  r.brecha = S.brecha ? Math.min(S.hijos,4)*brechaHijo(Y) : 0;
+  r.total = r.pension + r.comp + r.brecha;
+  r.anual = r.total*14; r.neto = r.total*(1-S.irpf);
+  r.hoy = r.total/Math.pow(1.02, Math.max(0,yf(TODAY,D)));
+  const ageY = yf(S.birth,D); r.to85 = r.hoy*14*Math.max(0,85-ageY);
+  return r;
+}
+
+/* ---------- Cálculo completo ---------- */
+function compute(){
+  read(); syncInputs(); updateSaveState();
+  const ok = !!S.birth && S.days>0 && S.birth < TODAY;
+  document.body.classList.toggle('is-empty', !ok);
+  $('#chk1').classList.toggle('done', !!S.birth); $('#chk2').classList.toggle('done', S.days>0); $('#chk3').classList.toggle('done', S.hijos>0);
+  if(!ok){ lastMoney=null; return; }
+  ORD = findOrdinary(); EARLY = findEarly();
+  scen = STOPS.map((st,i) => {
+    if(i===0){ if(!EARLY){ return {key:'ant',ok:false,disabled:true,type:'Anticipada',reason: earlyReason()}; } return scenario(EARLY,'ant'); }
+    if(i===1) return scenario(ORD,'ord');
+    return scenario(addMonths(ORD,12*(i-1)),st.key);
+  });
+  if(scen[S.sc]?.disabled) S.sc = 1;
+  buildLabels(); buildTimeline(); buildBars(); renderReq();
+  select(S.sc, false);
+}
+function earlyReason(){
+  const L = legalAge(ORD.getUTCFullYear(), cot(ORD));
+  const c = cot(addMonths(ORD,-1));
+  if(c < 12775) return 'La jubilación anticipada voluntaria exige al menos 35 años cotizados y no los alcanzarías antes de tu edad ordinaria.';
+  if(addMonths(S.birth,756) < TODAY && ORD <= TODAY) return 'Ya has alcanzado tu edad ordinaria.';
+  return 'No es posible adelantar la jubilación en tu caso.';
+}
+
+/* ---------- Selección de escenario (rápida, animada) ---------- */
+function select(i, fromUser=true){
+  if(scen[i]?.disabled){ $('#rSc').value = S.sc; return; }
+  S.sc = i; $('#rSc').value = i;
+  const s = scen[i], ord = scen[1], col = TYPES[s.type]||TYPES.Ordinaria;
+  $('#mainCard').style.setProperty('--c', col); document.querySelector('.bars-card').style.setProperty('--c', col);
+  $('#rSc').style.setProperty('--p', (i/6*100)+'%');
+  document.querySelectorAll('#scLabels button').forEach((b,k)=>b.classList.toggle('on',k===i));
+
+  $('#oType').textContent = s.type;
+  $('#oDate').textContent = fDate(s.D);
+  $('#oAge').innerHTML = `A los <b>${fAge(s.age)}</b>`;
+  const past = s.D <= TODAY;
+  $('#oLeft').innerHTML = past ? 'Fecha ya alcanzada' : `Quedan <b>${fAgeShort(ageYMD(TODAY,s.D))}</b>`;
+
+  if(s.ok){
+    tween($('#oMoney'), lastMoney ?? s.total, s.total); lastMoney = s.total;
+    $('#oMoneySub').innerHTML = `<b>${eur(s.anual)}</b> al año · neto aprox. <b>${eur(s.neto)}</b>/mes`;
+    if(i===1) $('#oDelta').innerHTML = `<span class="delta eq">Escenario de referencia</span>`;
+    else { const d = s.total-ord.total, pc = d/ord.total*100;
+      $('#oDelta').innerHTML = `<span class="delta ${d>=0?'up':'down'}">${d>=0?'▲':'▼'} ${d>=0?'+':'−'}${eur(Math.abs(d))}/mes (${d>=0?'+':'−'}${Math.abs(pc).toFixed(1).replace('.',',')} %) frente a la ordinaria</span>`; }
+  } else {
+    $('#oMoney').textContent = '—'; $('#oMoneySub').textContent=''; $('#oDelta').innerHTML='';
+  }
+  renderAlert(s);
+  movePin(s);
+  renderStats(s);
+  document.querySelectorAll('#bars .bar').forEach((b,k)=>b.classList.toggle('on',k===i));
+  document.querySelectorAll('#barsX span').forEach((b,k)=>b.classList.toggle('on',k===i));
+  renderDetail(s);
+}
+
+function tween(el, from, to){
+  cancelAnimationFrame(el._raf); const t0 = performance.now(), dur = 450;
+  const step = t => { const k = Math.min(1,(t-t0)/dur), e = 1-Math.pow(1-k,3); el.textContent = eur(from+(to-from)*e); if(k<1) el._raf = requestAnimationFrame(step); };
+  el._raf = requestAnimationFrame(step);
+}
+const ico = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></svg>';
+
+function renderAlert(s){
+  const a = $('#oAlert'); let cls='', t='';
+  const age65 = addMonths(S.birth,780);
+  if(!s.ok){ cls='red'; t = s.reason; }
+  else if(s.type==='Anticipada'){
+    cls='red';
+    const why = s.L>780 ? ` Tu edad de referencia en esa fecha es <b>${fMonths(s.L)}</b>, porque aún no tendrías ${fMonths(req(s.Y)[0])} cotizados.` : '';
+    t = `Te jubilas <b>${plural(s.months,'mes','meses')}</b> antes de tu edad ordinaria.${why} La reducción del <b>${pct(s.coef)}</b> es <b>para toda la vida</b>.`;
+  } else if(s.type==='Ordinaria' && s.key==='ord'){
+    const need = fMonths(req(s.Y)[0]);
+    if(s.L===780 && diffDays(age65,s.D)>2){ cls='gold'; t = `Cumples 65 años el <b>${fDate(age65)}</b>, pero entonces tendrás ${fCot(cot(age65))} cotizados y necesitas <b>${need}</b>. Los alcanzas el <b>${fDate(s.D)}</b>.`; }
+    else if(s.L===780){ cls='green'; t = `Con ${fCot(s.c)} cotizados cumples la carrera larga y te jubilas al cumplir <b>65 años</b>.`; }
+    else { cls='gold'; t = `A los 65 no alcanzarás ${need} cotizados, por eso tu edad ordinaria es <b>${fMonths(s.L)}</b>.`; }
+    if(s.loss) t += ` El tope te recorta <b>${eur(s.loss)}</b> al mes.`;
+  } else {
+    cls='green';
+    t = `Por ${s.demM>=12?plural(Math.floor(s.demM/12),'año','años'):'la'} de demora sumas un <b>+${s.pctDem} %</b>`;
+    t += (s.initial>=s.mp || s.comp>0) ? `, que se paga como complemento <b>por encima de la pensión máxima</b> (+${eur(s.comp)}/mes).` : '.';
+    if(s.age.y>=70) { cls='gold'; t += ' Ten en cuenta que en el SNS la prolongación en activo suele estar limitada a los <b>70 años</b>.'; }
+  }
+  a.className = 'alert '+cls; a.innerHTML = ico + `<div>${t}</div>`;
+}
+
+function renderStats(s){
+  const st = (l,v)=>`<div><span>${l}</span><b>${v}</b></div>`;
+  if(!s.ok){ $('#oStats').innerHTML = st('Cotización al jubilarte', s.c!=null?fCot(s.c):'—') + st('Porcentaje','—') + st('En euros de hoy','—') + st('Cobrado hasta los 85','—'); return; }
+  const totPct = s.type==='Anticipada' ? s.pct*(1-s.coef/100) : s.pct + s.pctDem;
+  $('#oStats').innerHTML =
+    st('Cotización al jubilarte', fCot(s.c)) +
+    st('Porcentaje aplicado', pct(totPct)) +
+    st('En euros de hoy', eur(s.hoy)) +
+    st('Cobrado hasta los 85 (€ hoy)', eur0(s.to85));
+}
+
+/* ---------- Etiquetas del deslizador ---------- */
+function buildLabels(){
+  $('#scLabels').innerHTML = STOPS.map((st,i)=>{
+    const s = scen[i];
+    return `<button style="left:${i/6*100}%" data-i="${i}" ${s.disabled?'disabled title="'+s.reason+'"':''}><span class="lg">${st.lab}</span><span class="st">${st.short||st.lab}</span><small>${s.D?fShort(s.D).slice(3):st.sm}</small></button>`;
+  }).join('');
+  document.querySelectorAll('#scLabels button').forEach(b=>b.onclick=()=>select(+b.dataset.i));
+}
+
+/* ---------- Línea temporal ---------- */
+let TL = null;
+function buildTimeline(){
+  const b = S.birth;
+  const first = EARLY || ORD, last = addMonths(ORD,66);
+  let start = addMonths(first,-8); if(TODAY < start && yf(TODAY,start) < 6) start = addMonths(TODAY,-4);
+  const span = last - start;
+  const pos = d => Math.min(100,Math.max(0,(d-start)/span*100));
+  TL = {pos};
+  const W = $('#timeline').clientWidth || 600;
+  const tall = W < 520;
+  const TR = 86;
+  $('#timeline').classList.toggle('tall', tall);
+  let h = `<div class="tl-track" style="top:${TR}px"></div>`;
+  if(EARLY) h += `<div class="tl-zone" style="top:${TR}px;left:${pos(EARLY)}%;width:${pos(ORD)-pos(EARLY)}%;background:var(--red)"></div>`;
+  h += `<div class="tl-zone" style="top:${TR}px;left:${pos(ORD)}%;width:${100-pos(ORD)}%;background:var(--green)"></div>`;
+  // ticks por edad
+  const a0 = Math.ceil(yf(b,start)), a1 = Math.floor(yf(b,last));
+  const stepA = (a1-a0)>14 ? 5 : (a1-a0)>9 ? 2 : 1;
+  for(let a=a0;a<=a1;a++){ if(a%stepA) continue; const d = addMonths(b,a*12); if(d<start||d>last) continue;
+    h += `<div class="tl-tick ${a%2?'odd':''}" style="left:${pos(d)}%;top:${TR+13}px">${a}</div>`; }
+  // hitos fijos arriba
+  const marks = [];
+  if(TODAY>=start && TODAY<=last) marks.push({d:TODAY,t:'Hoy'});
+  const a65 = addMonths(b,780); if(a65>=start && Math.abs(diffDays(a65,ORD))>20) marks.push({d:a65,t:'65 años'});
+  marks.push({d:ORD,t:'Ordinaria',c:'var(--navy)'});
+  if(EARLY) marks.push({d:EARLY,t:'Anticipada',c:'var(--red)'});
+  const a70 = addMonths(b,840); if(a70<=last && a70>=start) marks.push({d:a70,t:'70 años'});
+  marks.sort((x,y)=>x.d-y.d);
+  // fusionar hitos del mismo día
+  const M = [];
+  marks.forEach(m=>{ const p = M[M.length-1]; if(p && Math.abs(diffDays(p.d,m.d))<=15){ p.t += ' · '+m.t; p.c = p.c||m.c; } else M.push({...m}); });
+  const gap = (tall?92:104)/W*100, rows=[];
+  M.forEach(m=>{ m.p = pos(m.d); let r = 0; while(rows[r]!=null && m.p-rows[r] < gap) r++; rows[r]=m.p; m.r=r; });
+  const nRows = Math.max(1,rows.length), TRr = TR + (nRows-2)*38;
+  $('#timeline').style.height = (TRr+64)+'px';
+  h = h.replaceAll(`top:${TR}px`,`top:${TRr}px`).replaceAll(`top:${TR+13}px`,`top:${TRr+13}px`);
+  M.forEach(m=>{
+    const top = TRr-42-m.r*38;
+    h += `<div class="tl-m" style="left:${m.p}%;top:${top}px">${m.t}<small>${fShort(m.d)}</small><i style="top:30px;height:${TRr-top-30}px"></i></div>`;
+    h += `<span class="tl-dot" style="left:${m.p}%;top:${TRr+2}px;border-color:${m.c||'var(--muted)'}"></span>`;
+  });
+  TL.tr = TRr;
+  $('#tlStatic').innerHTML = h;
+  $('#tlFill').style.top = TL.tr+'px';
+  $('#tlPin').style.top = (TL.tr-9)+'px';
+  $('#tlRange').textContent = `${Math.round(yf(b,start))} – ${Math.round(yf(b,last))} años`;
+}
+function movePin(s){
+  if(!TL || !s.D) return;
+  const p = TL.pos(s.D);
+  const pin = $('#tlPin'); pin.style.left = p+'%';
+  // mantener la bandera dentro del contenedor
+  const flag = $('#tlFlag');
+  flag.innerHTML = `${s.type==='Anticipada'?'Anticipada':s.key==='ord'?'Ordinaria':STOPS[S.sc].lab+' '+STOPS[S.sc].sm}<small>${fShort(s.D)}</small>`;
+  const W = $('#timeline').clientWidth || 600, fx = p/100*W;
+  requestAnimationFrame(()=>{ const fw = flag.offsetWidth; let shift = 0;
+    if(fx - fw/2 < -10) shift = -10 - (fx - fw/2); if(fx + fw/2 > W+10) shift = (W+10) - (fx + fw/2);
+    flag.style.transform = `translateX(${shift}px)`; });
+  const start = TL.pos(TODAY);
+  $('#tlFill').style.left = start+'%';
+  $('#tlFill').style.width = Math.max(0,p-start)+'%';
+}
+
+/* ---------- Barras ---------- */
+function buildBars(){
+  const mode = S.barMode, net = S.netMode==='neto', f = net ? 1-S.irpf : 1;
+  const val = s => !s.ok ? 0 : (mode==='mes' ? s.total : s.to85)*f;
+  $('#irpfChip').innerHTML = net ? `Neto · retención IRPF ${pct(S.irpf*100)}` : 'Importes brutos · 14 pagas';
+  $('#irpfChip').style.background = net ? '' : 'var(--navy-soft)'; $('#irpfChip').style.color = net ? '' : 'var(--navy)';
+  $('#barsSub').textContent = mode==='mes' ? 'Pensión mensual · toca una barra para seleccionarla' : 'Total cobrado hasta los 85 años, en euros de hoy';
+  const mx = Math.max(...scen.map(val),1)*1.1;
+  let h = '';
+  scen.forEach((s,i)=>{
+    const v = val(s), c = TYPES[s.type]||TYPES.Ordinaria;
+    h += `<button class="bar" data-i="${i}" style="--bc:${c}" ${s.disabled?'disabled':''} aria-label="${STOPS[i].lab}: ${s.ok?(mode==='mes'?eur(v):eur0(v)):'no disponible'}">
+      <span class="v">${s.ok?(mode==='mes'?eur0(v):(v/1000).toLocaleString('es-ES',{maximumFractionDigits:0})+' mil €'):'—'}</span>
+      <i style="height:${v/mx*100}%"></i></button>`;
+  });
+  if(mode==='mes' && scen[1].ok && scen[1].mp){ h += `<div class="capline" style="bottom:${scen[1].mp*f/mx*100}%"></div>`; }
+  $('#capLegend').innerHTML = mode==='mes' && scen[1].ok ? `<i></i>Pensión máxima ${scen[1].Y}${net?' neta':''}: ${eur(scen[1].mp*f)}` : '';
+  $('#bars').innerHTML = h;
+  $('#barsX').innerHTML = STOPS.map(st=>`<span>${st.lab}</span>`).join('');
+  document.querySelectorAll('#bars .bar').forEach(b=>b.onclick=()=>select(+b.dataset.i));
+}
+
+/* ---------- Desglose ---------- */
+function renderDetail(s){
+  const row = (a,b,cls='',sm='') => `<tr class="${cls}"><td>${a}${sm?`<small>${sm}</small>`:''}</td><td>${b}</td></tr>`;
+  const title = S.sc===0?'Anticipada':S.sc===1?'Ordinaria':`Demorada ${STOPS[S.sc].lab} ${STOPS[S.sc].sm}`;
+  let h = `<h2>Desglose · ${title}</h2><p class="sub">${s.D?fDate(s.D)+' · '+fAge(s.age):''}</p>`;
+  if(!s.ok){ $('#detail').innerHTML = h + `<p class="meta">${s.reason}</p>`; return; }
+  h += '<table class="dl">';
+  h += '<tr class="grp"><td>Cotización</td><td></td></tr>';
+  h += row('Días cotizados computables', num(s.c)+' días','',fCot(s.c));
+  h += row('Edad ordinaria de referencia', fMonths(s.L), '', `Requisitos de ${s.Y}`);
+  h += '<tr class="grp"><td>Porcentajes</td><td></td></tr>';
+  h += row('Base reguladora', eur(s.br), '', S.brMode==='man'?'Introducida por ti (ajustada a la fecha)':'Estimada a partir de tu base de cotización');
+  h += row('Porcentaje por años cotizados', pct(s.pct));
+  if(s.type==='Anticipada'){
+    h += row('Meses de anticipación', s.months);
+    h += row('Coeficiente reductor', '−'+pct(s.coef),'neg','Vitalicio, según tu carrera de cotización');
+  } else {
+    h += row('Meses de demora', s.demM);
+    h += row('Porcentaje adicional por demora', s.pctDem ? '+'+s.pctDem+' %' : 'No aplicable', s.pctDem?'pos':'');
+  }
+  h += '<tr class="grp"><td>Importe</td><td></td></tr>';
+  h += row('Pensión inicial', eur(s.initial),'','Base reguladora × porcentaje');
+  if(s.type==='Anticipada'){
+    h += row('Tras la reducción por anticipación', eur(s.reduced));
+    h += row('Límite pensión anticipada', eur(s.limitEarly),'',`Pensión máxima ${s.Y} reducida un ${pct(s.coefT)} (aprox.)`);
+  } else {
+    h += row(`Límite pensión máxima ${s.Y}`, eur(s.mp));
+    if(s.loss) h += row('Exceso sobre el límite', '−'+eur(s.loss),'neg');
+  }
+  h += row('Pensión reconocida', eur(s.pension));
+  if(s.comp) h += row('Complemento por demora', '+'+eur(s.comp),'pos','Puede superar la pensión máxima');
+  if(s.brecha) h += row(`Complemento por hijos (${Math.min(S.hijos,4)})`, '+'+eur(s.brecha),'pos','No computa para el tope');
+  h += row('Total bruto mensual (14 pagas)', eur(s.total),'tot');
+  h += row('Total bruto anual', eur(s.anual));
+  h += row(`Neto mensual estimado (IRPF ${pct(S.irpf*100)})`, eur(s.neto));
+  h += row('Valor en euros de hoy', eur(s.hoy),'','Deflactado al 2 % anual');
+  h += '</table>';
+  $('#detail').innerHTML = h;
+}
+
+function renderReq(){
+  let h = '<tr><th>Año</th><th>A los 65 si tienes</th><th>Si no, edad</th><th>100 % con</th></tr>';
+  const oy = ORD.getUTCFullYear();
+  for(let Y=2023;Y<=2027;Y++){
+    const [t,l] = req(Y); const cur = Y===oy || (Y===2027 && oy>2027);
+    h += `<tr class="${cur?'cur':''}"><td>${Y===2027?'2027 y siguientes':Y}</td><td>${fMonths(t)}</td><td>${fMonths(l)}</td><td>${Y<=2026?'36,5 años':'37 años'}</td></tr>`;
+  }
+  $('#tblReq').innerHTML = h;
+}
+
+/* ---------- Sincronización de controles ---------- */
+const kidSvg = '<svg width="20" height="26" viewBox="0 0 20 26" fill="currentColor"><circle cx="10" cy="5.5" r="4.5"/><path d="M2 25v-8a8 8 0 0 1 16 0v8z"/></svg>';
+function syncInputs(){
+  const d = S.days;
+  $('#rDias').value = Math.min(18250,d); $('#rDias').style.setProperty('--p', Math.min(100,d/18250*100)+'%');
+  $('#pDias').textContent = fCot(d);
+  $('#rHijos').style.setProperty('--p', (S.hijos/6*100)+'%');
+  $('#pHijos').textContent = S.hijos===0?'Ninguno':plural(S.hijos,'hijo','hijos');
+  const k = $('#kids'); if(+k.dataset.n !== S.hijos){ k.dataset.n = S.hijos; k.innerHTML = S.hijos ? kidSvg.repeat(S.hijos) : '<span class="none">Sin hijos</span>'; }
+  $('#rIrpf').style.setProperty('--p', (S.irpf*100/45*100)+'%');
+  $('#pIrpf').textContent = pct(S.irpf*100);
+  const bw = $('#fBrecha'); bw.disabled = S.hijos===0; bw.closest('.switch').style.opacity = S.hijos===0?.45:1;
+  $('#brechaHint').textContent = S.hijos ? `Complemento de brecha de género: ${Math.min(S.hijos,4)} × 36,90 € = ${eur(Math.min(S.hijos,4)*36.9)}/mes (2026). Lo cobra solo uno de los progenitores, normalmente el de menor pensión.` : 'Requiere tener al menos un hijo.';
+}
+
+/* ---------- Persistencia (solo en este navegador) ---------- */
+const IDS = ['fNac','fDias','fBase','fBR','rHijos','rIrpf'];
+function snapshot(){ const o={brMode:S.brMode,sc:S.sc,barMode:S.barMode,netMode:S.netMode,fCont:$('#fCont').checked,fBrecha:$('#fBrecha').checked}; IDS.forEach(i=>o[i]=$('#'+i).value); return o; }
+const dataKey = o => JSON.stringify([o.fNac,o.fDias,o.fBase,o.fBR,o.rHijos,o.rIrpf,o.fCont,o.fBrecha,o.brMode]);
+function getSaved(){ try{ return JSON.parse(localStorage.getItem(KEY)||'null'); }catch(e){ return null; } }
+function apply(o){ IDS.forEach(i=>{ $('#'+i).value = o[i]!=null ? o[i] : ''; }); $('#fCont').checked=!!o.fCont; $('#fBrecha').checked=!!o.fBrecha; S.brMode=o.brMode||'est'; S.sc=+o.sc||1; S.barMode=o.barMode||'mes'; S.netMode=o.netMode||'bruto'; setMode(S.brMode); setBarMode(S.barMode); setNetMode(S.netMode); }
+function updateSaveState(){
+  const saved = getSaved(), same = saved && dataKey(saved)===dataKey(snapshot());
+  const b = $('#btnSave'); b.classList.toggle('saved', !!same); b.classList.toggle('primary', !same);
+  $('#saveTxt').textContent = same ? 'Guardado' : 'Guardar';
+  $('#btnReset').disabled = !saved;
+  $('#btnReset').title = saved ? 'Volver a mis datos guardados' : 'Aún no has guardado datos';
+}
+let tt; function toast(t){ const el=$('#toast'); el.textContent=t; el.classList.add('show'); clearTimeout(tt); tt=setTimeout(()=>el.classList.remove('show'),2600); }
+
+function setMode(v){ S.brMode=v; document.querySelectorAll('#segBR button').forEach(b=>b.classList.toggle('on',b.dataset.v===v)); $('#boxEst').hidden = v!=='est'; $('#boxMan').hidden = v!=='man'; }
+function setBarMode(v){ S.barMode=v; document.querySelectorAll('#segBars button').forEach(b=>b.classList.toggle('on',b.dataset.v===v)); }
+function setNetMode(v){ S.netMode=v; document.querySelectorAll('#segNet button').forEach(b=>b.classList.toggle('on',b.dataset.v===v)); }
+
+/* ---------- Eventos ---------- */
+document.querySelectorAll('#segBR button').forEach(b=>b.onclick=()=>{ setMode(b.dataset.v); compute(); });
+document.querySelectorAll('#segBars button').forEach(b=>b.onclick=()=>{ setBarMode(b.dataset.v); buildBars(); select(S.sc,false); });
+document.querySelectorAll('#segNet button').forEach(b=>b.onclick=()=>{ setNetMode(b.dataset.v); buildBars(); select(S.sc,false); });
+$('#rDias').addEventListener('input', e=>{ $('#fDias').value = e.target.value; compute(); });
+['fNac','fDias','fBase','fBR','rHijos','rIrpf'].forEach(id=>$('#'+id).addEventListener('input',compute));
+['fCont','fBrecha'].forEach(id=>$('#'+id).addEventListener('change',compute));
+$('#rSc').addEventListener('input', e=>{ let i=+e.target.value; if(scen[i]?.disabled) i=1; select(i); });
+$('#btnSave').onclick = () => {
+  if(!S.birth || !(S.days>0)){ toast('Introduce al menos tu fecha de nacimiento y tus días cotizados'); return; }
+  try{ localStorage.setItem(KEY, JSON.stringify(snapshot())); toast('Datos guardados en este dispositivo ✓'); }
+  catch(e){ toast('Este navegador no permite guardar datos (¿modo privado?)'); }
+  updateSaveState();
+};
+$('#btnReset').onclick = () => { const sv = getSaved(); if(!sv) return; apply(sv); lastMoney=null; compute(); toast('Se han cargado tus datos guardados'); };
+$('#btnClear').onclick = () => {
+  const saved = getSaved();
+  apply(EMPTY); lastMoney=null; compute(); window.scrollTo({top:0,behavior:'smooth'});
+  toast(saved ? 'Formulario vacío · tus datos guardados siguen disponibles en «Restablecer»' : 'Formulario vacío');
+};
+$('#btnDemo').onclick = () => { apply(DEMO); lastMoney=null; compute(); toast('Ejemplo cargado: persona ficticia nacida en 1967 con 2 hijos'); };
+$('#btnTheme').onclick = () => {
+  const r=document.documentElement; const dark = r.dataset.theme ? r.dataset.theme==='dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme = dark ? 'light' : 'dark';
+};
+let rt; addEventListener('resize',()=>{ clearTimeout(rt); rt=setTimeout(()=>{ if(document.body.classList.contains('is-empty') || !scen.length) return; buildTimeline(); movePin(scen[S.sc]); },150); });
+
+/* ---------- Versiones, novedades y aviso de actualización ---------- */
+const VKEY = 'simJubUltimaVersionVista';
+const cmpVer = (a,b) => { const x = String(a).split('.').map(Number), y = String(b).split('.').map(Number);
+  for(let i=0;i<Math.max(x.length,y.length);i++){ const d = (x[i]||0)-(y[i]||0); if(d) return d; } return 0; };
+const lsGet = k => { try{ return localStorage.getItem(k); }catch(e){ return null; } };
+const lsSet = (k,v) => { try{ localStorage.setItem(k,v); }catch(e){} };
+const verHtml = list => list.map(c=>`<div class="news-v${c.v===APP_VERSION?' cur':''}"><h3>Versión ${c.v} <span>${fDate(parse(c.date))}</span>${c.v===APP_VERSION?'<em>Actual</em>':''}</h3><ul>${c.items.map(t=>`<li>${t}</li>`).join('')}</ul></div>`).join('');
+document.querySelectorAll('.js-ver').forEach(e=>e.textContent = APP_VERSION);
+$('#verList').innerHTML = verHtml(CHANGES);
+
+// Ventana «Novedades» tras actualizar: solo muestra lo nuevo desde la última versión vista
+const dlg = $('#dlgNews');
+const closeNews = () => { if(dlg.close) dlg.close(); else dlg.removeAttribute('open'); };
+(function(){
+  const seen = lsGet(VKEY);
+  lsSet(VKEY, APP_VERSION);
+  if(!seen || cmpVer(APP_VERSION, seen) <= 0) return;
+  const nuevas = CHANGES.filter(c => cmpVer(c.v, seen) > 0);
+  if(!nuevas.length) return;
+  $('#newsTitle').textContent = `Novedades de la versión ${APP_VERSION}`;
+  $('#newsBody').innerHTML = verHtml(nuevas);
+  if(dlg.showModal) dlg.showModal(); else dlg.setAttribute('open','');
+})();
+$('#btnNewsClose').onclick = closeNews; $('#btnNewsOk').onclick = closeNews;
+dlg.addEventListener('click', e=>{ if(e.target===e.currentTarget) closeNews(); });
+
+// Pestañas de la Ayuda
+function showTab(t){
+  document.querySelectorAll('#ayuda .tabs button').forEach(b=>b.classList.toggle('on', b.dataset.tab===t));
+  document.querySelectorAll('#ayuda .tab-panel').forEach(p=>p.hidden = p.dataset.panel!==t);
+}
+document.querySelectorAll('#ayuda .tabs button').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+const goHistory = () => { closeNews(); showTab('versiones'); $('#ayuda').scrollIntoView({behavior:'smooth'}); };
+$('#lnkNews').onclick = goHistory; $('#btnNewsAll').onclick = goHistory;
+
+// Aviso «Ha habido cambios»: consulta version.json al abrir, cada minuto y al volver a la pestaña
+let updShown = false;
+async function checkUpdate(){
+  if(updShown || !/^https?:$/.test(location.protocol)) return;
+  try{
+    const r = await fetch('version.json?t='+Date.now(), {cache:'no-store'}); if(!r.ok) return;
+    const v = (await r.json()).version;
+    if(v && cmpVer(v, APP_VERSION) > 0){ updShown = true; $('#updVer').textContent = ` (Ver. ${v})`; $('#upd').classList.add('show'); $('#btnUpd').dataset.v = v; }
+  }catch(e){}
+}
+$('#btnUpd').onclick = () => { location.replace(location.pathname + '?v=' + encodeURIComponent($('#btnUpd').dataset.v)); };
+$('#btnUpdX').onclick = () => $('#upd').classList.remove('show');
+if(location.search.includes('v=')) history.replaceState(null, '', location.pathname + location.hash);
+checkUpdate(); setInterval(checkUpdate, 60*1000);
+document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) checkUpdate(); });
+
+// Menú de apartados
+const navLinks = [...document.querySelectorAll('#secnav a')];
+navLinks.forEach(a=>a.onclick = e => {
+  e.preventDefault();
+  let t = document.querySelector(a.getAttribute('href'));
+  if(a.hasAttribute('data-need') && document.body.classList.contains('is-empty')){ t = document.querySelector('.empty-card'); toast('Primero introduce tu fecha de nacimiento y tus días cotizados'); }
+  t.scrollIntoView({behavior:'smooth', block:'start'});
+});
+if('IntersectionObserver' in window){
+  const io = new IntersectionObserver(ents=>{ ents.forEach(en=>{ if(en.isIntersecting){ const id = '#'+en.target.id; navLinks.forEach(a=>{ const on = a.getAttribute('href')===id; a.classList.toggle('on', on); if(on){ const nav = $('#secnav'); nav.scrollTo({left: a.offsetLeft - (nav.clientWidth - a.offsetWidth)/2, behavior:'smooth'}); } }); } }); }, {rootMargin:'-35% 0px -60% 0px'});
+  navLinks.forEach(a=>{ const t = document.querySelector(a.getAttribute('href')); if(t) io.observe(t); });
+}
+const syncNav = () => navLinks.forEach(a=>a.classList.toggle('off', a.hasAttribute('data-need') && document.body.classList.contains('is-empty')));
+new MutationObserver(syncNav).observe(document.body, {attributes:true, attributeFilter:['class']});
+
+apply(getSaved() || EMPTY);
+compute();
+})();
+</script>
+</body>
+</html>
