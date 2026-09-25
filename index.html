@@ -144,6 +144,15 @@ details.adv .inner{padding-top:14px}
 .q{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px}
 .q h2{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:21px;margin:0}
 .q .step b{background:var(--gold)}
+.ant-tune{margin:4px 0 6px;padding:12px 14px 10px;border-radius:14px;background:var(--red-soft)}
+.ant-tune .lbl{flex-wrap:wrap;gap:6px}
+.ant-tune .pill{background:var(--surface);color:var(--red)}
+.ant-tune .scale{padding:0;font-size:11px}
+.ant-tune .hint{margin-top:4px}
+.vl-box{margin:0 0 20px;padding:12px 14px;border:1px dashed color-mix(in srgb,var(--navy) 35%,var(--line));border-radius:14px;background:var(--navy-soft)}
+.vl-box .btn{width:100%;justify-content:center;height:42px;font-size:13.5px;border-color:transparent;color:var(--navy);font-weight:600}
+.vl-box .hint a{color:var(--navy)}
+.vl-ok{color:var(--green)!important;font-weight:500}
 .early-sel{display:flex;align-items:center;gap:8px;position:relative;z-index:1}
 .early-sel > span{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .share-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
@@ -464,6 +473,13 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
     <aside class="card form" id="datos">
       <div class="step"><b>1</b><h2>Tus datos</h2></div>
 
+      <div class="vl-box">
+        <button type="button" class="btn" id="btnVL"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M12 17v-6M9.5 13.5L12 11l2.5 2.5"/></svg><span>Cargar mi Informe de Vida Laboral (PDF)</span></button>
+        <input type="file" id="fileVL" accept="application/pdf,.pdf" hidden>
+        <div class="hint">Rellena solo la fecha de nacimiento y los días cotizados. El PDF se lee en tu dispositivo y <b>no se envía a ningún sitio</b>. <a href="https://portal.seg-social.gob.es/wps/portal/importass/importass/Categorias/Vida+laboral+e+informes/Informes+sobre+tu+situacion+laboral/Informe+de+tu+vida+laboral" target="_blank" rel="noopener">Descárgalo aquí</a> (Seguridad Social).</div>
+        <div class="hint vl-ok" id="vlNote" hidden></div>
+      </div>
+
       <div class="field">
         <label for="fNac">Fecha de nacimiento</label>
         <input type="date" id="fNac" value="">
@@ -532,6 +548,12 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
         <div class="q"><div class="step" style="margin:0"><b>2</b><h2>¿Cuándo te quieres jubilar?</h2></div><div class="early-sel"><span>Anticipada</span><div class="seg sm" id="segEarly"><button data-v="vol" class="on" title="Por voluntad propia: hasta 2 años antes, con 35 años cotizados">Voluntaria</button><button data-v="inv" title="Por despido u otra causa no voluntaria: hasta 4 años antes, con 33 años cotizados">Involuntaria</button></div></div></div>
         <div class="sc-slider"><input type="range" id="rSc" min="0" max="6" step="1" value="1" aria-label="Escenario de jubilación"></div>
         <div class="sc-labels" id="scLabels"></div>
+        <div class="ant-tune" id="antTune" hidden>
+          <div class="lbl"><label for="rAnt">Afina tu fecha de jubilación anticipada</label><span class="pill" id="pAnt"></span></div>
+          <input type="range" id="rAnt" min="0" max="23" step="1" value="0" aria-label="Meses de adelanto">
+          <div class="scale"><span id="antL"></span><span id="antR"></span></div>
+          <div class="hint">Cada mes que retrasas la anticipada, el coeficiente reductor es menor.</div>
+        </div>
 
         <div class="res">
           <div>
@@ -591,7 +613,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
             <p><b>Porcentaje por años cotizados.</b> 50 % con 15 años; el 100 % se alcanza con 36,5 años (2023-2026) y con 37 años desde 2027.</p>
             <p><b>Tope.</b> La pensión no puede superar la pensión máxima: 3.359,60 €/mes (14 pagas) en 2026. La Seguridad Social la proyecta con un +2 % anual más un 0,115 % adicional.</p>
             <p><b>Demora.</b> +4 % por cada año completo tras la edad ordinaria y, desde el segundo, +2 % por cada semestre adicional. Si ya cobras la máxima, se paga como complemento que sí supera el tope (hasta el tope de la base de cotización). También puede cobrarse como cantidad única o de forma mixta.</p>
-            <p><b>Anticipada voluntaria.</b> Hasta 2 años antes de tu edad ordinaria, con 35 años cotizados. Coeficientes reductores mensuales según la carrera de cotización (Ley 21/2021). Si la pensión supera el tope, la reducción se aplica sobre la pensión máxima con un régimen transitorio hasta 2033 (aquí aproximado).</p>
+            <p><b>Anticipada voluntaria.</b> Hasta 2 años antes de tu edad legal (la que tendrías si siguieras cotizando hasta entonces, art. 208 LGSS), con 35 años cotizados. Coeficientes reductores mensuales según la carrera de cotización (Ley 21/2021). Si la pensión supera el tope, la reducción se aplica sobre la pensión máxima con un régimen transitorio hasta 2033 (aquí aproximado).</p>
           </div>
         </details>
         <details>
@@ -632,8 +654,8 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
         <div class="tab-panel" data-panel="uso">
           <p>El simulador te dice <b>cuándo</b> podrás jubilarte y <b>con cuánto</b>, y te deja comparar todas las opciones: jubilarte antes (anticipada), a tu edad legal (ordinaria) o retrasarlo hasta cinco años (demorada).</p>
           <ol class="steps">
-            <li><b>1</b><div><strong>Rellena «Tus datos».</strong> Con tu fecha de nacimiento y tus días cotizados los resultados aparecen al instante. Si solo quieres probar, pulsa <b>«Ver un ejemplo»</b>: cada vez carga un perfil ficticio distinto.</div></li>
-            <li><b>2</b><div><strong>Elige cuándo jubilarte.</strong> Mueve el deslizador de <b>«¿Cuándo te quieres jubilar?»</b> entre Anticipada, Ordinaria y +1 a +5 años. Verás la fecha, tu edad, la pensión bruta mensual, la diferencia con la ordinaria y tu línea temporal. Con el selector <b>«Anticipada: Voluntaria / Involuntaria»</b> eliges qué tipo de jubilación anticipada calcular.</div></li>
+            <li><b>1</b><div><strong>Rellena «Tus datos».</strong> Con tu fecha de nacimiento y tus días cotizados los resultados aparecen al instante. Lo más rápido: pulsa <b>«Cargar mi Informe de Vida Laboral (PDF)»</b> y se rellenan solos. Si solo quieres probar, pulsa <b>«Ver un ejemplo»</b>: cada vez carga un perfil ficticio distinto.</div></li>
+            <li><b>2</b><div><strong>Elige cuándo jubilarte.</strong> Mueve el deslizador de <b>«¿Cuándo te quieres jubilar?»</b> entre Anticipada, Ordinaria y +1 a +5 años. Verás la fecha, tu edad, la pensión bruta mensual, la diferencia con la ordinaria y tu línea temporal. Con el selector <b>«Anticipada: Voluntaria / Involuntaria»</b> eliges qué tipo de jubilación anticipada calcular. Con la anticipada seleccionada aparece <b>«Afina tu fecha de jubilación anticipada»</b>: muévelo para elegir el mes exacto (por ejemplo, 63 años y 6 meses) y verás cómo baja el coeficiente reductor.</div></li>
             <li><b>3</b><div><strong>Compara en el gráfico.</strong> Toca una barra para seleccionar ese escenario. Cambia entre <b>Bruto / Neto</b> y entre <b>Al mes / Hasta los 85</b> (total cobrado hasta los 85 años en euros de hoy). La línea dorada discontinua marca la pensión máxima.</div></li>
             <li><b>4</b><div><strong>Revisa el desglose.</strong> Base reguladora, porcentaje por años cotizados, coeficientes reductores o porcentaje por demora, tope de pensión máxima y complementos.</div></li>
             <li><b>5</b><div><strong>Consulta los requisitos.</strong> Tabla de edad ordinaria por año y explicación de cómo se calcula la pensión.</div></li>
@@ -656,6 +678,10 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
         </div>
 
         <div class="tab-panel" data-panel="datos" hidden>
+          <h3>La forma más rápida: tu Informe de Vida Laboral</h3>
+          <p>Descarga tu <b>Informe de Vida Laboral</b> en PDF desde la Seguridad Social (con certificado digital, Cl@ve o SMS) y pulsa <b>«Cargar mi Informe de Vida Laboral (PDF)»</b>. La app lee la fecha de nacimiento y el <b>total de días efectivamente computables</b>; si el informe es de días atrás y sigues de alta, suma los días hasta hoy. El PDF se lee en tu dispositivo y <b>no se envía a ningún sitio</b>.</p>
+          <p>⚠️ El Informe de Vida Laboral <b>no incluye los días de bonificación por cuidado de hijos</b> (art. 236 LGSS: periodos por nacimiento o adopción con interrupción de la cotización). Si te corresponden, súmalos a mano en «Días cotizados»; los verás en la simulación oficial de «Tu Seguridad Social» («Bonificaciones aplicadas»).</p>
+          <p>La app no puede conectarse ella sola a la Seguridad Social con tu certificado: la Seguridad Social no lo permite a aplicaciones externas, y así tus datos nunca pasan por ningún servidor.</p>
           <h3>Datos básicos</h3>
           <ul>
             <li><b>Fecha de nacimiento</b> <span class="req ob">Obligatorio</span><br>Determina tu edad ordinaria de jubilación y las fechas de cada escenario.</li>
@@ -695,7 +721,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
             <li><a href="https://www.seg-social.es/wps/portal/wss/internet/Trabajadores/PrestacionesPensionesTrabajadores/10963/28393/28398" target="_blank" rel="noopener">Seguridad Social · Jubilación anticipada</a><small>Requisitos y coeficientes reductores.</small></li>
             <li><a href="https://www.seg-social.es/wps/portal/wss/internet/Trabajadores/CotizacionRecaudacionTrabajadores/36537" target="_blank" rel="noopener">Seguridad Social · Bases y tipos de cotización</a><small>Base máxima, cotización solidaria y MEI.</small></li>
             <li><a href="https://sede.seg-social.gob.es" target="_blank" rel="noopener">Sede Electrónica · Tu Seguridad Social</a><small>Simulador oficial de jubilación e Informe de Vida Laboral.</small></li>
-            <li><a href="https://portal.seg-social.gob.es/wps/portal/importass/importass/tuss" target="_blank" rel="noopener">Import@ss (Tesorería General)</a><small>Descarga del Informe de Vida Laboral.</small></li>
+            <li><a href="https://portal.seg-social.gob.es/wps/portal/importass/importass/Categorias/Vida+laboral+e+informes/Informes+sobre+tu+situacion+laboral/Informe+de+tu+vida+laboral" target="_blank" rel="noopener">Import@ss · Informe de tu vida laboral</a><small>Descarga del Informe de Vida Laboral en PDF (Tesorería General de la Seguridad Social).</small></li>
             <li><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724" target="_blank" rel="noopener">Real Decreto Legislativo 8/2015 · Ley General de la Seguridad Social</a><small>BOE, texto consolidado.</small></li>
             <li><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2011-13242" target="_blank" rel="noopener">Ley 27/2011</a><small>Edad de jubilación y periodo de cálculo progresivos.</small></li>
             <li><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2021-21652" target="_blank" rel="noopener">Ley 21/2021</a><small>Coeficientes reductores de la anticipada y complemento por demora.</small></li>
@@ -747,8 +773,13 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 /* ---------- Versión ----------
    Al desplegar: sube APP_VERSION (formato 01.00 → 01.01 cambios menores, 02.00 cambios grandes),
    añade la entrada arriba del todo en CHANGES, y actualiza version.json y CHANGELOG.md con la misma versión. */
-const APP_VERSION = '01.02';
+const APP_VERSION = '01.03';
 const CHANGES = [
+  {v:'01.03', date:'2026-09-25', items:[
+    'Nuevo: carga tu Informe de Vida Laboral en PDF y la app rellena sola tu fecha de nacimiento y tus días cotizados. El PDF se lee en tu dispositivo y no se envía a ningún sitio.',
+    'Nuevo: afina tu jubilación anticipada mes a mes (por ejemplo, a los 63 años y 6 meses) y verás cómo baja el coeficiente reductor. Gracias a Paco por la idea.',
+    'Corregida la jubilación anticipada voluntaria: ahora se cuenta desde la edad legal que tendrías si siguieras cotizando (art. 208 LGSS), igual que hace la Seguridad Social. En algunos casos permite jubilarse antes que en versiones anteriores.'
+  ]},
   {v:'01.02', date:'2026-09-25', items:[
     'Arreglado el botón «Informe PDF» en el móvil: ahora crea el PDF directamente y te deja guardarlo en Archivos o enviarlo por WhatsApp o correo. Antes no hacía nada si tenías la app instalada en la pantalla de inicio del iPhone.',
     'En el ordenador, «Informe PDF» descarga el fichero directamente.'
@@ -843,6 +874,14 @@ let demoIdx = 0;
 const KEY = 'simJubMisDatos';
 const S = {};
 let ORD=null, EARLY=null, scen=[], lastMoney=null;
+// Ajuste fino de la anticipada: S.antK = meses que se retrasa desde la fecha más temprana (null/0 = lo antes posible)
+let ANT = null;
+function antDate(){
+  const end = ORDC < ORD ? ORDC : ORD;
+  let K = 0; while(addMonths(EARLY, K+1) < end) K++;
+  ANT = {K};
+  return addMonths(EARLY, Math.min(K, S.antK || 0));
+}
 const TYPES = {Anticipada:'var(--red)',Ordinaria:'var(--navy)',Demorada:'var(--green)'};
 const STOPS = [
   {key:'ant',lab:'Anticipada',short:'Antic.',sm:'máx.'},
@@ -868,22 +907,20 @@ function findOrdinary(){
   while(D<=end){ const L = legalAge(D.getUTCFullYear(), cot(D)); if(D>=addMonths(S.birth,L)) return D; D = addDays(D,1); }
   return end;
 }
-let ORDC = null; // edad ordinaria «de haber seguido cotizando» (art. 207.2 LGSS, para la involuntaria)
+// Edad legal de referencia para la anticipada: la que tendría «de haber seguido cotizando» hasta
+// cumplirla (arts. 207.2 y 208.2 LGSS), tanto en la voluntaria como en la involuntaria.
+let ORDC = null;
 function findEarly(){
-  if(S.early==='inv'){
-    const cont = S.cont; S.cont = true; ORDC = findOrdinary(); S.cont = cont;
-    let D = addMonths(ORDC,-48); if(D<TODAY) D = TODAY;
-    while(D<ORD && D<ORDC){ if(cot(D)>=12045) return D; D = addDays(D,1); }
-    return null;
-  }
-  let D = addMonths(S.birth,756); if(D<TODAY) D = TODAY;
-  while(D<ORD){ const c = cot(D); if(c>=12775){ const L = legalAge(D.getUTCFullYear(),c); if(D>=addMonths(S.birth,L-24)) return D; } D = addDays(D,1); }
+  const cont = S.cont; S.cont = true; ORDC = findOrdinary(); S.cont = cont;
+  const inv = S.early==='inv', minDays = inv ? 12045 : 12775; // 33 o 35 años cotizados
+  let D = addMonths(ORDC, inv ? -48 : -24); if(D<TODAY) D = TODAY;
+  while(D<ORD && D<ORDC){ if(cot(D)>=minDays) return D; D = addDays(D,1); }
   return null;
 }
 
 function scenario(D,key){
-  const inv = key==='ant' && S.early==='inv';
-  const c = cot(D), Y = D.getUTCFullYear(), L = inv ? monthsFloor(S.birth,ORDC) : legalAge(Y,c), legalDate = inv ? ORDC : addMonths(S.birth,L);
+  const ant = key==='ant', inv = ant && S.early==='inv';
+  const c = cot(D), Y = D.getUTCFullYear(), L = ant ? monthsFloor(S.birth,ORDC) : legalAge(Y,c), legalDate = ant ? ORDC : addMonths(S.birth,L);
   const r = {key,D,c,Y,L,age:ageYMD(S.birth,D),ok:true,pension:0,comp:0,brecha:0,total:0};
   if(c < 5475){ r.ok=false; r.type='Ordinaria'; r.reason='Aún no alcanzarías el mínimo de 15 años cotizados.'; return r; }
   const br = BR(D), p = pctYears(Y,c), mp = maxP(Y), initial = br*p/100;
@@ -922,7 +959,7 @@ function compute(){
   ORD = findOrdinary(); EARLY = findEarly();
   STOPS[0].lab = S.early==='inv' ? 'Antic. invol.' : 'Anticipada'; STOPS[0].short = S.early==='inv' ? 'Invol.' : 'Antic.';
   scen = STOPS.map((st,i) => {
-    if(i===0){ if(!EARLY){ return {key:'ant',ok:false,disabled:true,type:'Anticipada',reason: earlyReason()}; } return scenario(EARLY,'ant'); }
+    if(i===0){ if(!EARLY){ ANT=null; return {key:'ant',ok:false,disabled:true,type:'Anticipada',reason: earlyReason()}; } return scenario(antDate(),'ant'); }
     if(i===1) return scenario(ORD,'ord');
     return scenario(addMonths(ORD,12*(i-1)),st.key);
   });
@@ -963,6 +1000,7 @@ function select(i, fromUser=true){
   } else {
     $('#oMoney').textContent = '—'; $('#oMoneySub').textContent=''; $('#oDelta').innerHTML='';
   }
+  renderAntTune(i, s);
   renderAlert(s);
   movePin(s);
   renderStats(s);
@@ -971,6 +1009,16 @@ function select(i, fromUser=true){
   renderDetail(s);
 }
 
+function renderAntTune(i, s){
+  const box = $('#antTune'), show = i===0 && s.ok && !!ANT && ANT.K > 0;
+  box.hidden = !show; if(!show) return;
+  const r = $('#rAnt'), k = Math.min(ANT.K, S.antK || 0);
+  r.max = ANT.K; r.value = k; // izquierda = lo antes posible, derecha = lo más tarde antes de la ordinaria
+  r.style.setProperty('--p', (k/ANT.K*100)+'%');
+  $('#pAnt').textContent = `${fShort(s.D)} · ${fAgeShort(s.age)} · ${plural(s.months,'mes','meses')} antes`;
+  $('#antL').textContent = 'Lo antes posible';
+  $('#antR').textContent = 'Justo antes de la ordinaria';
+}
 function tween(el, from, to){
   cancelAnimationFrame(el._raf); const t0 = performance.now(), dur = 450;
   const step = t => { const k = Math.min(1,(t-t0)/dur), e = 1-Math.pow(1-k,3); el.textContent = eur(from+(to-from)*e); if(k<1) el._raf = requestAnimationFrame(step); };
@@ -984,7 +1032,7 @@ function renderAlert(s){
   if(!s.ok){ cls='red'; t = s.reason; }
   else if(s.type==='Anticipada'){
     cls='red';
-    const why = s.L>780 ? ` Tu edad de referencia en esa fecha es <b>${fMonths(s.L)}</b>, porque aún no tendrías ${fMonths(req(s.Y)[0])} cotizados.` : '';
+    const why = ` Se cuenta desde tu edad legal de referencia, <b>${fMonths(s.L)}</b> (${fDate(ORDC)}), la que tendrías si siguieras cotizando hasta entonces.`;
     t = `Te jubilas <b>${plural(s.months,'mes','meses')}</b> antes de tu edad ordinaria.${why} La reducción del <b>${pct(s.coef)}</b> es <b>para toda la vida</b>.`;
     if(s.inv) t += ` Solo si el cese no es voluntario (despido colectivo u objetivo, ERE, cierre…) y llevas 6 meses inscrito como demandante de empleo.`;
   } else if(s.type==='Ordinaria' && s.key==='ord'){
@@ -1175,10 +1223,10 @@ function syncInputs(){
 
 /* ---------- Persistencia (solo en este navegador) ---------- */
 const IDS = ['fNac','fDias','fBase','fBR','rHijos','rIrpf'];
-function snapshot(){ const o={brMode:S.brMode,early:S.early,sc:S.sc,barMode:S.barMode,netMode:S.netMode,fCont:$('#fCont').checked,fBrecha:$('#fBrecha').checked}; IDS.forEach(i=>o[i]=$('#'+i).value); return o; }
+function snapshot(){ const o={brMode:S.brMode,early:S.early,antK:S.antK,sc:S.sc,barMode:S.barMode,netMode:S.netMode,fCont:$('#fCont').checked,fBrecha:$('#fBrecha').checked}; IDS.forEach(i=>o[i]=$('#'+i).value); return o; }
 const dataKey = o => JSON.stringify([o.fNac,o.fDias,o.fBase,o.fBR,o.rHijos,o.rIrpf,o.fCont,o.fBrecha,o.brMode,o.early||'vol']);
 function getSaved(){ try{ return JSON.parse(localStorage.getItem(KEY)||'null'); }catch(e){ return null; } }
-function apply(o){ IDS.forEach(i=>{ $('#'+i).value = o[i]!=null ? o[i] : ''; }); $('#fCont').checked=!!o.fCont; $('#fBrecha').checked=!!o.fBrecha; S.brMode=o.brMode||'est'; setEarly(o.early||'vol'); S.sc=o.sc!=null&&o.sc!==''?+o.sc:1; S.barMode=o.barMode||'mes'; S.netMode=o.netMode||'bruto'; setMode(S.brMode); setBarMode(S.barMode); setNetMode(S.netMode); }
+function apply(o){ IDS.forEach(i=>{ $('#'+i).value = o[i]!=null ? o[i] : ''; }); $('#fCont').checked=!!o.fCont; $('#fBrecha').checked=!!o.fBrecha; S.brMode=o.brMode||'est'; setEarly(o.early||'vol'); S.antK = Number.isInteger(o.antK) && o.antK>0 ? o.antK : null; S.sc=o.sc!=null&&o.sc!==''?+o.sc:1; S.barMode=o.barMode||'mes'; S.netMode=o.netMode||'bruto'; setMode(S.brMode); setBarMode(S.barMode); setNetMode(S.netMode); }
 function updateSaveState(){
   const saved = getSaved(), same = saved && dataKey(saved)===dataKey(snapshot());
   const b = $('#btnSave'); b.classList.toggle('saved', !!same); b.classList.toggle('primary', !same);
@@ -1196,7 +1244,8 @@ function setNetMode(v){ S.netMode=v; document.querySelectorAll('#segNet button')
 /* ---------- Eventos ---------- */
 document.querySelectorAll('#segBR button').forEach(b=>b.onclick=()=>{ setMode(b.dataset.v); compute(); });
 document.querySelectorAll('#segBars button').forEach(b=>b.onclick=()=>{ setBarMode(b.dataset.v); buildBars(); select(S.sc,false); });
-document.querySelectorAll('#segEarly button').forEach(b=>b.onclick=()=>{ setEarly(b.dataset.v); lastMoney=null; compute(); });
+document.querySelectorAll('#segEarly button').forEach(b=>b.onclick=()=>{ setEarly(b.dataset.v); S.antK=null; lastMoney=null; compute(); });
+$('#rAnt').addEventListener('input', e=>{ S.antK = +e.target.value || null; compute(); });
 document.querySelectorAll('#segNet button').forEach(b=>b.onclick=()=>{ setNetMode(b.dataset.v); buildBars(); select(S.sc,false); });
 $('#rDias').addEventListener('input', e=>{ $('#fDias').value = e.target.value; compute(); });
 ['fNac','fDias','fBase','fBR','rHijos','rIrpf'].forEach(id=>$('#'+id).addEventListener('input',compute));
@@ -1297,6 +1346,7 @@ function cleanShared(o){ // solo campos conocidos y valores válidos
   const r = {}; IDS.forEach(k=>r[k]=txt(o[k]));
   r.fCont = o.fCont!==false; r.fBrecha = !!o.fBrecha;
   r.brMode = o.brMode==='man'?'man':'est'; r.early = o.early==='inv'?'inv':'vol';
+  r.antK = Number.isInteger(o.antK) && o.antK>0 && o.antK<=48 ? o.antK : null;
   r.barMode = o.barMode==='tot'?'tot':'mes'; r.netMode = o.netMode==='neto'?'neto':'bruto';
   const sc = parseInt(o.sc,10); r.sc = Number.isNaN(sc) ? 1 : Math.min(6,Math.max(0,sc));
   return r.fNac && r.fDias ? r : null;
@@ -1414,6 +1464,60 @@ $('#btnReport').onclick = reportPdf; $('#btnPrint').onclick = reportPdf;
 $('#btnPdfShare').onclick = async () => { try{ await navigator.share({files:[pdfFile], title:'Informe de jubilación'}); $('#dlgPdf').close(); }catch(e){ if(e.name!=='AbortError') downloadPdf(); } };
 $('#btnPdfDown').onclick = () => { downloadPdf(); $('#dlgPdf').close(); };
 $('#btnPdfClose').onclick = () => $('#dlgPdf').close();
+
+/* ---------- Leer el Informe de Vida Laboral (PDF de la Seguridad Social) en el dispositivo ---------- */
+// pdf.js se carga solo al elegir el fichero. El worker se descarga con comprobación SRI y se lanza desde un blob.
+const PDFJS = ['https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js','sha384-/1qUCSGwTur9vjf/z9lmu/eCUYbpOTgSjmpbMQZ1/CtX2v/WcAIKqRv+U1DUCG6e'];
+const PDFJS_WORKER = ['https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js','sha384-SnzOobpRMLXZ52iJvZm/C0fYw0OQemTXzTjIsdsfMcrCtCEe9qgzxTd3RSklO5x2'];
+let pdfjsReady = null;
+const loadPdfjs = () => pdfjsReady || (pdfjsReady = (async()=>{
+  await loadScript(PDFJS);
+  const code = await (await fetch(PDFJS_WORKER[0], {integrity:PDFJS_WORKER[1], mode:'cors'})).text();
+  pdfjsLib.GlobalWorkerOptions.workerPort = new Worker(URL.createObjectURL(new Blob([code], {type:'text/javascript'})));
+})().catch(e=>{ pdfjsReady = null; throw e; }));
+const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const fechaES = m => { if(!m) return null; const i = MESES.indexOf(m[2].toLowerCase()); return i<0 ? null : U(+m[3], i, +m[1]); };
+const maxDias = s => { let best = null; for(const m of s.matchAll(/(\d{1,3}(?:\.\d{3})*|\d+)\s*d[ií]as/gi)){ const n = +m[1].replace(/\./g,''); if(best==null || n>best) best = n; } return best; };
+async function leerVidaLaboral(file){
+  await loadPdfjs();
+  const doc = await pdfjsLib.getDocument({data: new Uint8Array(await file.arrayBuffer())}).promise;
+  let txt = '';
+  for(let p=1; p<=doc.numPages; p++){ const c = await (await doc.getPage(p)).getTextContent(); txt += ' ' + c.items.map(it=>it.str).join(' '); }
+  txt = txt.replace(/\s+/g,' ');
+  if(!/INFORME DE VIDA LABORAL/i.test(txt)) throw new Error('no-vl');
+  const nac = fechaES(txt.match(/nacido\/a el\s+(\d{1,2}) de ([a-záéíóú]+) de (\d{4})/i));
+  const fecha = fechaES(txt.match(/al d[ií]a\s+(\d{1,2}) de ([a-záéíóú]+) de (\d{4})/i));
+  // Días: el «total de días efectivamente computables» si hay pluriempleo; si no, el total en alta
+  const iComp = txt.search(/efectivamente computables/i), iTot = txt.search(/durante un total de/i);
+  const dias = iComp >= 0 ? maxDias(txt.slice(iComp, iComp + 220)) : iTot >= 0 ? maxDias(txt.slice(iTot, iTot + 160)) : null;
+  // ¿Sigue de alta? Una fila «fecha alta · fecha efecto · ---» (sin fecha de baja). Si delante hay otra
+  // fecha, esos «---» son de la columna C.T. de una fila con baja, no cuentan.
+  const vigente = [...txt.matchAll(/(\d{2}\.\d{2}\.\d{4} )?\d{2}\.\d{2}\.\d{4} \d{2}\.\d{2}\.\d{4} -{3}/g)].some(m=>!m[1]);
+  return {nac, fecha, dias, vigente};
+}
+$('#btnVL').onclick = () => $('#fileVL').click();
+$('#fileVL').addEventListener('change', async e => {
+  const file = e.target.files[0]; e.target.value = ''; if(!file) return;
+  const btn = $('#btnVL'), lbl = btn.querySelector('span'), txt0 = lbl.textContent;
+  btn.classList.add('busy'); lbl.textContent = 'Leyendo el informe…';
+  try{
+    const r = await leerVidaLaboral(file);
+    if(!r.nac || !r.dias) throw new Error('datos');
+    let dias = r.dias, extra = 0;
+    if(r.fecha && r.fecha < TODAY && r.vigente){ extra = diffDays(r.fecha, TODAY); dias += extra; }
+    const iso = d => d.toISOString().slice(0,10);
+    $('#fNac').value = iso(r.nac); $('#fDias').value = dias;
+    lastMoney = null; compute();
+    const nota = `✓ Datos cargados de tu Informe de Vida Laboral${r.fecha ? ' del '+fShort(r.fecha) : ''}: ${num(r.dias)} días computables${extra ? ` + ${num(extra)} días en alta hasta hoy` : ''}.`;
+    $('#vlNote').innerHTML = nota + ' <span style="color:var(--muted);font-weight:400">Ojo: este informe no incluye los días de <b>bonificación por cuidado de hijos</b> (art. 236 LGSS). Si te corresponden, súmalos; aparecen en la simulación oficial de «Tu Seguridad Social».</span>';
+    $('#vlNote').hidden = false;
+    toast('Informe de vida laboral leído ✓');
+  }catch(err){
+    toast(err.message==='no-vl' || err.message==='datos'
+      ? 'Ese PDF no parece un Informe de Vida Laboral de la Seguridad Social. Introduce los datos a mano.'
+      : 'No se ha podido leer el PDF. Comprueba tu conexión e inténtalo de nuevo.');
+  }finally{ btn.classList.remove('busy'); lbl.textContent = txt0; }
+});
 
 /* ---------- Modo sin conexión (service worker «primero la red») ---------- */
 if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));

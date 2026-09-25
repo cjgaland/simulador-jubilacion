@@ -6,6 +6,13 @@ Formato de versión `XX.YY` (cambios menores `01.01`, cambios grandes `02.00`).
 > Al publicar una versión nueva, actualiza también `APP_VERSION` y `CHANGES` en `index.html`
 > y `version.json`. Los usuarios verán el aviso «Ha habido cambios» y, al actualizar, las novedades.
 
+## [01.03] - 2026-09-25
+
+- Nuevo: carga del Informe de Vida Laboral en PDF (pdf.js, lectura local en el dispositivo): rellena fecha de nacimiento y total de días efectivamente computables, sumando los días hasta hoy si el informe es anterior y sigue de alta.
+- Nuevo: ajuste mes a mes de la jubilación anticipada (voluntaria e involuntaria), con su coeficiente reductor. Idea de Paco.
+- Corregido: en la anticipada voluntaria, la edad legal de referencia (acceso y meses de anticipación) es la que tendría el trabajador «de haber seguido cotizando» (art. 208.2 LGSS), como ya se hacía en la involuntaria. Contrastado con un informe oficial de «Tu Seguridad Social»: coinciden fecha, edad, días, base reguladora y pensión de la ordinaria.
+- Aviso: el Informe de Vida Laboral no incluye la bonificación por cuidado de hijos (art. 236 LGSS).
+
 ## [01.02] - 2026-09-25
 
 - Arreglado «Informe PDF» en el móvil: ahora genera el PDF en el propio dispositivo (jsPDF + html2canvas) y permite guardarlo o compartirlo. Antes usaba la impresión del navegador, que no funciona en el iPhone con la app instalada en la pantalla de inicio.
