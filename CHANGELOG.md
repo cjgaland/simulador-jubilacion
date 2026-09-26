@@ -6,6 +6,11 @@ Formato de versión `XX.YY` (cambios menores `01.01`, cambios grandes `02.00`).
 > Al publicar una versión nueva, actualiza también `APP_VERSION` y `CHANGES` en `index.html`
 > y `version.json`. Los usuarios verán el aviso «Ha habido cambios» y, al actualizar, las novedades.
 
+## [01.05] - 2026-09-26
+
+- Ayuda ampliada: dónde ver la base de cotización (nómina, Informe de bases de cotización de Import@ss, recibo de autónomos), qué es y cómo se calcula la base reguladora (RDL 2/2023, opción más favorable) y requisitos del complemento para la reducción de la brecha de género (art. 60 LGSS).
+- Enlace «¿Dónde la veo?» junto al campo de base de cotización y nuevo enlace oficial en «Fuentes oficiales».
+
 ## [01.04] - 2026-09-25
 
 - Arrastrar y soltar el Informe de Vida Laboral (PDF) en cualquier parte de la ventana, con aviso visual mientras se arrastra.

@@ -515,7 +515,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
             <div class="seg" id="segBR"><button data-v="est" class="on">Estimar</button><button data-v="man">La conozco</button></div>
             <div id="boxEst">
               <div class="input-suffix"><input type="number" id="fBase" value="5101.20" step="0.01" inputmode="decimal" aria-label="Base de cotización mensual"><span>€</span></div>
-              <div class="hint">Tu base de cotización mensual actual. Máxima 2026: 5.101,20 €. Se proyecta un +2 % anual.</div>
+              <div class="hint">Tu base de cotización mensual actual: en tu nómina, «Base contingencias comunes». Máxima 2026: 5.101,20 €. Se proyecta un +2 % anual. <a href="#ayuda" class="js-help-datos" style="color:var(--navy)">¿Dónde la veo?</a></div>
             </div>
             <div id="boxMan" hidden>
               <div class="input-suffix"><input type="number" id="fBR" value="" step="0.01" inputmode="decimal" aria-label="Base reguladora"><span>€</span></div>
@@ -698,6 +698,34 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
             <li><b>Retención IRPF</b>: solo sirve para estimar el neto; no cambia el bruto. Un pensionista con la pensión máxima ronda el 23 %.</li>
           </ul>
           <div class="tip">💡 <b>Consejo:</b> para afinar al máximo, pide tu simulación en «Tu Seguridad Social», copia la base reguladora en «La conozco» y compara el resultado.</div>
+
+          <h3>¿Dónde veo mi base de cotización?</h3>
+          <p>Es la cantidad sobre la que cotizas cada mes a la Seguridad Social. Hay tres formas de conocerla:</p>
+          <ul>
+            <li><b>En tu nómina</b> (lo más rápido): busca el apartado de <b>bases de cotización a la Seguridad Social</b> y el importe de <b>«Base contingencias comunes»</b> (a veces «B.C.C.C.» o «Base C. Comunes»). Es tu salario del mes más la parte proporcional de las pagas extra, con un tope de <b>5.101,20 €</b> en 2026. Si cobras guardias u horas extra y superas ese tope, tu base será justo 5.101,20 €.</li>
+            <li><b>En el Informe de bases de cotización</b> de la Seguridad Social: trae todas tus bases, mes a mes, de toda tu vida laboral. Se descarga en PDF al momento en <a href="https://portal.seg-social.gob.es/wps/portal/importass/importass/Categorias/Vida+laboral+e+informes/Informes+de+tus+cotizaciones/Informe+de+bases+de+cotizacion" target="_blank" rel="noopener">Import@ss · Informe de bases de cotización</a>, con certificado digital, Cl@ve o, si no tienes identificación electrónica, con un selfi y una foto de tu DNI.</li>
+            <li><b>Si eres autónomo</b>: es la base que elegiste, y aparece en tu recibo mensual de autónomos.</li>
+          </ul>
+          <p>En la app, escríbela en <b>Ajustes avanzados › Base reguladora › Estimar</b>.</p>
+
+          <h3>¿Qué es la base reguladora y cómo se calcula?</h3>
+          <p>Es como tu «sueldo medio» de los últimos años: la pensión es la base reguladora multiplicada por el porcentaje que te corresponde por años cotizados. La Seguridad Social calcula dos opciones y <b>te aplica la más favorable</b> (RDL 2/2023):</p>
+          <ul>
+            <li><b>Sistema clásico</b>: suma de las bases de los <b>últimos 25 años</b> (300 meses) dividida entre 350.</li>
+            <li><b>Sistema nuevo</b>: se toman los <b>últimos 29 años</b> y se <b>descartan los 24 peores meses</b> (324 mejores bases entre 378). Se implanta poco a poco hasta 2037; mientras tanto se usan periodos algo más cortos.</li>
+          </ul>
+          <p>Las bases de los 2 últimos años cuentan por su valor real y las anteriores se actualizan con el IPC. Los meses sin cotizar («lagunas») se rellenan con la base mínima.</p>
+          <p><b>Cómo conocerla:</b> la cifra exacta te la da la <b>simulación oficial de «Tu Seguridad Social»</b>; escríbela en «La conozco». Con el Informe de bases de cotización podrías calcularla a mano. La opción «Estimar» de la app es una aproximación que supone que llevas años con bases parecidas a la actual.</p>
+          <p>Si tu base reguladora es alta, la pensión puede quedar limitada por la <b>pensión máxima</b>. En ese caso, una base reguladora algo mayor o menor no cambia la pensión ordinaria, aunque sí la anticipada y el complemento por demora.</p>
+
+          <h3>¿Tengo derecho al complemento por hijos?</h3>
+          <p>Es el <b>complemento para la reducción de la brecha de género</b> (art. 60 LGSS): <b>36,90 €/mes por hijo</b> en 2026, hasta 4 hijos, en 14 pagas, y se cobra <b>aunque tengas la pensión máxima</b>. Se suma a la jubilación (salvo la parcial), a la incapacidad permanente o a la viudedad.</p>
+          <ul>
+            <li><b>Mujeres</b>: lo cobran si han tenido hijos, salvo que ya lo cobre el otro progenitor.</li>
+            <li><b>Hombres</b>: solo si su carrera laboral se vio perjudicada por el nacimiento o la adopción. Para hijos nacidos hasta 1994, más de 120 días sin cotizar entre los 9 meses antes y los 3 años después. Para hijos nacidos desde 1995, que sus bases de los 24 meses siguientes bajaran más de un 15 % respecto a los 24 meses anteriores. También si cobran viudedad y algún hijo tiene pensión de orfandad. Además, su pensión tiene que ser menor que la de la madre.</li>
+            <li><b>Solo lo cobra uno de los dos progenitores</b>: el que tenga la pensión más baja.</li>
+          </ul>
+          <p>Lo reconoce la Seguridad Social al pedir la pensión. No lo confundas con la <b>bonificación por cuidado de hijos</b> (art. 236 LGSS), que suma <b>días cotizados</b>, no dinero.</p>
         </div>
 
         <div class="tab-panel" data-panel="instalar" hidden>
@@ -723,6 +751,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
             <li><a href="https://www.seg-social.es/wps/portal/wss/internet/Trabajadores/CotizacionRecaudacionTrabajadores/36537" target="_blank" rel="noopener">Seguridad Social · Bases y tipos de cotización</a><small>Base máxima, cotización solidaria y MEI.</small></li>
             <li><a href="https://sede.seg-social.gob.es" target="_blank" rel="noopener">Sede Electrónica · Tu Seguridad Social</a><small>Simulador oficial de jubilación e Informe de Vida Laboral.</small></li>
             <li><a href="https://portal.seg-social.gob.es/wps/portal/importass/importass/Categorias/Vida+laboral+e+informes/Informes+sobre+tu+situacion+laboral/Informe+de+tu+vida+laboral" target="_blank" rel="noopener">Import@ss · Informe de tu vida laboral</a><small>Descarga del Informe de Vida Laboral en PDF (Tesorería General de la Seguridad Social).</small></li>
+            <li><a href="https://portal.seg-social.gob.es/wps/portal/importass/importass/Categorias/Vida+laboral+e+informes/Informes+de+tus+cotizaciones/Informe+de+bases+de+cotizacion" target="_blank" rel="noopener">Import@ss · Informe de bases de cotización</a><small>Todas tus bases de cotización mes a mes, en PDF.</small></li>
             <li><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724" target="_blank" rel="noopener">Real Decreto Legislativo 8/2015 · Ley General de la Seguridad Social</a><small>BOE, texto consolidado.</small></li>
             <li><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2011-13242" target="_blank" rel="noopener">Ley 27/2011</a><small>Edad de jubilación y periodo de cálculo progresivos.</small></li>
             <li><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2021-21652" target="_blank" rel="noopener">Ley 21/2021</a><small>Coeficientes reductores de la anticipada y complemento por demora.</small></li>
@@ -774,8 +803,12 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 /* ---------- Versión ----------
    Al desplegar: sube APP_VERSION (formato 01.00 → 01.01 cambios menores, 02.00 cambios grandes),
    añade la entrada arriba del todo en CHANGES, y actualiza version.json y CHANGELOG.md con la misma versión. */
-const APP_VERSION = '01.04';
+const APP_VERSION = '01.05';
 const CHANGES = [
+  {v:'01.05', date:'2026-09-26', items:[
+    'Ayuda ampliada (en «Datos que necesitas»): dónde ver tu base de cotización, qué es la base reguladora y cómo se calcula, y quién tiene derecho al complemento por hijos.',
+    'Nuevo enlace «¿Dónde la veo?» junto a la base de cotización, y acceso directo al Informe de bases de cotización de la Seguridad Social.'
+  ]},
   {v:'01.04', date:'2026-09-25', items:[
     'En el ordenador ya puedes arrastrar tu Informe de Vida Laboral (PDF) a la ventana de la app, además de usar el botón «Cargar mi Informe de Vida Laboral».'
   ]},
@@ -1308,6 +1341,7 @@ function showTab(t){
 document.querySelectorAll('#ayuda .tabs button').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
 const goHistory = () => { closeNews(); showTab('versiones'); $('#ayuda').scrollIntoView({behavior:'smooth'}); };
 $('#lnkNews').onclick = goHistory; $('#btnNewsAll').onclick = goHistory;
+document.querySelectorAll('.js-help-datos').forEach(a=>a.onclick = e => { e.preventDefault(); showTab('datos'); $('#ayuda').scrollIntoView({behavior:'smooth'}); });
 
 // Aviso «Ha habido cambios»: consulta version.json al abrir, cada minuto y al volver a la pestaña
 let updShown = false;

@@ -67,6 +67,9 @@ sobre degradado azul marino (`favicon.svg`; PNG generados desde él).
 - **No cambiar los cálculos** (bloque «Normativa» y `scenario()` del JS) sin que Carlos lo pida.
 - **Nunca datos reales de Carlos** en el código ni en el historial de git: el repo es público.
   (El 25/09/2026 se reescribió el historial para eliminarlos.) Los ejemplos son siempre ficticios.
+- Carlos guarda sus informes personales en `Informes Carlos/` dentro del proyecto: ignorado en git
+  (`Informes*/` y `*.pdf` en `.gitignore`), y `despliega.sh` aborta si va a subir cualquier
+  PDF/CSV/Excel/Word. No quitar esas protecciones.
 - Textos en español de España.
 
 ## Versionado

@@ -5,7 +5,10 @@ Backup/
 .DS_Store
 .claude/settings.local.json
 
-# Datos personales / secretos
+# Datos personales / secretos (el repo es PÚBLICO)
+# Informes de la Seguridad Social (vida laboral, simulaciones…): la app no usa ningún PDF propio
+*.pdf
+Informes*/
 *.csv
 .env
 .env.*

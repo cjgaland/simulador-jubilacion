@@ -27,6 +27,14 @@ echo "✓ Versión $V_HTML coherente en index.html, version.json y CHANGELOG.md"
 bash scripts/copia_seguridad.sh --name SimuladorJubilacion
 
 git add -A
+# Red de seguridad: el repo es público; nunca subir PDFs ni hojas de datos personales
+PELIGRO=$(git diff --cached --name-only | grep -iE '\.(pdf|csv|xlsx?|ods|docx?)$' || true)
+if [ -n "$PELIGRO" ]; then
+  git reset -q
+  fallo "Hay ficheros que podrían contener datos personales y NO se suben:
+$PELIGRO
+Muévelos fuera del proyecto o añádelos a .gitignore."
+fi
 if git diff --cached --quiet; then
   echo "No hay cambios que subir."
 else
