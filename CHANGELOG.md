@@ -6,6 +6,11 @@ Formato de versión `XX.YY` (cambios menores `01.01`, cambios grandes `02.00`).
 > Al publicar una versión nueva, actualiza también `APP_VERSION` y `CHANGES` en `index.html`
 > y `version.json`. Los usuarios verán el aviso «Ha habido cambios» y, al actualizar, las novedades.
 
+## [02.02] - 2026-09-27
+
+- Modo pareja: selector «Bruto / Neto» (sincronizado en el plan y en el gráfico del hogar, con etiqueta de IRPF de cada uno) que afecta a la pensión del hogar, aportación de cada uno, planes sugeridos, pensiones hasta los 85, consejos, gráfico de ingresos y sus etapas, e informe PDF.
+- Nuevo campo opcional «Sueldo bruto al mes» por persona (el gráfico en bruto usa sueldo bruto + pensión bruta; en neto, sueldo neto + pensión neta).
+
 ## [02.01] - 2026-09-27
 
 - Lectura del **Informe de Simulación de Jubilación** (PDF de «Tu Seguridad Social»): nacimiento, titular, fecha de jubilación, días a la jubilación (con bonificación por hijos), base reguladora y fecha del cálculo → días de hoy y base reguladora «La conozco» normalizada a la fecha ordinaria. Validado con dos simulaciones oficiales reales: coinciden fecha, edad, días, base reguladora y pensión.

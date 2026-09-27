@@ -69,6 +69,9 @@ Pensada para compartir con compañeros (médicos del SAS). Autor: **Carlos J. Ga
   combinaciones (ref, juntos = mismo mes con máx. total a 85, equilibrio = mínima distancia con total
   a 85 ≥ ref, largo, antes). Ingresos del hogar año a año con sueldo neto opcional (constante en € de
   hoy). Viudedad = 52 % BR del fallecido limitada a máxima − pensión propia.
+- Bruto/neto en pareja (02.02): `PS.net` ('bruto'|'neto'), helpers `pv()` (persona), `hv()` (hogar),
+  `t85()` y `bn()`; dos selectores `.pnet` sincronizados (plan y gráfico) + `.pchip`. Sueldos: `sueldoB`
+  (bruto) y `sueldo` (neto), ambos opcionales, 12 pagas. Los planes sugeridos se ordenan siempre en bruto.
 - `#requisitos` y `#ayuda` están en `.common` (fuera de `.grid`), visibles en los dos modos.
 - **html2canvas no entiende `color-mix()`**: no usarlo en nada que salga en el Informe PDF.
 - Pendiente (acordado con Carlos): cálculo de **Clases Pasivas** (MUFACE/ISFAS/MUGEJU pre-2011).
