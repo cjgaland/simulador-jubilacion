@@ -6,6 +6,16 @@ Formato de versión `XX.YY` (cambios menores `01.01`, cambios grandes `02.00`).
 > Al publicar una versión nueva, actualiza también `APP_VERSION` y `CHANGES` en `index.html`
 > y `version.json`. Los usuarios verán el aviso «Ha habido cambios» y, al actualizar, las novedades.
 
+## [04.00] - 2026-09-27
+
+- **Navegación por páginas** (hash `#inicio`, `#sim`, `#comparar`, `#desglose`, `#parcial`, `#requisitos`, `#ayuda`): menú lateral (>900 px) y cajón con hamburguesa en móvil; botones de la antigua cabecera al pie del menú. Todas las secciones siguen en el DOM (`data-pg`, `showPage()`); se quitan la cabecera y el menú de apartados con `IntersectionObserver`.
+- «Mi simulación» = datos + «¿Cuándo…?» (pareja: datos + plan); tarjeta «Primero, tus datos» en las páginas que los necesitan; aviso en «Jubilación parcial» para funcionarios y Clases Pasivas; fechas clave en «Desglose».
+- **Minibarra** fija con el resultado elegido (individual) o el plan del hogar (pareja).
+- **Borrador de la pestaña** en `sessionStorage`: Safari en iPhone recargaba la página y se perdían los datos no guardados.
+- **Gráfico de ingresos del hogar interactivo**: selección de año con desglose por persona (sueldo y pensión al mes y al año), marcas de jubilación, barras animadas, etapas con desglose por persona y clicables.
+- Aviso «sin validez oficial» genérico (organismo gestor: Seguridad Social o Clases Pasivas), en pie, Ayuda, informes PDF y README. Corregida una frase cortada en el texto de viudedad. El botón PDF en pareja ya no depende de los datos individuales.
+- Vista previa privada con `scripts/servidor-local.js` (Node), que no sirve PDF ni datos personales.
+
 ## [03.00] - 2026-09-27
 
 - **Clases Pasivas del Estado** (RDLeg 670/1987): selector «Régimen de tu pensión» (Seguridad Social / Clases Pasivas) en el modo individual y en cada ficha del modo pareja.

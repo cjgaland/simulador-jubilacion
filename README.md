@@ -28,7 +28,7 @@ Todo se calcula en tu navegador. **Tus datos no salen de tu dispositivo**: si pu
 
 ## Aviso
 
-Es una simulación **orientativa y sin validez oficial**. Para una cifra definitiva consulta [Tu Seguridad Social](https://sede.seg-social.gob.es) o la asesoría de tu Colegio de Médicos.
+Es una simulación **orientativa y sin validez oficial**. Para una cifra definitiva, solicita tu simulación oficial al organismo que gestiona tu pensión ([Seguridad Social](https://sede.seg-social.gob.es) o Clases Pasivas) o consulta con un profesional de tu confianza.
 
 ## Actualizaciones
 

@@ -3,7 +3,7 @@
 // (y se guarda una copia); sin internet se usa la última copia guardada.
 // version.json nunca se guarda, para que el aviso «Ha habido cambios» funcione siempre.
 
-const CACHE = 'simjub-v1';
+const CACHE = 'simjub-v2';
 const CORE = ['./', 'index.html', 'manifest.webmanifest', 'favicon.svg', 'favicon-32.png',
               'apple-touch-icon.png', 'icon-192.png', 'icon-512.png'];
 

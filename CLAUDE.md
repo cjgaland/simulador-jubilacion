@@ -34,8 +34,8 @@ Pensada para compartir con compañeros (médicos del SAS). Autor: **Carlos J. Ga
   Ordenador: descarga directa. Móvil: ventana `#dlgPdf` con «Guardar o compartir» (Web Share con
   fichero; necesita un toque nuevo, por eso va en ventana) y «Descargar». **No usar `window.print()`**:
   en iPhone con la app instalada en pantalla de inicio no hace nada. Ctrl/Cmd+P sigue imprimiendo
-  solo el informe (clase `report-mode` + `@media print`). El botón de la cabecera (`#btnPrint`) se
-  oculta a ≤420 px por espacio; en móvil se usa el de la tarjeta principal.
+  solo el informe (clase `report-mode` + `@media print`). El botón «PDF» (`#btnPrint`) está al pie del menú
+  lateral; también hay uno en la tarjeta principal.
 - **Compartir escenario**: enlace `…/#d=<base64url(JSON)>`; al abrirlo se aplican los datos
   (saneados en `cleanShared`), no se guardan y se limpia la URL.
 - **Ejemplos**: `DEMOS` (3 perfiles ficticios que se alternan).
@@ -70,6 +70,11 @@ Pensada para compartir con compañeros (médicos del SAS). Autor: **Carlos J. Ga
   combinaciones (ref, juntos = mismo mes con máx. total a 85, equilibrio = mínima distancia con total
   a 85 ≥ ref, largo, antes). Ingresos del hogar año a año con sueldo neto opcional (constante en € de
   hoy). Viudedad = 52 % BR del fallecido limitada a máxima − pensión propia.
+- **Gráfico de ingresos del hogar** (`renderHogar`, rehecho en 04.00): barras-botón interactivas; al tocar o pasar
+  el ratón, `hInspect(i)` muestra en `#hSel` el año con sueldo y pensión de cada uno. `HSEL` = año elegido
+  (se conserva entre planes); las barras se animan desde su altura anterior; marcas `.hmk` en la fecha de
+  jubilación de cada uno; las tarjetas de etapas (`.phases [data-y]`) desglosan por persona y seleccionan
+  su primer año completo. En el Informe PDF se oculta `#hSel`.
 - Bruto/neto en pareja (02.02): `PS.net` ('bruto'|'neto'), helpers `pv()` (persona), `hv()` (hogar),
   `t85()` y `bn()`; dos selectores `.pnet` sincronizados (plan y gráfico) + `.pchip`. Sueldos: `sueldoB`
   (bruto) y `sueldo` (neto), ambos opcionales, 12 pagas. Los planes sugeridos se ordenan siempre en bruto.
@@ -94,12 +99,27 @@ Pensada para compartir con compañeros (médicos del SAS). Autor: **Carlos J. Ga
   toma de posesión hasta hoy. Probado con un C.S. rellenado con datos ficticios (pdf.js `annotationStorage`
   + `saveDocument()`; pdf-lib no abre el PDF porque está cifrado). Pendiente probar con un C.S. real.
 
-## Estructura de la página
-Cabecera (tema, Nuevo, Restablecer, Guardar, Imprimir) → **Portada** (icono grande, título,
-descripción, «Creado por Carlos J. Galán Doval – Ver. XX.YY – 2026») → **menú fijo de apartados**:
-Datos (`#datos`), ¿Cuándo jubilarte? (`#mainCard`), Gráfico (`#grafico`), Desglose (`#detail`),
-Requisitos (`#requisitos`), Ayuda (`#ayuda`, con pestañas: Cómo usarla, Datos que necesitas,
-Instalar y actualizar, Fuentes oficiales, Versiones).
+## Estructura de la página (04.00: navegación por páginas)
+- **Menú lateral** `aside.sidebar` (ordenador/tablet >900 px; en móvil es un cajón que abre la hamburguesa
+  `#btnNav`, clase `body.nav-open`, velo `#veil`): marca, selector de modo compacto (`.mode-sel.sb-mode`),
+  páginas (`#sbNav [data-page]`) y abajo los botones Nuevo, Restablecer, Tema, PDF y Guardar (mismos ids
+  de siempre: `#btnClear`, `#btnReset`, `#btnTheme`, `#btnPrint`, `#btnSave`).
+- `.content` > `.topbar` (en móvil `.appbar` con título `#abTitle` y guardar `#btnSaveM`, que llama a
+  `#btnSave`) + **minibarra** `#minibar` (`updMini()`: escenario elegido o plan del hogar; oculta en Inicio
+  y sin datos) > `.wrap` con título de página `#pgH`.
+- **Páginas** (hash `#inicio`, `#sim`, `#comparar`, `#desglose`, `#parcial`, `#requisitos`, `#ayuda`;
+  `PAGES`/`PAGES_PAR`, `showPage()`, `go()`): todas las secciones siguen en el DOM y llevan `data-pg="…"`;
+  `showPage` marca `.pg-on` y el CSS oculta el resto. Inicio = portada; Mi simulación = `#datos` +
+  `#mainCard` (pareja: `#pDatos` + `#pPlan`); Comparar = `#grafico` (pareja `#pHogar`); Desglose =
+  `#detail` + `#plazosCard` con `#oPlazos` (pareja `#pDetalle`); Parcial = `#parcial` o `.parcial-no`
+  (oculta en pareja). `.need-card` sustituye a las páginas que necesitan datos cuando no los hay.
+  Textos que cambian con el modo: `.t-ind` / `.t-par`.
+- **Borrador de la pestaña** (`sessionStorage` `simJubBorrador` / `simJubBorradorPareja`, `ssSet`/`ssJSON`):
+  Safari en iPhone recarga a veces la página al cambiar de página; sin esto se perdían los datos no guardados
+  (p. ej. el ejemplo). Al arrancar: enlace compartido → borrador → datos guardados → vacío.
+- Al mostrar «sim» se redibuja la línea temporal (se mide con su ancho real). Página inicial: la del
+  hash; si no, `sim` con datos e `inicio` sin ellos. Los enlaces `#d=`/`#p=` se leen antes del router.
+- Ayuda con pestañas: Cómo usarla, Datos que necesitas, Instalar y actualizar, Fuentes oficiales, Versiones.
 
 ## Paleta
 Fondo `#f5f2ec`, azul marino `#1f3a5f` → `#12243d`, dorado `#a8844d`, verde `#3d7a58`, rojo `#a9503a`
@@ -136,6 +156,9 @@ sobre degradado azul marino (`favicon.svg`; PNG generados desde él).
 - Se trabaja en la rama `rediseno-04`; `main` (lo que ven los usuarios) no se toca hasta que Carlos dé el visto
   bueno. `despliega.sh` se niega a publicar fuera de `main`.
 - **Vista previa privada**: `bash scripts/vista-previa.sh` (localhost:8080 y la IP del Mac en la Wi-Fi para el móvil).
+  Usa `scripts/servidor-local.js` (Node), que no sirve PDF, CSV, hojas de cálculo ni las carpetas personales.
+- Estado (27/09/2026): **publicado como 04.00** (rama integrada en `main`). Para volver a la versión anterior
+  sigue existiendo la etiqueta `v03.00`.
 - Plan acordado: navegación por páginas (hash routing, todas las secciones siguen en el DOM y solo se muestra
   una), menú lateral en ordenador/tablet y hamburguesa en móvil; «Tus datos» + «¿Cuándo te quieres jubilar?»
   juntos en «Mi simulación»; mini barra fija con fecha y pensión. Redibujar línea temporal/gráficos al mostrar

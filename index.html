@@ -45,13 +45,11 @@ button,input{font:inherit;color:inherit}
 .serif{font-family:Fraunces,Georgia,serif}
 .wrap{max-width:1200px;margin:0 auto;padding:0 20px 60px}
 
-/* header */
-header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:22px 0 6px}
+/* marca (menú lateral) */
 .brand{display:flex;align-items:center;gap:12px}
 .logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(145deg,#2a4b78,#12243d);display:grid;place-items:center;color:#f3ead9;box-shadow:var(--shadow)}
 .brand small{display:block;color:var(--muted);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
 .brand strong{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:19px}
-.top-actions{display:flex;gap:8px;align-items:center}
 .icon-btn:disabled{opacity:.45;cursor:not-allowed}
 .icon-btn.primary{background:var(--navy);border-color:var(--navy);color:var(--surface)}
 .icon-btn.primary:hover{border-color:var(--navy);filter:brightness(1.1)}
@@ -78,13 +76,13 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:12p
 
 /* layout */
 .grid{display:grid;grid-template-columns:340px minmax(0,1fr);gap:22px;align-items:start}
-@media (max-width:960px){.grid{grid-template-columns:1fr}}
+@media (max-width:1120px){.grid{grid-template-columns:minmax(0,1fr)}}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
 .results{display:flex;flex-direction:column;gap:22px;min-width:0}
 
 /* form */
-aside.form{padding:24px;position:sticky;top:74px}
-@media (max-width:960px){aside.form{position:static}}
+aside.form{padding:24px;position:sticky;top:64px}
+@media (max-width:1120px){aside.form{position:static}}
 .step{display:flex;align-items:center;gap:10px;margin:0 0 18px}
 .step b{width:26px;height:26px;border-radius:50%;background:var(--navy);color:var(--surface);display:grid;place-items:center;font-size:12.5px}
 .step h2{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:20px;margin:0}
@@ -344,7 +342,7 @@ footer .ver button:hover{color:var(--gold)}
 .mode-sel button.on b,.mode-sel button.on small{color:var(--surface)}
 @media (max-width:420px){.mode-sel button{padding:9px 12px;gap:8px}.mode-sel small{display:none}}
 body.par .grid{display:none}
-.common{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;margin-top:22px}
+.common{display:grid;grid-template-columns:minmax(0,1fr);gap:22px}
 #pairApp{display:grid;grid-template-columns:minmax(0,1fr);gap:22px}
 #pairApp[hidden]{display:none}
 
@@ -436,9 +434,37 @@ body.par-empty .pempty{display:block}
 .hogar-card h2,.pdet-card h2{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:20px;margin:0}
 .hogar-card > p,.pdet-card > p{margin:2px 0 0;color:var(--muted);font-size:13px}
 .hchart{display:flex;align-items:flex-end;gap:3px;height:220px;border-bottom:1px solid var(--line);margin-top:18px;position:relative}
-.hbar{flex:1;min-width:0;height:100%;display:flex;flex-direction:column-reverse;cursor:default}
-.hbar i{display:block;width:100%;transition:height .5s cubic-bezier(.2,.8,.2,1)}
-.hbar:hover{filter:brightness(1.08)}
+.hbar{flex:1;min-width:0;height:100%;display:flex;flex-direction:column-reverse;cursor:pointer;border:0;background:none;padding:0;opacity:.62;transition:opacity .2s;border-radius:3px 3px 0 0;overflow:hidden}
+.hbar i{display:block;width:100%;flex:none;transition:height .5s cubic-bezier(.2,.8,.2,1)}
+.hbar:hover,.hbar.on{opacity:1}
+.hx span.on{color:var(--ink);font-weight:700;position:relative;z-index:1}
+.hbar:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
+.hmk{position:absolute;top:0;bottom:0;border-left:1.5px dashed var(--pc);pointer-events:none}
+.hmk span{position:absolute;z-index:2;left:4px;font-size:10.5px;font-weight:600;color:var(--pc);background:var(--surface);padding:0 4px;border-radius:4px;white-space:nowrap;line-height:16px}
+.hmk.r span{left:auto;right:4px}
+.hsel{margin-top:14px;border:1px solid var(--line);border-radius:14px;background:var(--surface-2);padding:10px 14px 4px}
+.hsel:empty{display:none}
+.hs-h{display:flex;align-items:baseline;gap:6px 12px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:4px}
+.hs-h .yr{font-family:Fraunces,Georgia,serif;font-size:22px;color:var(--ink)}
+.hs-h b{color:var(--ink)}
+.hs-p{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:2px 14px;align-items:center;padding:9px 0;border-top:1px dashed var(--line);font-size:13.5px}
+.hs-p > i{width:10px;height:10px;border-radius:50%;background:var(--pc)}
+.hs-p small{display:block;color:var(--muted);font-size:11.5px}
+.hs-v{display:flex;gap:14px;color:var(--muted);font-size:12.5px}
+.hs-v b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.hs-t{font-variant-numeric:tabular-nums;font-size:15px;text-align:right}
+.hs-t{white-space:nowrap}
+.hs-p .hs-t small{display:inline;margin-left:5px;font-size:12px;font-weight:400;color:var(--muted)}
+.hs-v small{display:inline;font-size:11px;color:var(--muted)}
+.hs-v{flex-wrap:wrap;row-gap:2px}
+.hs-v > span{white-space:nowrap}
+@media (max-width:560px){.hs-p{grid-template-columns:auto minmax(0,1fr) auto}.hs-v{grid-column:2/-1;grid-row:2;gap:2px 12px}}
+.phases [data-y]{cursor:pointer;transition:border-color .2s}
+.phases [data-y]:hover{border-color:var(--gold)}
+.phases .pp{display:flex;align-items:center;gap:6px;margin-top:3px}
+.phases .pp i{width:8px;height:8px;border-radius:50%;background:var(--pc);flex:none}
+#report .hsel{display:none}
+#report .hbar{opacity:1}
 /* sin color-mix: html2canvas (Informe PDF) no lo entiende */
 .s-sa{background:var(--navy);opacity:.32}
 .s-pa{background:var(--navy)}
@@ -466,15 +492,75 @@ body.par-empty .pempty{display:block}
 .viu small{display:block;color:var(--muted);font-size:11.5px;line-height:1.4}
 .pdet-card h2.second{margin-top:26px}
 
-/* menú de apartados */
-.secnav{position:sticky;top:0;z-index:30;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:10px 0;margin:0 0 18px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.secnav::-webkit-scrollbar{display:none}
-.secnav a{flex:none;text-decoration:none;color:var(--muted);font-size:13px;font-weight:500;padding:8px 14px;border-radius:99px;border:1px solid transparent;transition:.2s;white-space:nowrap}
-.secnav a:hover{color:var(--ink);border-color:var(--line)}
-.secnav a.on{background:var(--navy);color:var(--surface)}
-.secnav a.off{opacity:.45}
-.card,#datos,#pDatos,#pPlan,#pHogar,#pDetalle{scroll-margin-top:72px}
-
+/* ===== Navegación por páginas (04.00): menú lateral, barra superior y minibarra ===== */
+:root{--sbw:248px}
+[data-pg]:not(.pg-on){display:none!important}
+body:not([data-page="sim"]) .grid{grid-template-columns:minmax(0,1fr)}
+.t-par{display:none}
+body.par .t-par{display:inline}
+body.par .t-ind{display:none}
+.need-card{display:none}
+body:not(.par).is-empty .need-card,body.par.par-empty .need-card{display:block}
+.parcial-no{display:none}
+body.no-parcial .parcial-no{display:block}
+body.par .sb-nav [data-page="parcial"]{display:none}
+.sidebar{position:fixed;top:0;bottom:0;left:0;width:var(--sbw);z-index:40;background:var(--surface);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:16px 12px calc(14px + env(safe-area-inset-bottom));overflow-y:auto;overscroll-behavior:contain}
+.content{margin-left:var(--sbw);min-height:100vh}
+.sb-brand{gap:10px;padding:4px 4px 14px;border-bottom:1px solid var(--line)}
+.sb-brand > div:nth-child(2){flex:1;min-width:0}
+.sb-brand .logo{width:36px;height:36px;border-radius:10px;flex:none;box-shadow:none}
+.sb-brand strong{display:block;font-size:15px;line-height:1.2}
+.sb-brand small{font-size:9.5px;letter-spacing:.08em;margin-top:2px}
+.sb-close{display:none;flex:none;width:34px;height:34px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--muted);place-items:center;cursor:pointer}
+.sidebar .sb-mode{display:grid;grid-template-columns:1fr 1fr;gap:3px;padding:3px;margin:14px 2px 10px;border-radius:11px;box-shadow:none;background:var(--surface-2)}
+.sidebar .sb-mode button{justify-content:center;gap:6px;padding:7px 4px;border-radius:8px}
+.sidebar .sb-mode b{font-size:12px;color:inherit}
+.sb-nav{display:flex;flex-direction:column;gap:2px;margin-top:4px}
+.sb-nav button{display:flex;align-items:center;gap:11px;width:100%;padding:9px 10px;border:0;background:none;border-radius:10px;font-size:13.5px;color:var(--ink);cursor:pointer;text-align:left;transition:background .15s}
+.sb-nav button svg{flex:none;color:var(--muted)}
+.sb-nav button:hover{background:var(--surface-2)}
+.sb-nav button.on{background:var(--navy-soft);color:var(--navy);font-weight:600;box-shadow:inset 3px 0 0 var(--navy)}
+.sb-nav button.on svg{color:var(--navy)}
+.sb-nav button.off{opacity:.5}
+.sb-nav .sep{height:1px;background:var(--line);margin:8px 4px}
+.sb-foot{margin-top:auto;padding-top:16px}
+.sb-btns{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.sb-btns .icon-btn{height:36px;padding:0 8px;gap:6px;font-size:12.5px}
+.sb-btns #btnSave{grid-column:1/-1}
+/* en pareja el PDF depende de los datos de la pareja, no de los individuales */
+body.par #btnPrint{display:inline-flex!important}
+body.par.par-empty #btnPrint{display:none!important}
+.sb-ver{font-size:10.5px;color:var(--muted);text-align:center;margin-top:10px}
+.veil{display:none}
+.topbar{position:sticky;top:0;z-index:30}
+.appbar{display:none}
+.minibar{display:flex;align-items:center;gap:14px;width:100%;border:0;border-bottom:1px solid var(--line);background:var(--surface-2);padding:10px 24px;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;white-space:nowrap;overflow:hidden}
+.minibar .mb-pill{font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;padding:3px 9px;border-radius:99px;background:var(--navy-soft);color:var(--navy)}
+.minibar b{font-variant-numeric:tabular-nums}
+.minibar .mb-m{font-family:Fraunces,Georgia,serif;font-size:18px;font-weight:500;color:var(--navy)}
+.minibar .mb-r{margin-left:auto;color:var(--muted);font-size:12px}
+.minibar .mb-s{color:var(--muted)}
+body[data-page="inicio"] .minibar,body:not(.par).is-empty .minibar,body.par.par-empty .minibar{display:none}
+.pg-head{padding:26px 0 18px}
+.pg-head h1{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:28px;line-height:1.15;margin:0;outline:none}
+.cover{padding-top:48px}
+@media (max-width:900px){
+  .content{margin-left:0}
+  .sidebar{width:min(300px,84vw);transform:translateX(-102%);transition:transform .25s ease;box-shadow:8px 0 30px rgba(0,0,0,.2);padding-top:calc(16px + env(safe-area-inset-top))}
+  body.nav-open .sidebar{transform:none}
+  .veil{display:block;position:fixed;inset:0;z-index:39;background:rgba(14,19,27,.45);opacity:0;pointer-events:none;transition:opacity .25s}
+  body.nav-open .veil{opacity:1;pointer-events:auto}
+  body.nav-open{overflow:hidden}
+  .sb-close{display:grid}
+  .appbar{display:flex;align-items:center;gap:10px;padding:calc(10px + env(safe-area-inset-top)) 14px 10px;background:var(--surface);border-bottom:1px solid var(--line)}
+  .ab-title{flex:1;min-width:0;font-family:Fraunces,Georgia,serif;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .minibar{background:var(--navy-soft);padding:8px 14px;font-size:12px;gap:9px}
+  .minibar .mb-m{font-size:15px}
+  .pg-head{display:none}
+  .wrap{padding-top:16px}
+  .cover{padding-top:10px}
+}
+@media (max-width:420px){.minibar .mb-r,.minibar .mb-age,body.par .minibar .mb-pill{display:none}.minibar .mb-m{margin-left:auto}}
 /* ayuda */
 .ayuda{padding:24px 26px}
 .ayuda > .step b{background:var(--gold)}
@@ -538,10 +624,8 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 #verList .news-v:first-child::before{top:12px}
 
 @media (max-width:560px){
-  .top-actions{gap:6px}
   .icon-btn{padding:0 11px}
-  .wrap{padding:0 14px 50px}
-  .brand small,.icon-btn span{display:none}
+  .wrap{padding:16px 14px 50px}
   .main-card,.bars-card,.detail{padding:20px 18px}
   .info{padding:4px 18px}
   .ayuda{padding:20px 18px}
@@ -549,21 +633,13 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
   .cover{padding:22px 0 24px}
   .cover-icon{width:92px;height:92px;border-radius:23px}
   .cover-desc{font-size:15px}
-  .secnav{margin:0 -14px 16px;padding:10px 14px}
   .timeline{margin:0 8px}
   .tl-tick.odd{visibility:hidden}
 }
-@media (max-width:420px){
-  header.top{gap:8px}
-  #btnPrint{display:none}
-  .icon-btn{height:38px;min-width:38px;padding:0 10px}
-  .logo{width:36px;height:36px;border-radius:11px}
-  .brand{gap:9px;min-width:0}
-  .brand strong{font-size:15.5px;line-height:1.2;display:block}
-}
 @media print{
   body{background:#fff}
-  .top-actions,aside.form,.privacy,.seg.sm,dialog.news,footer .ver,.secnav,#ayuda,.upd,.cover-icon,.cover-desc,.credit{display:none!important}
+  .sidebar,.topbar,.veil,.pg-head,aside.form,.privacy,.seg.sm,dialog.news,footer .ver,#ayuda,.upd,.cover-icon,.cover-desc,.credit{display:none!important}
+  .content{margin-left:0}
   .cover{padding:10px 0}
   .grid{grid-template-columns:1fr}
   .card{box-shadow:none;break-inside:avoid}
@@ -613,22 +689,51 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header class="top">
-    <div class="brand">
-      <div class="logo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
-      <div><small>Seguridad Social · Clases Pasivas</small><strong>Simulador de Jubilación</strong></div>
-    </div>
-    <div class="top-actions">
-      <button class="icon-btn" id="btnTheme" title="Cambiar tema" aria-label="Cambiar tema claro u oscuro"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+<aside class="sidebar" id="sidebar" aria-label="Menú de la aplicación">
+  <div class="brand sb-brand">
+    <div class="logo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+    <div><strong>Simulador de Jubilación</strong><small>Seg. Social · Clases Pasivas</small></div>
+    <button type="button" class="sb-close" id="btnNavClose" aria-label="Cerrar el menú"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="mode-sel sb-mode" role="group" aria-label="Tipo de simulación">
+    <button type="button" data-m="ind" class="on"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><b>Solo yo</b></button>
+    <button type="button" data-m="par"><svg width="18" height="15" viewBox="0 0 28 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.6"/><circle cx="19" cy="8" r="3.6"/><path d="M2 21a7 7 0 0 1 14 0M12 21a7 7 0 0 1 14 0"/></svg><b>En pareja</b></button>
+  </div>
+  <nav class="sb-nav" id="sbNav" aria-label="Páginas">
+      <button type="button" data-page="inicio"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg><span>Inicio</span></button>
+      <button type="button" data-page="sim"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8.5 7.5h7M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/></svg><span class="t-ind">Mi simulación</span><span class="t-par">Nuestra simulación</span></button>
+      <button type="button" data-page="comparar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 17v-5M10 17V6M15 17v-8M20 17v-3"/></svg><span class="t-ind">Comparar opciones</span><span class="t-par">Ingresos del hogar</span></button>
+      <button type="button" data-page="desglose"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg><span class="t-ind">Desglose y fechas clave</span><span class="t-par">Desglose de cada uno</span></button>
+      <button type="button" data-page="parcial"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v9h9"/></svg><span>Jubilación parcial</span></button>
+      <div class="sep"></div>
+      <button type="button" data-page="requisitos"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v15H6a2 2 0 0 0-2 2z"/><path d="M6 21h14v-3"/><path d="M9 7h7M9 11h5"/></svg><span>Requisitos y normativa</span></button>
+      <button type="button" data-page="ayuda"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.2a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.5"/><path d="M12 17h.01"/></svg><span>Ayuda</span></button>
+  </nav>
+  <div class="sb-foot">
+    <div class="sb-btns">
       <button class="icon-btn" id="btnClear" title="Empezar de cero (vaciar todos los datos)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>Nuevo</span></button>
       <button class="icon-btn" id="btnReset" title="Volver a mis datos guardados"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg><span>Restablecer</span></button>
+      <button class="icon-btn" id="btnTheme" title="Cambiar tema" aria-label="Cambiar tema claro u oscuro"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span>Tema</span></button>
+      <button class="icon-btn needs-data" id="btnPrint" title="Informe completo para guardar como PDF o imprimir"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2M8 14h8v7H8z"/></svg><span>PDF</span></button>
       <button class="icon-btn primary" id="btnSave" title="Guardar mis datos en este dispositivo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v6h8V3M8 21v-7h8v7"/></svg><span id="saveTxt">Guardar</span></button>
-      <button class="icon-btn needs-data" id="btnPrint" title="Informe completo para guardar como PDF o imprimir"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2M8 14h8v7H8z"/></svg><span>Informe PDF</span></button>
     </div>
-  </header>
+    <div class="sb-ver">Ver. <span class="js-ver"></span> · Carlos J. Galán Doval</div>
+  </div>
+</aside>
+<div class="veil" id="veil"></div>
+<div class="content">
+<div class="topbar">
+<div class="appbar">
+  <button type="button" class="icon-btn" id="btnNav" aria-label="Abrir el menú" aria-controls="sidebar" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  <div class="ab-title" id="abTitle">Simulador de Jubilación</div>
+  <button type="button" class="icon-btn primary" id="btnSaveM" title="Guardar mis datos en este dispositivo" aria-label="Guardar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v6h8V3M8 21v-7h8v7"/></svg></button>
+</div>
+<button type="button" class="minibar" id="minibar" title="Ir a la simulación"></button>
+</div>
+<div class="wrap">
+  <div class="pg-head" data-pg="sim comparar desglose parcial requisitos ayuda"><h1 class="serif" id="pgH" tabindex="-1"></h1></div>
 
-  <section class="cover" id="inicio">
+  <section class="cover" id="inicio" data-pg="inicio">
     <div class="cover-icon" aria-hidden="true"><svg viewBox="0 0 512 512"><defs><linearGradient id="cvBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1f3a5f"/><stop offset="1" stop-color="#12243d"/></linearGradient><linearGradient id="cvGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c9a56a"/><stop offset="1" stop-color="#a8844d"/></linearGradient></defs><rect width="512" height="512" fill="url(#cvBg)"/><circle cx="256" cy="256" r="150" fill="none" stroke="#f3ead9" stroke-opacity=".22" stroke-width="16"/><path d="M256 128v14M384 256h-14M256 384v-14M128 256h14" stroke="#f3ead9" stroke-opacity=".55" stroke-width="8" stroke-linecap="round"/><path d="M256 106 A150 150 0 1 1 126.1 331" fill="none" stroke="url(#cvGold)" stroke-width="16" stroke-linecap="round"/><circle cx="126.1" cy="331" r="17" fill="#a8844d" stroke="#f3ead9" stroke-width="6"/><path d="M256 176v80l52 34" fill="none" stroke="#f3ead9" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><circle cx="256" cy="256" r="13" fill="#a8844d"/></svg></div>
     <h1 class="serif">¿Cuándo y con cuánto<br>te podrás <em>jubilar</em>?</h1>
     <p class="cover-desc">Descubre cuándo podrás jubilarte y con qué pensión, en la <b>Seguridad Social</b> o en <b>Clases Pasivas</b>, y compara al instante todas tus opciones: jubilarte antes, a tu edad, más tarde o de forma parcial, con la normativa vigente en 2026. Carga tu informe oficial en PDF para rellenar tus datos en segundos y, si lo planificáis en pareja, encontrad juntos vuestra mejor fecha.</p>
@@ -640,18 +745,17 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
     <p class="credit">Creado por Carlos J. Galán Doval – Ver. <span class="js-ver"></span> – 2026</p>
   </section>
 
-  <nav class="secnav" id="secnav" aria-label="Apartados">
-    <a href="#datos" data-par="#pDatos">Datos</a>
-    <a href="#mainCard" data-par="#pPlan" data-need>¿Cuándo jubilarte?</a>
-    <a href="#grafico" data-par="#pHogar" data-need>Gráfico</a>
-    <a href="#detail" data-par="#pDetalle" data-need>Desglose</a>
-    <a href="#requisitos">Requisitos</a>
-    <a href="#ayuda">Ayuda</a>
-  </nav>
+
+  <section class="card empty need-card" data-pg="comparar desglose parcial">
+    <svg class="ill" width="120" height="44" viewBox="0 0 120 44" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 30h108" opacity=".35"/><circle cx="20" cy="30" r="5"/><circle cx="60" cy="30" r="7" fill="currentColor"/><circle cx="100" cy="30" r="5"/></svg>
+    <h2><span class="t-ind">Primero, tus datos</span><span class="t-par">Primero, vuestros datos</span></h2>
+    <p><span class="t-ind">Esta página se completa en cuanto introduces tu fecha de nacimiento y tus días cotizados (o cargas tu informe oficial en PDF).</span><span class="t-par">Esta página se completa en cuanto rellenáis la fecha de nacimiento y los días cotizados de los dos.</span></p>
+    <div class="actions"><button type="button" class="btn" data-go="sim">Ir a <span class="t-ind">Mi simulación</span><span class="t-par">Nuestra simulación</span></button></div>
+  </section>
 
   <div class="grid">
     <!-- ============ FORM ============ -->
-    <aside class="card form" id="datos">
+    <aside class="card form" id="datos" data-pg="sim">
       <div class="step"><b>1</b><h2>Tus datos</h2></div>
 
       <div class="field reg-field">
@@ -730,7 +834,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 
     <!-- ============ RESULTS ============ -->
     <main class="results">
-      <section class="card empty empty-card">
+      <section class="card empty empty-card" data-pg="sim">
         <svg class="ill" width="120" height="44" viewBox="0 0 120 44" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 30h108" opacity=".35"/><circle cx="20" cy="30" r="5"/><circle cx="60" cy="30" r="7" fill="currentColor"/><circle cx="100" cy="30" r="5"/><path d="M60 21V8" opacity=".5"/><path d="M52 8h16" opacity=".5"/></svg>
         <h2>Empecemos por tus datos</h2>
         <p>Rellena tus datos, o carga tu informe oficial en PDF, y verás al momento tu fecha de jubilación, tu pensión y todas las opciones para adelantarla, retrasarla o hacerla parcial.</p>
@@ -741,7 +845,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
         </ol>
         <div class="actions"><button class="btn" id="btnDemo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3l14 9-14 9z"/></svg>Ver un ejemplo</button></div>
       </section>
-      <section class="card main-card needs-data" id="mainCard">
+      <section class="card main-card needs-data" id="mainCard" data-pg="sim">
         <div class="q"><div class="step" style="margin:0"><b>2</b><h2>¿Cuándo te quieres jubilar?</h2></div><div class="early-sel ss-only"><span>Anticipada</span><div class="seg sm" id="segEarly"><button data-v="vol" class="on" title="Por voluntad propia: hasta 2 años antes, con 35 años cotizados">Voluntaria</button><button data-v="inv" title="Por despido u otra causa no voluntaria: hasta 4 años antes, con 33 años cotizados">Involuntaria</button></div></div></div>
         <div class="sc-slider"><input type="range" id="rSc" min="0" max="6" step="1" value="1" aria-label="Escenario de jubilación"></div>
         <div class="sc-labels" id="scLabels"></div>
@@ -777,14 +881,13 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
         </div>
 
         <div class="stats" id="oStats"></div>
-        <div id="oPlazos"></div>
         <div class="share-row">
           <button class="btn" id="btnShare" title="Crea un enlace con estos datos para que otra persona vea la misma simulación"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>Compartir escenario</button>
           <button class="btn" id="btnReport" title="Informe completo listo para guardar como PDF o imprimir"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M9 13h6M9 17h6"/></svg>Informe PDF</button>
         </div>
       </section>
 
-      <section class="card bars-card needs-data" id="grafico">
+      <section class="card bars-card needs-data" id="grafico" data-pg="comparar">
         <div class="bars-head">
           <div><h2>Compara todas las opciones</h2><p id="barsSub">Toca una barra para seleccionarla</p><span class="irpf-chip" id="irpfChip"></span></div>
           <div class="bars-ctrl">
@@ -797,9 +900,15 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
         <div class="cap-legend" id="capLegend"></div>
       </section>
 
-      <section class="card detail needs-data" id="detail"></section>
+      <section class="card detail needs-data" id="detail" data-pg="desglose"></section>
+      <section class="card detail needs-data" id="plazosCard" data-pg="desglose"><div id="oPlazos"></div></section>
 
-      <section class="card parcial-card needs-data ss-only" id="parcial">
+      <section class="card empty needs-data parcial-no" data-pg="parcial">
+        <h2>La jubilación parcial no es para tu caso</h2>
+        <p>La jubilación parcial (art. 215 LGSS) es para trabajadores por cuenta ajena de la Seguridad Social. Como has indicado que eres funcionario/a o de Clases Pasivas, no se calcula en tu simulación.</p>
+        <div class="actions"><button type="button" class="btn" data-go="sim">Volver a Mi simulación</button></div>
+      </section>
+      <section class="card parcial-card needs-data ss-only" id="parcial" data-pg="parcial">
         <div class="bars-head"><div><h2>Jubilación parcial</h2><p>Reduce tu jornada y cobra a la vez una parte de tu pensión hasta jubilarte del todo (art. 215 LGSS).</p></div></div>
         <div id="parcialBody"></div>
       </section>
@@ -812,7 +921,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 
   <!-- ============ COMÚN A LOS DOS MODOS ============ -->
   <div class="common">
-      <section class="card info" id="requisitos">
+      <section class="card info" id="requisitos" data-pg="requisitos">
         <details>
           <summary>Requisitos de edad ordinaria por año</summary>
           <div class="body scroll-x"><table class="tbl" id="tblReq"></table></div>
@@ -853,7 +962,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
         <div class="sources"><b>Fuentes:</b> Ley 27/2011, RDL 2/2023 y Ley 21/2021 · «Jubilación ordinaria del Médico en 2026: cuándo, cómo y cuánto» (Centro de Estudios SIMEG) · Metodología de proyección del simulador oficial de «Tu Seguridad Social» (2 % anual + 0,115 % en la pensión máxima).</div>
       </section>
 
-      <section class="card ayuda" id="ayuda">
+      <section class="card ayuda" id="ayuda" data-pg="ayuda">
         <div class="step"><b>?</b><h2>Ayuda</h2></div>
         <div class="tabs" role="tablist">
           <button data-tab="uso" class="on" role="tab">Cómo usarla</button>
@@ -1046,16 +1155,17 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
             <li><a href="https://www.igae.pap.hacienda.gob.es/simula/inicio" target="_blank" rel="noopener">Simul@ · simulador oficial de Clases Pasivas (Hacienda)</a><small>Para contrastar tu cálculo de Clases Pasivas.</small></li>
             <li><b>«Jubilación ordinaria del Médico en 2026: cuándo, cómo y cuánto»</b><small>Centro de Estudios SIMEG.</small></li>
           </ul>
-          <div class="tip" style="background:var(--gold-soft)">⚠️ Simulación <b>orientativa y sin validez oficial</b>. Para una cifra definitiva, solicita tu simulación en «Tu Seguridad Social» o consulta con la asesoría de tu Colegio de Médicos.</div>
+          <div class="tip" style="background:var(--gold-soft)">⚠️ Simulación <b>orientativa y sin validez oficial</b>. Para una cifra definitiva, solicita tu simulación oficial al organismo que gestiona tu pensión (Seguridad Social o Clases Pasivas) o consulta con un profesional de tu confianza.</div>
         </div>
 
         <div class="tab-panel" data-panel="versiones" hidden><div id="verList"></div></div>
       </section>
   </div>
 
-  <footer>Simulación orientativa sin validez oficial. Para una cifra definitiva consulta «Tu Seguridad Social» (sede.seg-social.gob.es) o la asesoría de tu Colegio de Médicos.
+  <footer>Simulación orientativa sin validez oficial. Para una cifra definitiva, solicita tu simulación oficial al organismo que gestiona tu pensión (Seguridad Social o Clases Pasivas) o consulta con un profesional de tu confianza.
     <div class="ver">Ver. <span class="js-ver"></span> · <button type="button" id="lnkNews">Historial de versiones</button></div>
   </footer>
+</div>
 </div>
 <div id="report" aria-hidden="true"></div>
 <dialog class="news" id="dlgPdf" aria-labelledby="pdfTitle">
@@ -1090,8 +1200,18 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 /* ---------- Versión ----------
    Al desplegar: sube APP_VERSION (formato 01.00 → 01.01 cambios menores, 02.00 cambios grandes),
    añade la entrada arriba del todo en CHANGES, y actualiza version.json y CHANGELOG.md con la misma versión. */
-const APP_VERSION = '03.00';
+const APP_VERSION = '04.00';
 const CHANGES = [
+  {v:'04.00', date:'2026-09-27', items:[
+    'Nuevo diseño por páginas: menú lateral en el ordenador y la tablet, y menú ☰ en el móvil, con Inicio, Mi simulación, Comparar opciones, Desglose y fechas clave, Jubilación parcial, Requisitos y Ayuda. Los botones Nuevo, Restablecer, Tema, PDF y Guardar están ahora al pie del menú.',
+    '«Mi simulación» reúne tus datos y «¿Cuándo te quieres jubilar?» en la misma página.',
+    'Nueva barra fija con tu fecha de jubilación y tu pensión (en pareja, las dos fechas y la pensión del hogar), visible mientras navegas por la app.',
+    'El botón «atrás» del navegador o del móvil vuelve a la página anterior.',
+    'Modo pareja: el gráfico de ingresos del hogar es ahora interactivo. Toca una barra para ver ese año el sueldo y la pensión de cada uno (al mes y al año); marca la fecha de jubilación de cada uno, y las etapas muestran lo que aporta cada persona.',
+    'En iPhone ya no se pierden los datos que aún no has guardado (por ejemplo, un ejemplo cargado) cuando Safari recarga la página.',
+    'Aviso de simulación orientativa válido para todos: remite al organismo que gestiona tu pensión (Seguridad Social o Clases Pasivas).',
+    'Corregido el texto de la pensión de viudedad en pareja, y el botón PDF del modo pareja, que a veces no aparecía.'
+  ]},
   {v:'03.00', date:'2026-09-27', items:[
     'Nuevo: pensión de Clases Pasivas del Estado (funcionarios de MUFACE, ISFAS o MUGEJU ingresados antes de 2011). Elige «Clases Pasivas» en «Régimen de tu pensión» e indica tus años de servicio en cada grupo (A1, A2, B, C1, C2, E).',
     'Calcula la jubilación voluntaria (desde los 60 con 30 años de servicio, sin coeficientes reductores), la forzosa a los 65 y la prolongación con su +4 % por año, con los haberes reguladores oficiales de 2026 y la fórmula legal para varios grupos.',
@@ -1425,11 +1545,11 @@ function scenario(D,key){
 
 /* ---------- Cálculo completo ---------- */
 function compute(){
-  read(); syncInputs(); updateSaveState();
+  read(); syncInputs(); updateSaveState(); ssSet(WKEY, JSON.stringify(snapshot()));
   const ok = !!S.birth && S.days>0 && S.birth < TODAY;
   document.body.classList.toggle('is-empty', !ok);
   $('#chk1').classList.toggle('done', !!S.birth); $('#chk2').classList.toggle('done', S.days>0); $('#chk3').classList.toggle('done', S.hijos>0);
-  if(!ok){ lastMoney=null; return; }
+  if(!ok){ lastMoney=null; if(typeof updMini==='function') updMini(); return; }
   ORD = findOrdinary(); EARLY = findEarly();
   if(S.reg==='cp'){ Object.assign(STOPS[0], {lab:'Voluntaria', short:'Volunt.', sm:'desde 60'}); Object.assign(STOPS[1], {lab:'Forzosa', short:'Forzosa', sm:'65 años'}); }
   else { Object.assign(STOPS[0], {lab: S.early==='inv' ? 'Antic. invol.' : 'Anticipada', short: S.early==='inv' ? 'Invol.' : 'Antic.', sm:'máx.'}); Object.assign(STOPS[1], {lab:'Ordinaria', short:'Ord.', sm:'edad legal'}); }
@@ -1458,7 +1578,7 @@ function earlyReason(){
 /* ---------- Selección de escenario (rápida, animada) ---------- */
 function select(i, fromUser=true){
   if(scen[i]?.disabled){ $('#rSc').value = S.sc; return; }
-  S.sc = i; $('#rSc').value = i;
+  S.sc = i; $('#rSc').value = i; if(fromUser) ssSet(WKEY, JSON.stringify(snapshot()));
   const s = scen[i], ord = scen[1], col = TYPES[s.type]||TYPES.Ordinaria;
   $('#mainCard').style.setProperty('--c', col); document.querySelector('.bars-card').style.setProperty('--c', col);
   $('#rSc').style.setProperty('--p', (i/6*100)+'%');
@@ -1487,6 +1607,7 @@ function select(i, fromUser=true){
   document.querySelectorAll('#bars .bar').forEach((b,k)=>b.classList.toggle('on',k===i));
   document.querySelectorAll('#barsX span').forEach((b,k)=>b.classList.toggle('on',k===i));
   renderDetail(s);
+  updMini();
 }
 
 /* ---------- Jubilación parcial con contrato de relevo (art. 215.2 LGSS, redacción RDL 11/2024, desde 1-4-2025) ----------
@@ -1837,6 +1958,12 @@ const IDS = ['fNac','fDias','fBase','fBR','rHijos','rIrpf'];
 function snapshot(){ const o={reg:IND_REG,tipo:IND_TIPO,cp:JSON.parse(JSON.stringify(IND_CP)),brMode:S.brMode,early:S.early,antK:S.antK,sc:S.sc,barMode:S.barMode,netMode:S.netMode,fCont:$('#fCont').checked,fBrecha:$('#fBrecha').checked,fSubs:$('#fSubs').checked}; IDS.forEach(i=>o[i]=$('#'+i).value); return o; }
 const dataKey = o => JSON.stringify([o.fNac,o.fDias,o.fBase,o.fBR,o.rHijos,o.rIrpf,o.fCont,o.fBrecha,!!o.fSubs,o.brMode,o.early||'vol',o.reg||'ss',o.reg==='cp' ? JSON.stringify(o.cp) : '',o.tipo||'lab']);
 function getSaved(){ try{ return JSON.parse(localStorage.getItem(KEY)||'null'); }catch(e){ return null; } }
+// Borrador de la pestaña (sessionStorage, se borra al cerrarla): Safari en iPhone a veces recarga la página
+// (al cambiar de página, volver a la pestaña o liberar memoria); así se recupera lo que había en pantalla
+// aunque no se haya pulsado «Guardar».
+const WKEY = 'simJubBorrador', WPKEY = 'simJubBorradorPareja';
+const ssSet = (k,v) => { try{ sessionStorage.setItem(k,v); }catch(e){} };
+const ssJSON = k => { try{ return JSON.parse(sessionStorage.getItem(k)||'null'); }catch(e){ return null; } };
 function apply(o){ IDS.forEach(i=>{ $('#'+i).value = o[i]!=null ? o[i] : ''; }); IND_CP = cleanCP(o.cp); setReg(o.reg); setTipo(o.tipo); drawCPInd(); $('#fCont').checked=!!o.fCont; $('#fBrecha').checked=!!o.fBrecha; $('#fSubs').checked=!!o.fSubs; S.brMode=o.brMode||'est'; setEarly(o.early||'vol'); S.antK = Number.isInteger(o.antK) && o.antK>0 ? o.antK : null; S.sc=o.sc!=null&&o.sc!==''?+o.sc:1; S.barMode=o.barMode||'mes'; S.netMode=o.netMode||'bruto'; setMode(S.brMode); setBarMode(S.barMode); setNetMode(S.netMode); }
 function updateSaveState(){
   const saved = getSaved(), same = saved && dataKey(saved)===dataKey(snapshot());
@@ -1918,9 +2045,9 @@ function showTab(t){
   document.querySelectorAll('#ayuda .tab-panel').forEach(p=>p.hidden = p.dataset.panel!==t);
 }
 document.querySelectorAll('#ayuda .tabs button').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
-const goHistory = () => { closeNews(); showTab('versiones'); $('#ayuda').scrollIntoView({behavior:'smooth'}); };
+const goHistory = () => { closeNews(); showTab('versiones'); go('ayuda'); };
 $('#lnkNews').onclick = goHistory; $('#btnNewsAll').onclick = goHistory;
-document.querySelectorAll('.js-help-datos').forEach(a=>a.onclick = e => { e.preventDefault(); showTab('datos'); $('#ayuda').scrollIntoView({behavior:'smooth'}); });
+document.querySelectorAll('.js-help-datos').forEach(a=>a.onclick = e => { e.preventDefault(); showTab('datos'); go('ayuda'); });
 
 // Aviso «Ha habido cambios»: consulta version.json al abrir, cada minuto y al volver a la pestaña
 let updShown = false;
@@ -1938,31 +2065,62 @@ if(location.search.includes('v=')) history.replaceState(null, '', location.pathn
 checkUpdate(); setInterval(checkUpdate, 60*1000);
 document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) checkUpdate(); });
 
-// Menú de apartados
-const navLinks = [...document.querySelectorAll('#secnav a')];
-// En modo pareja cada enlace apunta a su apartado equivalente (data-par)
+// Navegación por páginas (04.00): cada página es un hash (#sim, #comparar…). Todas las secciones siguen en el
+// DOM y cada una dice en data-pg en qué página(s) aparece; showPage() solo muestra las de la página activa.
+const PAGES = {inicio:'Inicio', sim:'Mi simulación', comparar:'Comparar opciones', desglose:'Desglose y fechas clave', parcial:'Jubilación parcial', requisitos:'Requisitos y normativa', ayuda:'Ayuda'};
+const PAGES_PAR = {sim:'Nuestra simulación', comparar:'Ingresos del hogar', desglose:'Desglose de cada uno'};
+const NEED = ['comparar','desglose','parcial'];
 const isPar = () => document.body.classList.contains('par');
-const navHref = a => isPar() && a.dataset.par ? a.dataset.par : a.getAttribute('href');
-const needsData = a => a.hasAttribute('data-need') && document.body.classList.contains(isPar() ? 'par-empty' : 'is-empty');
-navLinks.forEach(a=>a.onclick = e => {
-  e.preventDefault();
-  let t = document.querySelector(navHref(a));
-  if(needsData(a)){
-    t = document.querySelector(isPar() ? '#pDatos' : '.empty-card');
-    toast(isPar() ? 'Primero rellenad la fecha de nacimiento y los días cotizados de los dos' : 'Primero introduce tu fecha de nacimiento y tus días cotizados');
-  }
-  if(t) t.scrollIntoView({behavior:'smooth', block:'start'});
-});
-let navIO = null;
-function navObserve(){
-  if(!('IntersectionObserver' in window)) return;
-  if(navIO) navIO.disconnect();
-  navIO = new IntersectionObserver(ents=>{ ents.forEach(en=>{ if(en.isIntersecting){ const id = '#'+en.target.id; navLinks.forEach(a=>{ const on = navHref(a)===id; a.classList.toggle('on', on); if(on){ const nav = $('#secnav'); nav.scrollTo({left: a.offsetLeft - (nav.clientWidth - a.offsetWidth)/2, behavior:'smooth'}); } }); } }); }, {rootMargin:'-35% 0px -60% 0px'});
-  navLinks.forEach(a=>{ [a.getAttribute('href'), a.dataset.par].forEach(sel=>{ const t = sel && document.querySelector(sel); if(t) navIO.observe(t); }); });
+const noData = () => document.body.classList.contains(isPar() ? 'par-empty' : 'is-empty');
+const pageTitle = pg => (isPar() && PAGES_PAR[pg]) || PAGES[pg];
+let PAGE = null;
+function showPage(pg){
+  if(!PAGES[pg] || (pg==='parcial' && MODE==='par')) pg = 'sim';
+  const changed = pg !== PAGE; PAGE = pg;
+  document.body.dataset.page = pg;
+  document.querySelectorAll('[data-pg]').forEach(el=>el.classList.toggle('pg-on', el.dataset.pg.split(' ').includes(pg)));
+  document.querySelectorAll('#sbNav [data-page]').forEach(b=>{ const on = b.dataset.page===pg; b.classList.toggle('on', on); if(on) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
+  const t = pageTitle(pg);
+  $('#pgH').textContent = t; $('#abTitle').textContent = pg==='inicio' ? 'Simulador de Jubilación' : t;
+  document.title = pg==='inicio' ? 'Simulador de Jubilación' : t + ' · Simulador de Jubilación';
+  closeNav();
+  // La línea temporal se mide con su ancho real: hay que redibujarla al hacerse visible
+  if(pg==='sim' && MODE!=='par' && !document.body.classList.contains('is-empty') && scen.length){ buildTimeline(); movePin(scen[S.sc]); }
+  if(changed) window.scrollTo(0,0);
 }
-navObserve();
-const syncNav = () => navLinks.forEach(a=>a.classList.toggle('off', needsData(a)));
+function go(pg){ if(location.hash==='#'+pg) showPage(pg); else location.hash = pg; }
+addEventListener('hashchange', ()=>{ const h = location.hash.slice(1); if(PAGES[h]) showPage(h); });
+document.querySelectorAll('#sbNav [data-page]').forEach(b=>b.onclick = ()=>go(b.dataset.page));
+document.addEventListener('click', e=>{ const b = e.target.closest && e.target.closest('[data-go]'); if(b) go(b.dataset.go); });
+// Menú hamburguesa (móvil)
+function openNav(){ document.body.classList.add('nav-open'); $('#btnNav').setAttribute('aria-expanded','true'); }
+function closeNav(){ if(!document.body.classList.contains('nav-open')) return; document.body.classList.remove('nav-open'); $('#btnNav').setAttribute('aria-expanded','false'); }
+$('#btnNav').onclick = openNav; $('#btnNavClose').onclick = closeNav; $('#veil').onclick = closeNav;
+addEventListener('keydown', e=>{ if(e.key==='Escape') closeNav(); });
+$('.sb-btns').addEventListener('click', e=>{ const b = e.target.closest('button'); if(b && b.id!=='btnTheme') closeNav(); });
+// Guardar desde la barra del móvil (refleja el estado «Guardado» del botón del menú)
+$('#btnSaveM').onclick = e => $('#btnSave').onclick(e);
+new MutationObserver(()=>$('#btnSaveM').classList.toggle('saved', $('#btnSave').classList.contains('saved'))).observe($('#btnSave'), {attributes:true, attributeFilter:['class']});
+// Las páginas que necesitan datos se ven atenuadas en el menú mientras no los hay
+const syncNav = () => { const off = noData(); document.querySelectorAll('#sbNav [data-page]').forEach(b=>b.classList.toggle('off', off && NEED.includes(b.dataset.page))); };
 new MutationObserver(syncNav).observe(document.body, {attributes:true, attributeFilter:['class']});
+// Minibarra: el resultado elegido, visible en todas las páginas
+const fMY = d => String(d.getUTCMonth()+1).padStart(2,'0') + '/' + d.getUTCFullYear();
+const escH = t => String(t).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function updMini(){
+  let h = '';
+  if(MODE==='par'){
+    const e = PR && PR.ev;
+    if(e && e.ok) h = `<span class="mb-pill">Hogar</span><span class="mb-s">${escH(pName('A'))}</span><b>${fMY(e.A.o.D)}</b><span class="mb-s">${escH(pName('B'))}</span><b>${fMY(e.B.o.D)}</b><span class="mb-m">${eur0(hv(e))}/mes</span><span class="mb-r">${isNet() ? 'netos' : 'brutos'}, en € de hoy</span>`;
+    else if(e) h = `<span class="mb-pill">Hogar</span><span class="mb-s">Con esas fechas alguno de los dos no puede jubilarse</span>`;
+  } else {
+    const s = scen[S.sc];
+    if(s && !document.body.classList.contains('is-empty')) h = `<span class="mb-pill">${s.type}</span><b>${fShort(s.D)}</b><span class="mb-s mb-age">${s.age ? fAgeShort(s.age) : ''}</span>`
+      + (s.ok ? `<span class="mb-m">${eur(s.total)}/mes</span><span class="mb-r">neto aprox. ${eur(s.neto)}</span>` : '<span class="mb-m">—</span>');
+  }
+  $('#minibar').innerHTML = h;
+}
+$('#minibar').onclick = () => { if(PAGE!=='sim') return go('sim'); $(MODE==='par' ? '#pPlan' : '#mainCard').scrollIntoView({behavior:'smooth', block:'start'}); };
 
 /* ---------- Compartir escenario por enlace ---------- */
 const APP_URL = 'https://cjgaland.github.io/simulador-jubilacion/';
@@ -2034,7 +2192,7 @@ function buildReport(){
     </div>
     <h2>Comparativa de escenarios</h2>
     <table><tr><th>Escenario</th><th>Fecha</th><th>Edad</th><th class="n">Bruto/mes</th><th class="n">Neto/mes</th><th class="n">vs ordinaria</th><th class="n">Hasta los 85 (€ hoy)</th></tr>${rows}</table>
-    <div class="rp-note">Simulación orientativa y sin validez oficial, basada en la normativa vigente en 2026 (LGSS, Ley 27/2011, Ley 21/2021 y RDL 2/2023) y en la metodología de proyección de «Tu Seguridad Social» (+2 % anual). Para una cifra definitiva, solicita tu simulación en la Sede Electrónica de la Seguridad Social.</div>
+    <div class="rp-note">Simulación orientativa y sin validez oficial, basada en la normativa vigente en 2026 (LGSS, Ley 27/2011, Ley 21/2021 y RDL 2/2023) y en la metodología de proyección de «Tu Seguridad Social» (+2 % anual). Para una cifra definitiva, solicita tu simulación oficial al organismo que gestiona tu pensión (Seguridad Social o Clases Pasivas).</div>
     <div class="rp-foot">Simulador de Jubilación · ${APP_URL} · Creado por Carlos J. Galán Doval – Ver. ${APP_VERSION} – 2026</div>`;
   return true;
 }
@@ -2244,7 +2402,7 @@ addEventListener('drop', e => {
   else toast('Suelta el PDF sobre la ficha de la persona a la que pertenece');
 });
 async function cargarVL(file){
-  $('#datos').scrollIntoView({behavior:'smooth', block:'start'});
+  go('sim'); $('#datos').scrollIntoView({behavior:'smooth', block:'start'});
   const btn = $('#btnVL'), lbl = btn.querySelector('span'), txt0 = lbl.textContent;
   btn.classList.add('busy'); lbl.textContent = 'Leyendo el informe…';
   try{
@@ -2416,7 +2574,7 @@ const trackHTML = k => `<div class="ptrack" id="pTrack${k}" data-p="${k}"><div c
 
 function buildPairUI(){
   $('#pairApp').innerHTML = `
-  <section class="card pcard-wrap" id="pDatos">
+  <section class="card pcard-wrap" id="pDatos" data-pg="sim">
     <div class="step"><b>1</b><h2>Vuestros datos</h2></div>
     <p class="sub">Rellenad los datos de cada uno o cargad su vida laboral en PDF (en el ordenador también podéis arrastrarla sobre su ficha). Todo se calcula en este dispositivo.</p>
     <div class="pgrid">${pcardHTML('A')}${pcardHTML('B')}</div>
@@ -2429,11 +2587,11 @@ function buildPairUI(){
     </div>
     <div class="pactions"><button type="button" class="btn" id="pDemo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3l14 9-14 9z"/></svg>Ver un ejemplo de pareja</button></div>
   </section>
-  <section class="card pempty">
+  <section class="card pempty" data-pg="sim">
     <h2>Rellenad los datos de los dos</h2>
     <p>Con la fecha de nacimiento y los días cotizados de cada uno veréis vuestro plan conjunto: fechas, pensión del hogar, ingresos año a año y qué pasaría si falta uno.</p>
   </section>
-  <section class="card pplan needs-pair" id="pPlan">
+  <section class="card pplan needs-pair" id="pPlan" data-pg="sim">
     <div class="q"><div class="step" style="margin:0"><b>2</b><h2>¿Cuándo os jubiláis?</h2></div></div>
     <div class="pnet-bar"><span class="irpf-chip pchip"></span><div class="seg sm pnet"><button type="button" data-v="bruto">Bruto</button><button type="button" data-v="neto">Neto</button></div></div>
     <div class="label" style="margin-bottom:8px">Planes sugeridos · toca uno para aplicarlo</div>
@@ -2447,16 +2605,16 @@ function buildPairUI(){
       <button class="btn" id="pReport"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M9 13h6M9 17h6"/></svg>Informe PDF</button>
     </div>
   </section>
-  <section class="card hogar-card needs-pair" id="pHogar">
+  <section class="card hogar-card needs-pair" id="pHogar" data-pg="comparar">
     <div class="bars-head">
       <div><h2>Ingresos <span class="js-bn">brutos</span> del hogar, año a año</h2>
-      <p>Sueldos y pensiones <span class="js-bn">brutos</span> de los dos, en euros de hoy. Pasa el dedo o el ratón por una barra para ver el detalle.</p>
+      <p>Sueldos y pensiones <span class="js-bn">brutos</span> de los dos, en euros de hoy. Toca una barra (o pasa el ratón) para ver qué aporta cada uno ese año.</p>
       <span class="irpf-chip pchip"></span></div>
       <div class="bars-ctrl"><div class="seg sm pnet"><button type="button" data-v="bruto">Bruto</button><button type="button" data-v="neto">Neto</button></div></div>
     </div>
     <div id="pHogarBody"></div>
   </section>
-  <section class="card pdet-card needs-pair" id="pDetalle">
+  <section class="card pdet-card needs-pair" id="pDetalle" data-pg="desglose">
     <h2>Desglose de cada uno</h2>
     <p>Cómo se calcula cada pensión en la fecha elegida.</p>
     <div id="pDetBody"></div>
@@ -2532,8 +2690,8 @@ function refreshNames(){
 function computePair(){
   const PA = personIn(PS.A), PB = personIn(PS.B), ok = !!(PA && PB);
   document.body.classList.toggle('par-empty', !ok);
-  refreshNames(); updatePairSaveState();
-  if(!ok){ PR = null; return; }
+  refreshNames(); updatePairSaveState(); ssSet(WPKEY, JSON.stringify(PS));
+  if(!ok){ PR = null; updMini(); return; }
   const R = {A: personPlan(PA), B: personPlan(PB)};
   R.ia = idxOf(R.A, PS.selA); R.ib = idxOf(R.B, PS.selB);
   R.pre = computePresets(R);
@@ -2543,7 +2701,7 @@ function computePair(){
 function refreshSelection(){
   if(!PR) return;
   PR.ev = evalPair(PR, PR.ia, PR.ib);
-  paintTracks(); markPresets(); renderSummary(); renderHogar(); renderPDetail(); updatePairSaveState();
+  paintTracks(); markPresets(); renderSummary(); renderHogar(); renderPDetail(); updatePairSaveState(); updMini(); ssSet(WPKEY, JSON.stringify(PS));
 }
 function renderTracks(){
   ['A','B'].forEach(k=>{
@@ -2638,8 +2796,12 @@ function renderAdvice(){
   if(+PS.hc && PS.asig==='auto' && e.to!=='none') tips.push(`El complemento por los hijos en común lo cobraría <b>${pName(e.to)}</b>, por tener la pensión más baja (art. 60 LGSS).`);
   $('#pAdvice').innerHTML = tips.length ? `<h3>💡 Qué os conviene saber</h3><ul>${tips.map(t=>`<li>${t}</li>`).join('')}</ul>` : '';
 }
+// Ingresos del hogar año a año. Interactivo como el gráfico individual: al pasar el ratón o tocar una barra
+// se ve el desglose de ese año de cada uno (#hSel). HSEL = año elegido; se conserva al cambiar de plan.
+// Las barras parten de la altura anterior para que el cambio se vea animado.
+let HSEL = null, HYEARS = [];
 function renderHogar(){
-  const e = PR.ev; if(!e.ok){ $('#pHogarBody').innerHTML = ''; return; }
+  const e = PR.ev, body = $('#pHogarBody'); if(!e.ok){ body.innerHTML = ''; HYEARS = []; return; }
   const sal = k => +(isNet() ? PS[k].sueldo : PS[k].sueldoB) || 0, y0 = TODAY.getUTCFullYear() + 1;
   const y1 = Math.max(PR.A.P.birth.getUTCFullYear(), PR.B.P.birth.getUTCFullYear()) + 85;
   const years = [];
@@ -2652,22 +2814,65 @@ function renderHogar(){
     }
     v.t = v.sa + v.pa + v.sb + v.pb; years.push(v);
   }
-  const mx = Math.max(...years.map(v=>v.t), 1), h = x => (x/mx*100).toFixed(2)+'%';
-  const tip = v => `${v.y} · ${eur0(v.t)} ${bn()} al año\n${pName('A')}: ${v.sa ? 'sueldo '+eur0(v.sa) : ''}${v.sa && v.pa ? ' + ' : ''}${v.pa ? 'pensión '+eur0(v.pa) : ''}\n${pName('B')}: ${v.sb ? 'sueldo '+eur0(v.sb) : ''}${v.sb && v.pb ? ' + ' : ''}${v.pb ? 'pensión '+eur0(v.pb) : ''}`;
-  const bars = years.map(v=>`<div class="hbar" title="${tip(v)}"><i class="s-pa" style="height:${h(v.pa)}"></i><i class="s-sa" style="height:${h(v.sa)}"></i><i class="s-pb" style="height:${h(v.pb)}"></i><i class="s-sb" style="height:${h(v.sb)}"></i></div>`).join('');
-  const xs = years.map((v,i)=>`<span>${v.y%5===0 || i===0 ? v.y : ''}</span>`).join('');
+  HYEARS = years;
+  const n = years.length, mx = Math.max(...years.map(v=>v.t), 1), h = x => (x/mx*86).toFixed(2)+'%';
   const first = e.A.o.D <= e.B.o.D ? e.A : e.B, second = first===e.A ? e.B : e.A, anySal = sal('A') || sal('B');
+  const clampY = y => Math.min(Math.max(y, y0), y1);
+  if(!years.some(v=>v.y===HSEL)) HSEL = clampY(first.o.D.getUTCFullYear());
+  // alturas anteriores (mismo número de barras) para animar desde ellas
+  const prev = [...body.querySelectorAll('.hchart .hbar')].map(bb=>[...bb.children].map(i=>i.style.height));
+  const old = (i,j) => prev.length===n ? prev[i][j] : '0%';
+  const segs = ['pa','sa','pb','sb'];
+  const bars = years.map((v,i)=>`<button type="button" class="hbar${v.y===HSEL ? ' on' : ''}" data-i="${i}" aria-label="${v.y}: ${eur0(v.t)} al año">${segs.map((k,j)=>`<i class="s-${k}" style="height:${old(i,j)}" data-h="${h(v[k])}"></i>`).join('')}</button>`).join('');
+  const mk = (x, row) => { const d = x.o.D, i = d.getUTCFullYear() - y0; if(i < 0 || i >= n) return '';
+    const l = (i + d.getUTCMonth()/12)/n*100;
+    return `<div class="hmk${l > 62 ? ' r' : ''}" data-p="${x.k}" style="left:${l.toFixed(2)}%"><span style="top:${row*17}px">${escH(pName(x.k))} se jubila</span></div>`; };
+  const xs = years.map(()=>'<span></span>').join('');
+  const ma = (t, mes, n) => `${t} ${eur0(mes)}/mes · ${eur0(mes*n)}/año`; // al mes y al año
+  const pp = (k, t) => `<span class="pp" data-p="${k}"><i></i>${escH(pName(k))}: ${t}</span>`;
   const ph1 = (sal('A') + sal('B'))*12, ph2 = pv(first)*14 + sal(second.k)*12, ph3 = hv(e)*14;
   const chg = x => ph1 ? ` <small>${x>=ph1?'+':'−'}${Math.abs(Math.round((x/ph1-1)*100))} % frente a hoy</small>` : '';
+  const yF = first.o.D.getUTCFullYear(), yS = second.o.D.getUTCFullYear();
   const phases = `<div class="phases">
-      <div><span>Los dos trabajando · hasta ${fShort(first.o.D).slice(3)}</span><b>${anySal ? eur0(ph1)+'/año' : '—'}</b>${anySal ? '' : `<small>Añadid los sueldos ${bn()}</small>`}</div>
-      ${e.juntos ? `<div><span>Os jubiláis a la vez</span><b>—</b><small>No hay etapa intermedia</small></div>` : `<div><span>Con ${pName(first.k)} jubilado/a · ${fShort(first.o.D).slice(3)} a ${fShort(second.o.D).slice(3)}</span><b>${eur0(ph2)}/año</b>${chg(ph2)}</div>`}
-      <div><span>Los dos jubilados · desde ${fShort(second.o.D).slice(3)}</span><b>${eur0(ph3)}/año</b>${chg(ph3)}</div>
+      <div data-y="${clampY(Math.min(y0, yF))}"><span>Los dos trabajando · hasta ${fShort(first.o.D).slice(3)}</span><b>${anySal ? eur0(ph1)+'/año' : '—'}</b>${anySal ? `<small>${pp('A', ma('sueldo', sal('A'), 12))}${pp('B', ma('sueldo', sal('B'), 12))}</small>` : `<small>Añadid los sueldos ${bn()}</small>`}</div>
+      ${e.juntos ? `<div><span>Os jubiláis a la vez</span><b>—</b><small>No hay etapa intermedia</small></div>` : `<div data-y="${clampY(Math.min(yF + 1, yS))}"><span>Con ${escH(pName(first.k))} jubilado/a · ${fShort(first.o.D).slice(3)} a ${fShort(second.o.D).slice(3)}</span><b>${eur0(ph2)}/año</b>${chg(ph2)}<small>${pp(first.k, ma('pensión', pv(first), 14))}${pp(second.k, sal(second.k) ? ma('sueldo', sal(second.k), 12) : 'sueldo sin indicar')}</small></div>`}
+      <div data-y="${clampY(yS + 1)}"><span>Los dos jubilados · desde ${fShort(second.o.D).slice(3)}</span><b>${eur0(ph3)}/año</b>${chg(ph3)}<small>${pp('A', ma('pensión', pv(e.A), 14))}${pp('B', ma('pensión', pv(e.B), 14))}</small></div>
     </div>`;
-  $('#pHogarBody').innerHTML = `<div class="hchart">${bars}</div><div class="hx">${xs}</div>
-    <div class="hleg"><span><i class="s-sa"></i>Sueldo ${pName('A')}</span><span><i class="s-pa"></i>Pensión ${pName('A')}</span><span><i class="s-sb"></i>Sueldo ${pName('B')}</span><span><i class="s-pb"></i>Pensión ${pName('B')}</span></div>
+  body.innerHTML = `<div class="hchart">${bars}${mk(e.A,0)}${mk(e.B,1)}</div><div class="hx">${xs}</div>
+    <div class="hleg"><span><i class="s-sa"></i>Sueldo ${escH(pName('A'))}</span><span><i class="s-pa"></i>Pensión ${escH(pName('A'))}</span><span><i class="s-sb"></i>Sueldo ${escH(pName('B'))}</span><span><i class="s-pb"></i>Pensión ${escH(pName('B'))}</span></div>
+    <div class="hsel" id="hSel" aria-live="polite"></div>
     ${phases}
-    <p class="hint" style="margin-top:10px">En euros de hoy: se supone que sueldos y pensiones mantienen su poder adquisitivo. Hasta que el más joven cumpla 85 años.</p>`;
+    <p class="hint" style="margin-top:10px">En euros de hoy: se supone que sueldos y pensiones mantienen su poder adquisitivo. Hasta que el más joven cumpla 85 años. Toca una etapa para ver su primer año completo.</p>`;
+  const ch = body.querySelector('.hchart');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>ch.querySelectorAll('i[data-h]').forEach(i=>{ i.style.height = i.dataset.h; })));
+  // Eje: cada 5 años y el año elegido en negrita (sin los rótulos que se le echarían encima)
+  const axis = () => { const s = HYEARS.findIndex(v=>v.y===HSEL);
+    body.querySelectorAll('.hx span').forEach((sp,i)=>{ const y = HYEARS[i].y, on = i===s;
+      sp.classList.toggle('on', on); sp.textContent = on || ((y%5===0 || i===0) && Math.abs(i-s) > 2) ? y : ''; }); };
+  const pick = y => { const i = HYEARS.findIndex(v=>v.y===y); if(i < 0) return; HSEL = y; ch.querySelectorAll('.hbar').forEach((bb,k)=>bb.classList.toggle('on', k===i)); hInspect(i); axis(); };
+  axis();
+  ch.addEventListener('click', ev=>{ const bb = ev.target.closest('.hbar'); if(bb) pick(HYEARS[+bb.dataset.i].y); });
+  ch.addEventListener('pointerover', ev=>{ if(ev.pointerType!=='mouse') return; const bb = ev.target.closest('.hbar'); if(bb) hInspect(+bb.dataset.i); });
+  ch.addEventListener('pointerleave', ev=>{ if(ev.pointerType==='mouse') hInspect(HYEARS.findIndex(v=>v.y===HSEL)); });
+  body.querySelectorAll('.phases [data-y]').forEach(d=>d.onclick = ()=>pick(+d.dataset.y));
+  hInspect(HYEARS.findIndex(v=>v.y===HSEL));
+}
+// Desglose de un año del gráfico del hogar: qué aporta cada uno (sueldo y/o pensión)
+function hInspect(i){
+  const v = HYEARS[i], box = $('#hSel'), e = PR && PR.ev; if(!v || !box || !e || !e.ok) return;
+  const who = (k, sv, pvv) => {
+    const x = e[k], yJ = x.o.D.getUTCFullYear();
+    const est = yJ > v.y ? 'Trabajando' : yJ < v.y ? `Jubilado/a · ${x.o.type.toLowerCase()}` : `Se jubila en ${x.o.D.toLocaleDateString('es-ES', {month:'long', timeZone:'UTC'})}`;
+    // Primero lo que cobra al mes (sueldo en 12 pagas, pensión en 14) y después el total del año
+    const salM = +(isNet() ? PS[k].sueldo : PS[k].sueldoB) || 0;
+    const salTxt = sv ? `${eur0(salM)}/mes` : yJ >= v.y && !salM ? 'sin indicar' : '—';
+    return `<div class="hs-p" data-p="${k}"><i></i><div><b>${escH(pName(k))}</b><small>${est}</small></div>
+      <div class="hs-v"><span>Sueldo <b>${salTxt}</b>${sv ? ' <small>12 pagas</small>' : ''}</span><span>Pensión <b>${pvv ? eur0(pv(x))+'/mes' : '—'}</b>${pvv ? ' <small>14 pagas</small>' : ''}</span></div>
+      <b class="hs-t">${eur0(sv + pvv)}<small>al año</small></b></div>`;
+  };
+  const media = k => eur0((k==='A' ? v.sa + v.pa : v.sb + v.pb)/12);
+  box.innerHTML = `<div class="hs-h"><span class="yr">${v.y}</span><span>Hogar: <b>${eur0(v.t)}</b> ${bn()} al año · unos <b>${eur0(v.t/12)}</b> al mes (${escH(pName('A'))} ${media('A')} · ${escH(pName('B'))} ${media('B')})</span></div>
+    ${who('A', v.sa, v.pa)}${who('B', v.sb, v.pb)}`;
 }
 // Pensión de viudedad del que queda (en € de hoy): 52 % de la base reguladora del fallecido,
 // limitada para que su pensión propia + viudedad no superen la pensión máxima.
@@ -2720,13 +2925,13 @@ function renderPDetail(){
     <h2 class="second" style="font-family:Fraunces,Georgia,serif;font-weight:500;font-size:20px;margin:26px 0 0">¿Y si falta uno? · Pensión de viudedad</h2>
     <p style="color:var(--muted);font-size:13px;margin:2px 0 0">Con los dos ya jubilados; importes brutos mensuales en euros de hoy.</p>
     <div class="viu">${vcard(e.A, e.B)}${vcard(e.B, e.A)}</div>
-    <p class="hint" style="margin-top:10px">Requiere matrimonio o pareja de hecho registrada que cumpla los requisitos de convivencia. En la Seguridad Social, con pensión propia se aplica normalmente el 52 % de la base reguladora del fallecido; en Clases Pasivas, el 50 % de su pensión de jubilación. puede ser el 60 % (65 años o más sin otros ingresos relevantes) o el 70 % (con cargas familiares e ingresos bajos). La suma de pensiones públicas no puede superar la pensión máxima. Cálculo orientativo.</p>`;
+    <p class="hint" style="margin-top:10px">Requiere matrimonio o pareja de hecho registrada que cumpla los requisitos de convivencia. En la Seguridad Social, con pensión propia se aplica normalmente el 52 % de la base reguladora del fallecido; en Clases Pasivas, el 50 % de su pensión de jubilación. En la Seguridad Social, el porcentaje puede subir al 60 % (65 años o más sin otros ingresos relevantes) o el 70 % (con cargas familiares e ingresos bajos). La suma de pensiones públicas no puede superar la pensión máxima. Cálculo orientativo.</p>`;
 }
 
 /* ---------- Vida laboral por persona, guardar, compartir e informe ---------- */
 async function cargarVLPar(file, k){
   const card = $(`#pairApp .pcard[data-p="${k}"]`), btn = card.querySelector('[data-vl]'), lbl = btn.querySelector('span'), t0 = lbl.textContent;
-  card.scrollIntoView({behavior:'smooth', block:'center'});
+  go('sim'); card.scrollIntoView({behavior:'smooth', block:'center'});
   btn.classList.add('busy'); lbl.textContent = 'Leyendo el informe…';
   try{
     const r = await leerVidaLaboral(file);
@@ -2812,7 +3017,7 @@ function buildPairReport(){
     ${$('#pHogarBody').innerHTML}
     <h2>Desglose y viudedad</h2>
     ${$('#pDetBody').innerHTML}
-    <div class="rp-note">Simulación orientativa y sin validez oficial, basada en la normativa vigente en 2026 y en la metodología de proyección de «Tu Seguridad Social» (+2 % anual). Los dos estaréis jubilados desde el ${fDate(later)}. Para cifras definitivas, solicitad vuestras simulaciones en la Sede Electrónica de la Seguridad Social.</div>
+    <div class="rp-note">Simulación orientativa y sin validez oficial, basada en la normativa vigente en 2026 y en la metodología de proyección de «Tu Seguridad Social» (+2 % anual). Los dos estaréis jubilados desde el ${fDate(later)}. Para cifras definitivas, solicitad vuestras simulaciones oficiales al organismo que gestiona la pensión de cada uno (Seguridad Social o Clases Pasivas).</div>
     <div class="rp-foot">Simulador de Jubilación · ${APP_URL} · Creado por Carlos J. Galán Doval – Ver. ${APP_VERSION} – 2026</div>`;
   return true;
 }
@@ -2824,12 +3029,12 @@ function setModeUI(m){
   $('#pairApp').hidden = MODE!=='par';
   document.querySelectorAll('.mode-sel button').forEach(b=>b.classList.toggle('on', b.dataset.m===MODE));
   if(MODE==='par') computePair(); else compute();
-  syncNav();
+  syncNav(); updMini();
+  if(PAGE==='parcial' && MODE==='par') go('sim'); else if(PAGE) showPage(PAGE);
 }
 document.querySelectorAll('.mode-sel button').forEach(b=>b.onclick = ()=>{
-  if(b.dataset.m===MODE) return;
-  setModeUI(b.dataset.m);
-  $(MODE==='par' ? '#pDatos' : '#datos').scrollIntoView({behavior:'smooth', block:'start'});
+  if(b.dataset.m!==MODE) setModeUI(b.dataset.m);
+  if(b.closest('.cover') || PAGE==='inicio') go('sim');
 });
 {
   const indSave = $('#btnSave').onclick, indReset = $('#btnReset').onclick, indClear = $('#btnClear').onclick;
@@ -2844,6 +3049,7 @@ document.querySelectorAll('.mode-sel button').forEach(b=>b.onclick = ()=>{
     PS = sv; fillPairForm(); computePair(); toast('Se han cargado los datos guardados de la pareja');
   };
   $('#btnClear').onclick = e => {
+    go('sim');
     if(MODE!=='par') return indClear(e);
     PS = clonar(PEMPTY); document.querySelectorAll('#pairApp [data-vlnote]').forEach(n=>n.hidden = true);
     fillPairForm(); computePair(); window.scrollTo({top:0, behavior:'smooth'});
@@ -2854,16 +3060,19 @@ document.querySelectorAll('.mode-sel button').forEach(b=>b.onclick = ()=>{
 /* ---------- Modo sin conexión (service worker «primero la red») ---------- */
 if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 
-apply(shared || getSaved() || EMPTY);
+apply(shared || ssJSON(WKEY) || getSaved() || EMPTY);
 compute();
 if(shared) toast('Simulación compartida cargada · no se guarda en tu dispositivo salvo que pulses «Guardar»');
 
 // Modo pareja: enlace compartido (#p=…), datos guardados y último modo usado
 let sharedPair = null;
 { const m = location.hash.match(/[#&]p=([^&]+)/); if(m){ try{ sharedPair = cleanPair(b64d(m[1])); }catch(e){} history.replaceState(null,'',location.pathname); } }
-PS = sharedPair || cleanPair(getSavedPair()) || clonar(PEMPTY);
-buildPairUI(); fillPairForm(); navObserve();
+PS = sharedPair || cleanPair(ssJSON(WPKEY)) || cleanPair(getSavedPair()) || clonar(PEMPTY);
+buildPairUI(); fillPairForm();
 setModeUI(sharedPair ? 'par' : shared ? 'ind' : (lsGet(MKEY)==='par' ? 'par' : 'ind'));
+// Página inicial: la del enlace (#sim, #ayuda…); si no, la simulación cuando ya hay datos y la portada si no los hay
+{ const h = location.hash.slice(1), start = PAGES[h] ? h : noData() ? 'inicio' : 'sim';
+  history.replaceState(null, '', location.pathname + location.search + '#' + start); showPage(start); }
 if(sharedPair) toast('Plan de pareja compartido cargado · no se guarda salvo que pulséis «Guardar»');
 })();
 </script>
