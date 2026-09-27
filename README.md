@@ -2,7 +2,7 @@
 
 **👉 Abrir la app: https://cjgaland.github.io/simulador-jubilacion/**
 
-Aplicación web para calcular **cuándo y con cuánto** te podrás jubilar en el Régimen General de la Seguridad Social española.
+Aplicación web para calcular **cuándo y con qué pensión** te podrás jubilar en España, tanto en la **Seguridad Social** como en **Clases Pasivas** (funcionarios de MUFACE, ISFAS o MUGEJU anteriores a 2011), comparando todas las opciones: anticipada, ordinaria, demorada o parcial, y también en pareja.
 
 Introduces tus datos (fecha de nacimiento, días cotizados según tu Informe de Vida Laboral y, si quieres, número de hijos y los ajustes avanzados de base de cotización e IRPF) y la app muestra al momento:
 
@@ -11,6 +11,7 @@ Introduces tus datos (fecha de nacimiento, días cotizados según tu Informe de 
 - Las alternativas de **jubilación anticipada** (voluntaria o involuntaria) y **demorada** (de +1 a +5 años), con sus coeficientes reductores o porcentajes adicionales.
 - Un **informe en PDF** listo para guardar o imprimir, y un enlace para **compartir** la simulación.
 - Funciona también **sin conexión** una vez abierta.
+- **Clases Pasivas** 🏛️: funcionarios de MUFACE, ISFAS o MUGEJU ingresados antes de 2011 (voluntaria desde los 60 sin reducción, forzosa a los 65 y prolongación).
 - **Modo pareja** 👥: planificad la jubilación de los dos (fecha común, equilibrio, máximo a largo plazo…), con la pensión del hogar, los ingresos año a año, el desglose de cada uno y la pensión de viudedad si falta uno.
 - Una **línea temporal**, un gráfico comparativo de todas las opciones y el **desglose** completo del cálculo.
 

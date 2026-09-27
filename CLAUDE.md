@@ -22,7 +22,8 @@ Pensada para compartir con compañeros (médicos del SAS). Autor: **Carlos J. Ga
 - Escenarios: anticipada (voluntaria o **involuntaria**, selector `#segEarly`, estado `S.early`),
   ordinaria y demorada +1…+5. En **ambas** anticipadas la edad legal de referencia es la «de haber
   seguido cotizando» (`ORDC`, arts. 207.2 y 208.2 LGSS; corregido en 01.03 con permiso de Carlos).
-  Voluntaria: hasta 24 meses, 35 años, tabla `COEF`. Involuntaria: hasta 48 meses, 33 años, tabla
+  Voluntaria: hasta 24 meses, 35 años, tabla `COEF` (art. 208.2 LGSS; **corregida en 03.00**, la original
+  era errónea salvo en 24 meses; verificada valor a valor contra el BOE). Involuntaria: hasta 48 meses, 33 años, tabla
   `COEF_INV`, tope = máxima −0,5 %/trimestre.
 - **Validación oficial (25/09/2026):** contrastado con un informe real de «Tu Seguridad Social»
   (datos de Carlos, que NO se guardan en ningún fichero del repo): la ordinaria coincide exactamente
@@ -72,9 +73,26 @@ Pensada para compartir con compañeros (médicos del SAS). Autor: **Carlos J. Ga
 - Bruto/neto en pareja (02.02): `PS.net` ('bruto'|'neto'), helpers `pv()` (persona), `hv()` (hogar),
   `t85()` y `bn()`; dos selectores `.pnet` sincronizados (plan y gráfico) + `.pchip`. Sueldos: `sueldoB`
   (bruto) y `sueldo` (neto), ambos opcionales, 12 pagas. Los planes sugeridos se ordenan siempre en bruto.
+- **Tipo de personal (03.00)**: `IND_TIPO` / `PS[k].tipo` → `S.tipo` 'lab'|'est'|'fun' (solo régimen SS; en CP se
+  trata como funcionario). No toca la pensión. `tope70()`: estatutario (art. 26 Ley 55/2003), funcionario y
+  Clases Pasivas → sin escenarios después de los 70 (individual: `disabled`; pareja: `personPlan` corta las
+  fechas). Avisos en `renderAlert` y `renderAdvice`.
 - `#requisitos` y `#ayuda` están en `.common` (fuera de `.grid`), visibles en los dos modos.
 - **html2canvas no entiende `color-mix()`**: no usarlo en nada que salga en el Informe PDF.
-- Pendiente (acordado con Carlos): cálculo de **Clases Pasivas** (MUFACE/ISFAS/MUGEJU pre-2011).
+- **Clases Pasivas (03.00)**: `S.reg` 'ss'|'cp' (individual: `IND_REG`/`IND_CP`, `body.ind-cp`; pareja:
+  `PS[k].reg`/`PS[k].cp`, `.pcard.reg-cp`; CSS `.ss-only`/`.cp-only`). Carrera `cp = {t:[{g,a,m}], ssA, ssM}`
+  (`cleanCP`, componente `mountCP`). Motor: `findOrdinary/findEarly/scenario` delegan en `cpOrd/cpEarly/
+  scenarioCP` si `S.reg==='cp'`. `HR2026` (RDL 3/2026 anexo III; **actualizar cada año**), `PCT_CP` (art. 31.1),
+  `cpPension` (art. 31.2; SS → grupo de menor haber, art. 32.2.e). Tipos: 'Voluntaria' (sin coef., sin
+  complemento hijos), 'Forzosa', 'Prolongación' (demora DA 17.ª = art. 210.2 LGSS, tope HR A1/14).
+  Viudedad CP: 50 % de la pensión del fallecido. Validado con cálculos a mano; **pendiente contrastar con un
+  caso real** (Simul@ de Hacienda o resolución de pensión).
+- **Modelo C.S.** (`leerCS(fo)`, dentro de `leerVidaLaboral()`): el PDF oficial es un formulario rellenable
+  y **cifrado**; se leen las casillas con `pdfjs getFieldObjects()` (318 campos: `cboGrupo1-10`, `aa/mm/dd1-10`,
+  `Posesion/Cese1-10`, `cbosGrupo1-7`, `saa/smm/sdd1-7`, `FechaNacimiento`, `Nombre_Solicitante`). La casilla
+  oculta `Today` guarda la fecha de la **plantilla** (31-03-2020): no usarla. Destino sin cese → desde la
+  toma de posesión hasta hoy. Probado con un C.S. rellenado con datos ficticios (pdf.js `annotationStorage`
+  + `saveDocument()`; pdf-lib no abre el PDF porque está cifrado). Pendiente probar con un C.S. real.
 
 ## Estructura de la página
 Cabecera (tema, Nuevo, Restablecer, Guardar, Imprimir) → **Portada** (icono grande, título,
@@ -137,6 +155,11 @@ esquinas redondeadas) para `apple-touch-icon.png`, `icon-192.png` e `icon-512.pn
 Chrome headless se cuelga; funciona un script Swift con `NSImage` (lee SVG nativo) → PNG.
 
 ## Ideas pendientes (propuestas a Carlos)
+- (Hecho en 03.00, del «Manual práctico de jubilación» de la Junta: fechas clave, jubilación parcial, art. 208.3,
+  premio de jubilación y discapacidad en la Ayuda.) Pendiente: confirmar si el premio aplica a estatutarios del
+  SAS; calcular la anticipada por discapacidad; jubilación parcial en el modo pareja.
+- Jubilación parcial: `PAR` (estado en memoria, no se guarda), `PARCTX`; solo modo individual. Oculta para
+  funcionarios (`body.no-parcial`) y Clases Pasivas (`.ss-only`).
 - (Hechas en 01.01: anticipada involuntaria, informe PDF, compartir por enlace, modo sin conexión.)
 - (Hecho en 02.00: modo pareja con viudedad y sueldos.)
 - Clases Pasivas (haberes reguladores por grupo + % por años de servicio, LPGE de cada año).

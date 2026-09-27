@@ -6,6 +6,23 @@ Formato de versión `XX.YY` (cambios menores `01.01`, cambios grandes `02.00`).
 > Al publicar una versión nueva, actualiza también `APP_VERSION` y `CHANGES` en `index.html`
 > y `version.json`. Los usuarios verán el aviso «Ha habido cambios» y, al actualizar, las novedades.
 
+## [03.00] - 2026-09-27
+
+- **Clases Pasivas del Estado** (RDLeg 670/1987): selector «Régimen de tu pensión» (Seguridad Social / Clases Pasivas) en el modo individual y en cada ficha del modo pareja.
+- Carrera por grupos (A1, A2, B, C1, C2, E; hasta 4 tramos) + años en otros regímenes (cómputo recíproco, asignados al grupo de menor haber regulador, art. 32.2.e).
+- Cálculo: haberes reguladores 2026 (RDL 3/2026, anexo III, +2 %/año en adelante), porcentajes del art. 31.1, fórmula P = R1·C1 + (R2−R1)·C2 + … (art. 31.2), 14 pagas y tope de pensión máxima.
+- Escenarios: voluntaria desde los 60 con 30 años (art. 28.2.b, sin coeficientes reductores), forzosa a los 65 (con prórroga hasta 15 años si procede), prolongación +1…+5 con el porcentaje adicional por demora (DA 17.ª TRLCP → art. 210.2 LGSS; tope: haber regulador A1).
+- **Lectura del Modelo C.S.** (certificación de servicios efectivos a efectos de derechos pasivos, PDF rellenable del Ministerio): se leen las casillas del formulario por su nombre (`cboGrupoN`, `aaN/mmN/ddN`, `PosesionN`, `CeseN`, `cbosGrupoN`, `saaN…`, `FechaNacimiento`, `Nombre_Solicitante`). Grupos antiguos traducidos (A→A1, B→A2, C→C1, D→C2, AP→E); tramos consecutivos del mismo grupo se unen; el destino actual (sin cese) se cuenta desde la toma de posesión hasta hoy. Escaneos: aviso para introducir a mano.
+- El tipo de PDF cargado elige el régimen (vida laboral/simulación → Seguridad Social; Modelo C.S. → Clases Pasivas). El botón «Cargar un PDF oficial» se ve en los dos regímenes.
+- Complemento por hijos solo en forzosa/prolongación, no en voluntaria (DA 18.ª). Viudedad en Clases Pasivas: 50 % de la pensión del fallecido.
+- **Tipo de personal** (régimen de Seguridad Social): laboral/privado, estatutario o funcionario, en el modo individual y en cada ficha de pareja. Estatutario (art. 26 Ley 55/2003) y funcionario: forzosa a los 65, prolongación hasta los 70 → se desactivan los escenarios posteriores a los 70 (también en Clases Pasivas) y se avisa de que hace falta solicitar la prolongación si la edad ordinaria supera los 65. Laboral: sin edad forzosa. Incluido en avisos, consejos de pareja, informe PDF y Ayuda.
+- **Fechas clave** (`plazosLista/plazosHTML`) en el modo individual y en el desglose de cada persona del modo pareja: solicitud de la pensión (hasta 3 meses antes; en la misma cita del informativo si faltan menos de 3 meses), prolongación (estatutario/funcionario/Clases Pasivas: pedirla ≥2 meses antes de los 65; terminarla con 3 meses), comunicación a la empresa (laboral) e IRPF de la última nómina y del premio. Incluidas en el informe PDF.
+- **Jubilación parcial** (`renderParcial/updParcial`, tarjeta `#parcial`, laboral y estatutario): art. 215.2 LGSS tras el RDL 11/2024 (la DT 10.ª está suprimida desde el 1-4-2025): hasta 3 años antes de la edad legal «de haber seguido cotizando», 33 años cotizados, reducción del 25-75 % (20-33 % el primer año si se adelanta más de 2 años), pensión parcial = pensión sin coeficientes × reducción, ingresos con sueldo opcional y lista de requisitos.
+- **Art. 208.3 LGSS**: opción «Cobro el subsidio por desempleo desde hace 3 meses o más» (individual y pareja) → la anticipada voluntaria usa `COEF_INV` (solo cambia con 22-24 meses de adelanto).
+- **Ayuda**: premio de jubilación de la Junta (funcionarios, laborales, 30 % exento de IRPF, recálculo de la pensión), jubilación anticipada por discapacidad (RD 1539/2003 y RD 1851/2009), jubilación parcial, fechas clave. Nuevas fuentes: RDL 11/2024, Ley 55/2003, RD 1539/2003, RD 1851/2009 y el «Manual práctico de jubilación».
+- **Corregida la tabla de coeficientes reductores de la anticipada voluntaria** (`COEF`): la heredada del simulador original solo acertaba con 24 meses. Sustituida por la del art. 208.2 LGSS (Ley 21/2021), comprobada valor a valor (96) contra el texto del BOE. Detectado gracias al «Manual práctico de jubilación» de la Consejería de Salud y Consumo (Junta de Andalucía).
+- Ayuda, Requisitos y Fuentes oficiales (BOE, RDL 3/2026, Simul@ de Hacienda). Ejemplo ficticio de funcionaria docente; en la pareja de ejemplo, Lucía pasa a Clases Pasivas.
+
 ## [02.02] - 2026-09-27
 
 - Modo pareja: selector «Bruto / Neto» (sincronizado en el plan y en el gráfico del hogar, con etiqueta de IRPF de cada uno) que afecta a la pensión del hogar, aportación de cada uno, planes sugeridos, pensiones hasta los 85, consejos, gráfico de ingresos y sus etapas, e informe PDF.
