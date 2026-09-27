@@ -6,6 +6,11 @@ Formato de versión `XX.YY` (cambios menores `01.01`, cambios grandes `02.00`).
 > Al publicar una versión nueva, actualiza también `APP_VERSION` y `CHANGES` en `index.html`
 > y `version.json`. Los usuarios verán el aviso «Ha habido cambios» y, al actualizar, las novedades.
 
+## [04.01] - 2026-09-27
+
+- **DT 34.ª LGSS** (tope de la anticipada voluntaria cuando la pensión supera la máxima): `coefTope` redondeado a 2 decimales (coincide con los 960 valores de las tablas del BOE, ±0,01). Nueva constante `DT34_CONF = 2026` (último año confirmado: el INSS la suspendió el 1-1-2026 y la restableció el 24-3-2026). Por defecto solo se aplica hasta ese año; la opción «Aplicar la DT 34.ª hasta 2033» (`fDT34` / `S.dt34`, pareja `PS[k].dt34`) la aplica todo el periodo.
+- Desglose (individual y pareja), aviso de la tarjeta principal e informe PDF indican la regla aplicada (`dt34Txt`). Nuevo apartado en la Ayuda. Aportación de Paco.
+
 ## [04.00] - 2026-09-27
 
 - **Navegación por páginas** (hash `#inicio`, `#sim`, `#comparar`, `#desglose`, `#parcial`, `#requisitos`, `#ayuda`): menú lateral (>900 px) y cajón con hamburguesa en móvil; botones de la antigua cabecera al pie del menú. Todas las secciones siguen en el DOM (`data-pg`, `showPage()`); se quitan la cabecera y el menú de apartados con `IntersectionObserver`.

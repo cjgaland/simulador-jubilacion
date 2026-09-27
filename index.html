@@ -809,6 +809,8 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
             <span class="tx">Seguiré cotizando hasta jubilarme<small>Se suma cada día desde hoy hasta la fecha de jubilación (en Clases Pasivas, años de servicio).</small></span></label>
           <label class="switch ss-only"><input type="checkbox" id="fSubs"><span class="tg"></span>
             <span class="tx">Cobro el subsidio por desempleo desde hace 3 meses o más<small>Art. 208.3 LGSS: en la anticipada voluntaria se aplican los coeficientes de la involuntaria, que son más favorables.</small></span></label>
+          <label class="switch ss-only"><input type="checkbox" id="fDT34"><span class="tg"></span>
+            <span class="tx">Aplicar la DT 34.ª hasta 2033<small>Solo afecta a la anticipada voluntaria cuando tu pensión supera la máxima. Desactivado (criterio prudente), el periodo transitorio más suave solo se aplica en 2026, el último año confirmado por la Seguridad Social. <a href="#ayuda" class="js-help-dt34" style="color:var(--navy)">Más información</a></small></span></label>
 
           <div class="field ss-only">
             <div class="lbl">Base reguladora</div>
@@ -934,7 +936,8 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
             <p><b>Tope.</b> La pensión no puede superar la pensión máxima: 3.359,60 €/mes (14 pagas) en 2026. La Seguridad Social la proyecta con un +2 % anual más un 0,115 % adicional.</p>
             <p><b>Demora.</b> +4 % por cada año completo tras la edad ordinaria y, desde el segundo, +2 % por cada semestre adicional. Si ya cobras la máxima, se paga como complemento que sí supera el tope (hasta el tope de la base de cotización). También puede cobrarse como cantidad única o de forma mixta.</p>
             <p><b>Clases Pasivas.</b> Haber regulador del grupo (2026: A1 52.697,06 €; A2 41.473,91 €; B 36.317,13 €; C1 31.852,67 €; C2 25.200,74 €; E 21.485,65 € al año) × porcentaje por años de servicio (art. 31 TRLCP). Voluntaria desde los 60 con 30 años de servicio, sin coeficientes reductores; forzosa a los 65; demora del 4 % por año si se prolonga el servicio activo.</p>
-            <p><b>Anticipada voluntaria.</b> Hasta 2 años antes de tu edad legal (la que tendrías si siguieras cotizando hasta entonces, art. 208 LGSS), con 35 años cotizados. Coeficientes reductores mensuales según la carrera de cotización (Ley 21/2021). Si la pensión supera el tope, la reducción se aplica sobre la pensión máxima con un régimen transitorio hasta 2033 (aquí aproximado).</p>
+            <p><b>Anticipada voluntaria.</b> Hasta 2 años antes de tu edad legal (la que tendrías si siguieras cotizando hasta entonces, art. 208 LGSS), con 35 años cotizados. Coeficientes reductores mensuales según la carrera de cotización (Ley 21/2021). Si la pensión supera el tope, la reducción se aplica sobre la pensión máxima (ver «Pensión máxima en la anticipada: la DT 34.ª»).</p>
+            <p id="ayudaDT34"><b>Pensión máxima en la anticipada: la DT 34.ª.</b> Si tu pensión anticipada voluntaria supera la pensión máxima, cobras la máxima rebajada con un coeficiente. Antes de 2022 era un 0,5 % por trimestre de adelanto (un 4 % con 2 años); la Ley 21/2021 lo endureció hasta los coeficientes generales (hasta un 21 % con 2 años). La <b>disposición transitoria 34.ª LGSS</b> aplica ese endurecimiento <b>poco a poco de 2024 a 2033</b> con unas tablas por año (en 2026, con 2 años de adelanto, entre un 6,70 % y un 9,10 % según los años cotizados), pero solo mientras la subida de la pensión máxima compense la diferencia. Por ese motivo la Seguridad Social <b>dejó de aplicarla el 1 de enero de 2026</b> y la <b>restableció el 24 de marzo de 2026</b> con efecto retroactivo. No se sabe si seguirá en 2027 y después. Por eso la app, con <b>criterio prudente</b>, la aplica solo en 2026 y, a partir de 2027, usa los coeficientes completos. Si quieres suponer que seguirá hasta 2033, activa «Aplicar la DT 34.ª hasta 2033» en «Ajustes avanzados». En el desglose verás siempre qué regla se ha aplicado. No afecta a la anticipada involuntaria (0,5 % por trimestre) ni a quien no llega a la pensión máxima.</p>
           </div>
         </details>
         <details>
@@ -1084,6 +1087,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
             <li><b>Seguiré cotizando hasta jubilarme</b>: suma los días desde hoy hasta la fecha de jubilación. Desactívalo si ya no trabajas.</li>
             <li><b>Base reguladora · Estimar</b>: introduce tu <b>base de cotización mensual</b> actual (en tu nómina, «base de contingencias comunes»; máxima 2026: 5.101,20 €). Se proyecta con un +2 % anual para estimar tu base reguladora.</li>
             <li><b>Base reguladora · La conozco</b>: si tienes una simulación oficial de «Tu Seguridad Social», escribe su base reguladora (referida a tu fecha ordinaria). Se ajusta ±2 % por año en los demás escenarios. Es la opción más precisa.</li>
+            <li><b>Aplicar la DT 34.ª hasta 2033</b>: solo cambia la anticipada voluntaria de quien supera la pensión máxima. Desactivado, el periodo transitorio solo se aplica en 2026 (ver «Pensión máxima en la anticipada» en Requisitos).</li>
             <li><b>Retención IRPF</b>: solo sirve para estimar el neto; no cambia el bruto. Un pensionista con la pensión máxima ronda el 23 %.</li>
           </ul>
           <div class="tip">💡 <b>Consejo:</b> para afinar al máximo, pide tu simulación en «Tu Seguridad Social», copia la base reguladora en «La conozco» y compara el resultado.</div>
@@ -1200,8 +1204,13 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 /* ---------- Versión ----------
    Al desplegar: sube APP_VERSION (formato 01.00 → 01.01 cambios menores, 02.00 cambios grandes),
    añade la entrada arriba del todo en CHANGES, y actualiza version.json y CHANGELOG.md con la misma versión. */
-const APP_VERSION = '04.00';
+const APP_VERSION = '04.01';
 const CHANGES = [
+  {v:'04.01', date:'2026-09-27', items:[
+    'Jubilación anticipada voluntaria con pensión por encima de la máxima (DT 34.ª LGSS): la rebaja de la pensión máxima usa ahora exactamente las tablas del BOE y, con criterio prudente, el periodo transitorio más suave solo se aplica en 2026, el último año confirmado por la Seguridad Social (que lo suspendió en enero y lo restableció en marzo).',
+    'Nueva opción en «Ajustes avanzados»: «Aplicar la DT 34.ª hasta 2033», por si se prorroga (también en cada persona del modo pareja).',
+    'El desglose y el aviso indican qué regla se ha aplicado al tope de tu anticipada, y la Ayuda lo explica en «Requisitos › Cómo se calcula la pensión».'
+  ]},
   {v:'04.00', date:'2026-09-27', items:[
     'Nuevo diseño por páginas: menú lateral en el ordenador y la tablet, y menú ☰ en el móvil, con Inicio, Mi simulación, Comparar opciones, Desglose y fechas clave, Jubilación parcial, Requisitos y Ayuda. Los botones Nuevo, Restablecer, Tema, PDF y Guardar están ahora al pie del menú.',
     '«Mi simulación» reúne tus datos y «¿Cuándo te quieres jubilar?» en la misma página.',
@@ -1332,7 +1341,14 @@ const COEF_INV = [ // art. 207.2 LGSS (anticipada involuntaria), meses 1..48 por
   [0.5,1,1.5,2,2.5,3,3.62,3.8,4,4.22,4.47,4.75,5.07,5.43,5.85,6.33,6.91,7.6,8.4,9.2,10,11,11.5,12,12.5,13,13.5,14,14.5,15,15.5,16,16.5,17,17.5,18,18.5,19,19.5,20,20.5,21,21.5,22,22.5,23,23.5,24]
 ];
 const coefForInv = (days,months) => { const y = days/365, t = y<38.5?0:y<41.5?1:y<44.5?2:3; return COEF_INV[t][Math.min(48,Math.max(1,months))-1]; };
-const coefTope =(Y,months,coef) => { const old = 0.5*Math.ceil(months/3), f = Math.min(1,Math.max(0,(Y-2023)/10)); return old + (coef-old)*f; };
+// DT 34.ª LGSS: si la pensión anticipada voluntaria supera la máxima, los coeficientes sobre la pensión máxima se
+// endurecen poco a poco de 2024 a 2033. Sus tablas del BOE son exactamente la interpolación lineal entre el 0,5 %
+// por trimestre de 2021 y los coeficientes completos (comprobado con los 960 valores, ±0,01). El INSS dejó de
+// aplicarla el 1-1-2026 y la restableció el 24-3-2026 con efecto retroactivo: solo está confirmada hasta DT34_CONF.
+// Por defecto (criterio prudente) después se aplican los coeficientes completos; S.dt34 = true la aplica hasta 2033.
+const DT34_CONF = 2026;   // actualizar cada año según el criterio del INSS
+const dt34Rige = Y => Y >= 2024 && Y <= 2033 && (!!S.dt34 || Y <= DT34_CONF);
+const coefTope =(Y,months,coef) => { if(!dt34Rige(Y)) return coef; const old = 0.5*Math.ceil(months/3), f = (Y-2023)/10; return Math.round((old + (coef-old)*f)*100)/100; };
 const maxP = Y => 3359.60*Math.pow(1.02115, Y-2026);
 const topeMes14 = Y => 5101.20*Math.pow(1.02, Y-2026)*12/14;
 const brechaHijo = Y => 36.90*Math.pow(1.02, Y-2026);
@@ -1487,7 +1503,7 @@ function read(){
   S.hijos = +$('#rHijos').value;
   S.irpf = +$('#rIrpf').value/100;
   S.brecha = $('#fBrecha').checked;
-  S.reg = IND_REG; S.cp = IND_CP; S.tipo = IND_TIPO; S.subsidio = $('#fSubs').checked;
+  S.reg = IND_REG; S.cp = IND_CP; S.tipo = IND_TIPO; S.subsidio = $('#fSubs').checked; S.dt34 = $('#fDT34').checked;
   if(S.reg==='cp') S.days = Math.round(cpYearsNow(S.cp)*365);   // años de servicio → días, para las comprobaciones comunes
 }
 const cot = D => { const dd = diffDays(TODAY,D); return Math.max(0, dd<=0 ? S.days+dd : (S.cont ? S.days+dd : S.days)); };
@@ -1523,7 +1539,7 @@ function scenario(D,key){
     r.type='Anticipada'; r.months = monthsCeil(D,legalDate);
     r.inv = inv;
     if(inv){ r.coef = coefForInv(c,r.months); r.coefT = 0.5*Math.ceil(r.months/3); }
-    else { r.sub = !!S.subsidio; r.coef = r.sub ? coefForInv(c,r.months) : coefFor(c,r.months); r.coefT = coefTope(Y,r.months,r.coef); }   // art. 208.3 LGSS
+    else { r.sub = !!S.subsidio; r.coef = r.sub ? coefForInv(c,r.months) : coefFor(c,r.months); r.coefT = coefTope(Y,r.months,r.coef); r.dt34 = dt34Rige(Y); }   // art. 208.3 LGSS · DT 34.ª
     r.reduced = initial*(1-r.coef/100); r.limitEarly = mp*(1-r.coefT/100);
     r.pension = Math.min(r.reduced, r.limitEarly); r.capped = r.reduced > r.limitEarly;
   } else {
@@ -1720,6 +1736,14 @@ function cpAlertText(s){
   if(s.loss) t += ` El tope de la pensión máxima te recorta <b>${eur(s.loss)}</b> al mes.`;
   return [s.type==='Forzosa' ? 'green' : 'green', t];
 }
+// Qué regla se ha aplicado al tope de la anticipada voluntaria (DT 34.ª o coeficientes completos del art. 210.3)
+function dt34Txt(o){
+  const base = `Pensión máxima ${o.Y} reducida un ${pct(o.coefT)}: `;
+  if(o.sub) return base + 'coeficientes de la involuntaria (art. 208.3)' + (o.dt34 ? ' con el periodo transitorio de la DT 34.ª' : '');
+  if(o.dt34) return base + `periodo transitorio de la DT 34.ª (tabla de ${o.Y})`;
+  if(o.Y >= 2034) return base + 'coeficientes completos (art. 210.3; la DT 34.ª terminó en 2033)';
+  return base + `coeficientes completos: no se aplica la DT 34.ª (criterio prudente; actívala en «Ajustes avanzados» para aplicarla hasta 2033)`;
+}
 function renderAlert(s){
   const a = $('#oAlert'); let cls='', t='';
   if(S.reg==='cp'){ [cls, t] = cpAlertText(s); a.className = 'alert '+cls; a.innerHTML = ico + `<div>${t}</div>`; return; }
@@ -1730,6 +1754,7 @@ function renderAlert(s){
     const why = ` Se cuenta desde tu edad legal de referencia, <b>${fMonths(s.L)}</b> (${fDate(ORDC)}), la que tendrías si siguieras cotizando hasta entonces.`;
     t = `Te jubilas <b>${plural(s.months,'mes','meses')}</b> antes de tu edad ordinaria.${why} La reducción del <b>${pct(s.coef)}</b> es <b>para toda la vida</b>.`;
     if(s.sub) t += ` Se aplican los coeficientes de la involuntaria porque cobras el subsidio por desempleo desde hace 3 meses o más (art. 208.3 LGSS).`;
+    if(s.capped && !s.inv) t += ` Tu pensión supera la máxima, así que queda en la <b>pensión máxima reducida un ${pct(s.coefT)}</b> (${s.dt34 ? `periodo transitorio de la DT 34.ª, tabla de ${s.Y}` : 'coeficientes completos, sin la DT 34.ª'}).`;
     if(s.inv) t += ` Solo si el cese no es voluntario (despido colectivo u objetivo, ERE, cierre…) y llevas 6 meses inscrito como demandante de empleo.`;
   } else if(s.type==='Ordinaria' && s.key==='ord'){
     const need = fMonths(req(s.Y)[0]);
@@ -1912,7 +1937,7 @@ function renderDetail(s){
   h += row('Pensión inicial', eur(s.initial),'','Base reguladora × porcentaje');
   if(s.type==='Anticipada'){
     h += row('Tras la reducción por anticipación', eur(s.reduced));
-    h += row('Límite pensión anticipada', eur(s.limitEarly),'',s.inv ? `Pensión máxima ${s.Y} reducida un ${pct(s.coefT)} (0,5 % por trimestre)` : `Pensión máxima ${s.Y} reducida un ${pct(s.coefT)} (aprox.)`);
+    h += row('Límite pensión anticipada', eur(s.limitEarly),'',s.inv ? `Pensión máxima ${s.Y} reducida un ${pct(s.coefT)} (0,5 % por trimestre)` : dt34Txt(s));
   } else {
     h += row(`Límite pensión máxima ${s.Y}`, eur(s.mp));
     if(s.loss) h += row('Exceso sobre el límite', '−'+eur(s.loss),'neg');
@@ -1955,8 +1980,8 @@ function syncInputs(){
 
 /* ---------- Persistencia (solo en este navegador) ---------- */
 const IDS = ['fNac','fDias','fBase','fBR','rHijos','rIrpf'];
-function snapshot(){ const o={reg:IND_REG,tipo:IND_TIPO,cp:JSON.parse(JSON.stringify(IND_CP)),brMode:S.brMode,early:S.early,antK:S.antK,sc:S.sc,barMode:S.barMode,netMode:S.netMode,fCont:$('#fCont').checked,fBrecha:$('#fBrecha').checked,fSubs:$('#fSubs').checked}; IDS.forEach(i=>o[i]=$('#'+i).value); return o; }
-const dataKey = o => JSON.stringify([o.fNac,o.fDias,o.fBase,o.fBR,o.rHijos,o.rIrpf,o.fCont,o.fBrecha,!!o.fSubs,o.brMode,o.early||'vol',o.reg||'ss',o.reg==='cp' ? JSON.stringify(o.cp) : '',o.tipo||'lab']);
+function snapshot(){ const o={reg:IND_REG,tipo:IND_TIPO,cp:JSON.parse(JSON.stringify(IND_CP)),brMode:S.brMode,early:S.early,antK:S.antK,sc:S.sc,barMode:S.barMode,netMode:S.netMode,fCont:$('#fCont').checked,fBrecha:$('#fBrecha').checked,fSubs:$('#fSubs').checked,fDT34:$('#fDT34').checked}; IDS.forEach(i=>o[i]=$('#'+i).value); return o; }
+const dataKey = o => JSON.stringify([o.fNac,o.fDias,o.fBase,o.fBR,o.rHijos,o.rIrpf,o.fCont,o.fBrecha,!!o.fSubs,!!o.fDT34,o.brMode,o.early||'vol',o.reg||'ss',o.reg==='cp' ? JSON.stringify(o.cp) : '',o.tipo||'lab']);
 function getSaved(){ try{ return JSON.parse(localStorage.getItem(KEY)||'null'); }catch(e){ return null; } }
 // Borrador de la pestaña (sessionStorage, se borra al cerrarla): Safari en iPhone a veces recarga la página
 // (al cambiar de página, volver a la pestaña o liberar memoria); así se recupera lo que había en pantalla
@@ -1964,7 +1989,7 @@ function getSaved(){ try{ return JSON.parse(localStorage.getItem(KEY)||'null'); 
 const WKEY = 'simJubBorrador', WPKEY = 'simJubBorradorPareja';
 const ssSet = (k,v) => { try{ sessionStorage.setItem(k,v); }catch(e){} };
 const ssJSON = k => { try{ return JSON.parse(sessionStorage.getItem(k)||'null'); }catch(e){ return null; } };
-function apply(o){ IDS.forEach(i=>{ $('#'+i).value = o[i]!=null ? o[i] : ''; }); IND_CP = cleanCP(o.cp); setReg(o.reg); setTipo(o.tipo); drawCPInd(); $('#fCont').checked=!!o.fCont; $('#fBrecha').checked=!!o.fBrecha; $('#fSubs').checked=!!o.fSubs; S.brMode=o.brMode||'est'; setEarly(o.early||'vol'); S.antK = Number.isInteger(o.antK) && o.antK>0 ? o.antK : null; S.sc=o.sc!=null&&o.sc!==''?+o.sc:1; S.barMode=o.barMode||'mes'; S.netMode=o.netMode||'bruto'; setMode(S.brMode); setBarMode(S.barMode); setNetMode(S.netMode); }
+function apply(o){ IDS.forEach(i=>{ $('#'+i).value = o[i]!=null ? o[i] : ''; }); IND_CP = cleanCP(o.cp); setReg(o.reg); setTipo(o.tipo); drawCPInd(); $('#fCont').checked=!!o.fCont; $('#fBrecha').checked=!!o.fBrecha; $('#fSubs').checked=!!o.fSubs; $('#fDT34').checked=!!o.fDT34; S.brMode=o.brMode||'est'; setEarly(o.early||'vol'); S.antK = Number.isInteger(o.antK) && o.antK>0 ? o.antK : null; S.sc=o.sc!=null&&o.sc!==''?+o.sc:1; S.barMode=o.barMode||'mes'; S.netMode=o.netMode||'bruto'; setMode(S.brMode); setBarMode(S.barMode); setNetMode(S.netMode); }
 function updateSaveState(){
   const saved = getSaved(), same = saved && dataKey(saved)===dataKey(snapshot());
   const b = $('#btnSave'); b.classList.toggle('saved', !!same); b.classList.toggle('primary', !same);
@@ -1992,7 +2017,7 @@ $('#rAnt').addEventListener('input', e=>{ S.antK = +e.target.value || null; comp
 document.querySelectorAll('#segNet button').forEach(b=>b.onclick=()=>{ setNetMode(b.dataset.v); buildBars(); select(S.sc,false); });
 $('#rDias').addEventListener('input', e=>{ $('#fDias').value = e.target.value; compute(); });
 ['fNac','fDias','fBase','fBR','rHijos','rIrpf'].forEach(id=>$('#'+id).addEventListener('input',compute));
-['fCont','fBrecha','fSubs'].forEach(id=>$('#'+id).addEventListener('change',compute));
+['fCont','fBrecha','fSubs','fDT34'].forEach(id=>$('#'+id).addEventListener('change',compute));
 $('#rSc').addEventListener('input', e=>{ let i=+e.target.value; if(scen[i]?.disabled) i=1; select(i); });
 $('#btnSave').onclick = () => {
   if(!S.birth || !(S.days>0)){ toast('Introduce al menos tu fecha de nacimiento y tus días cotizados'); return; }
@@ -2047,6 +2072,7 @@ function showTab(t){
 document.querySelectorAll('#ayuda .tabs button').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
 const goHistory = () => { closeNews(); showTab('versiones'); go('ayuda'); };
 $('#lnkNews').onclick = goHistory; $('#btnNewsAll').onclick = goHistory;
+document.querySelectorAll('.js-help-dt34').forEach(a=>a.onclick = e => { e.preventDefault(); go('requisitos'); const t = $('#ayudaDT34'), d = t && t.closest('details'); if(d) d.open = true; if(t) setTimeout(()=>t.scrollIntoView({behavior:'smooth', block:'center'}), 60); });
 document.querySelectorAll('.js-help-datos').forEach(a=>a.onclick = e => { e.preventDefault(); showTab('datos'); go('ayuda'); });
 
 // Aviso «Ha habido cambios»: consulta version.json al abrir, cada minuto y al volver a la pestaña
@@ -2130,7 +2156,7 @@ function cleanShared(o){ // solo campos conocidos y valores válidos
   if(!o || typeof o!=='object') return null;
   const txt = v => typeof v==='string' ? v.slice(0,20) : '';
   const r = {}; IDS.forEach(k=>r[k]=txt(o[k]));
-  r.fCont = o.fCont!==false; r.fBrecha = !!o.fBrecha; r.fSubs = !!o.fSubs;
+  r.fCont = o.fCont!==false; r.fBrecha = !!o.fBrecha; r.fSubs = !!o.fSubs; r.fDT34 = !!o.fDT34;
   r.brMode = o.brMode==='man'?'man':'est'; r.early = o.early==='inv'?'inv':'vol';
   r.antK = Number.isInteger(o.antK) && o.antK>0 && o.antK<=48 ? o.antK : null;
   r.reg = o.reg==='cp' ? 'cp' : 'ss'; r.cp = cleanCP(o.cp); r.tipo = ['est','fun'].includes(o.tipo) ? o.tipo : 'lab';
@@ -2187,6 +2213,7 @@ function buildReport(){
         ${cpR ? '' : tr('Base reguladora', S.brMode==='man' ? 'Conocida: '+eur(S.brMan) : 'Estimada (base de cotización '+eur(S.base)+')')}
         ${tr('Retención IRPF', pct(S.irpf*100))}
         ${cpR ? '' : tr('Anticipada considerada', S.early==='inv'?'Involuntaria':'Voluntaria')}
+        ${cpR ? '' : tr('DT 34.ª (tope de la anticipada)', S.dt34 ? 'Aplicada hasta 2033' : 'Solo en '+DT34_CONF+' (criterio prudente)')}
       </table></div>
       <div>${$('#detail').innerHTML}</div>
     </div>
@@ -2460,11 +2487,11 @@ function personIn(p){
   const birth = parse(p.fNac), days = Math.max(0, Math.round(+p.dias || 0));
   if(!birth || !(days > 0) || birth >= TODAY) return null;
   return {birth, days, cont: p.cont!==false, base: +p.base || 0, brMan: +p.brMan || 0, brMode: p.brMode==='man' ? 'man' : 'est',
-          irpf: Math.min(60, Math.max(0, +p.irpf || 0))/100, early: p.early==='inv' ? 'inv' : 'vol', subsidio: !!p.subsidio, reg:'ss', tipo: ['est','fun'].includes(p.tipo) ? p.tipo : 'lab', cp:null};
+          irpf: Math.min(60, Math.max(0, +p.irpf || 0))/100, early: p.early==='inv' ? 'inv' : 'vol', subsidio: !!p.subsidio, dt34: !!p.dt34, reg:'ss', tipo: ['est','fun'].includes(p.tipo) ? p.tipo : 'lab', cp:null};
 }
 function withPerson(P, fn){
   const bak = Object.assign({}, S), g = [ORD, EARLY, ORDC];
-  Object.assign(S, {birth:P.birth, days:P.days, cont:P.cont, base:P.base, brMan:P.brMan, brMode:P.brMode, irpf:P.irpf, hijos:0, brecha:false, early:P.early, subsidio:!!P.subsidio, reg:P.reg||'ss', tipo:P.tipo||'lab', cp:P.cp});
+  Object.assign(S, {birth:P.birth, days:P.days, cont:P.cont, base:P.base, brMan:P.brMan, brMode:P.brMode, irpf:P.irpf, hijos:0, brecha:false, early:P.early, subsidio:!!P.subsidio, dt34:!!P.dt34, reg:P.reg||'ss', tipo:P.tipo||'lab', cp:P.cp});
   try{ return fn(); }
   finally{ for(const k in S) delete S[k]; Object.assign(S, bak); [ORD, EARLY, ORDC] = g; }
 }
@@ -2562,6 +2589,7 @@ const pcardHTML = k => `
   <label class="switch"><input type="checkbox" data-f="derecho"><span class="tg"></span><span class="tx">Tiene derecho al complemento por hijos<small>Mujeres con hijos; hombres solo si su carrera se vio perjudicada por el nacimiento (ver Ayuda).</small></span></label>
   <details class="adv"><summary>Ajustes avanzados</summary><div class="inner">
     <label class="switch ss-only"><input type="checkbox" data-f="subsidio"><span class="tg"></span><span class="tx">Cobra el subsidio por desempleo desde hace 3 meses o más<small>Art. 208.3 LGSS: su anticipada voluntaria usa los coeficientes de la involuntaria.</small></span></label>
+    <label class="switch ss-only"><input type="checkbox" data-f="dt34"><span class="tg"></span><span class="tx">Aplicar la DT 34.ª hasta 2033<small>Anticipada voluntaria con pensión por encima de la máxima. Desactivado, el periodo transitorio solo se aplica en 2026 (último año confirmado).</small></span></label>
     <label class="switch"><input type="checkbox" data-f="cont"><span class="tg"></span><span class="tx">Seguirá cotizando hasta jubilarse<small>Desactívalo si ya no trabaja.</small></span></label>
     <div class="pf ss-only" style="margin-bottom:12px"><span class="plbl">Jubilación anticipada</span><div class="seg" data-seg="early"><button type="button" data-v="vol">Voluntaria</button><button type="button" data-v="inv">Involuntaria</button></div></div>
     <div class="pf ss-only" style="margin-bottom:12px"><span class="plbl">Base reguladora</span><div class="seg" data-seg="brMode"><button type="button" data-v="est">Estimar</button><button type="button" data-v="man">La conozco</button></div>
@@ -2905,7 +2933,7 @@ function personRows(x){
   if(o.type==='Anticipada'){ h += row('Meses de anticipación', o.months); h += row('Coeficiente reductor', '−'+pct(o.coef), 'neg', o.sub ? 'Coeficientes de la involuntaria (subsidio por desempleo, art. 208.3)' : 'Para toda la vida'); }
   else { h += row('Meses de demora', o.demM); h += row('Porcentaje adicional por demora', o.pctDem ? '+'+o.pctDem+' %' : 'No aplicable', o.pctDem ? 'pos' : ''); }
   h += row('Pensión inicial', eur(o.initial), '', 'Base reguladora × porcentaje');
-  h += row(o.type==='Anticipada' ? 'Límite pensión anticipada' : `Límite pensión máxima ${o.Y}`, eur(o.type==='Anticipada' ? o.limitEarly : o.mp));
+  h += row(o.type==='Anticipada' ? 'Límite pensión anticipada' : `Límite pensión máxima ${o.Y}`, eur(o.type==='Anticipada' ? o.limitEarly : o.mp), '', o.type==='Anticipada' ? (o.inv ? `Pensión máxima reducida un ${pct(o.coefT)} (0,5 % por trimestre)` : dt34Txt(o)) : '');
   h += row('Pensión reconocida', eur(o.pension));
   if(o.comp) h += row('Complemento por demora', '+'+eur(o.comp), 'pos', 'Puede superar la pensión máxima');
   if(x.brecha) h += row(`Complemento por hijos (${x.n})`, '+'+eur(x.brecha), 'pos', 'No computa para el tope');
@@ -2973,7 +3001,7 @@ function cleanPair(o){
   const txt = v => typeof v==='string' ? v.slice(0,24) : '';
   const per = p => ({name: txt(p.name), fNac: txt(p.fNac), dias: txt(String(p.dias ?? '')), cont: p.cont!==false, early: p.early==='inv' ? 'inv' : 'vol',
                      brMode: p.brMode==='man' ? 'man' : 'est', base: txt(String(p.base ?? '5101.20')), brMan: txt(String(p.brMan ?? '')),
-                     irpf: txt(String(p.irpf ?? '23')), sueldo: txt(String(p.sueldo ?? '')), sueldoB: txt(String(p.sueldoB ?? '')), derecho: p.derecho!==false, subsidio: !!p.subsidio, reg: p.reg==='cp' ? 'cp' : 'ss', tipo: ['est','fun'].includes(p.tipo) ? p.tipo : 'lab', cp: cleanCP(p.cp)});
+                     irpf: txt(String(p.irpf ?? '23')), sueldo: txt(String(p.sueldo ?? '')), sueldoB: txt(String(p.sueldoB ?? '')), derecho: p.derecho!==false, subsidio: !!p.subsidio, dt34: !!p.dt34, reg: p.reg==='cp' ? 'cp' : 'ss', tipo: ['est','fun'].includes(p.tipo) ? p.tipo : 'lab', cp: cleanCP(p.cp)});
   const n = v => Math.min(6, Math.max(0, parseInt(v,10) || 0)), d = v => typeof v==='string' && /^\d{4}-\d{2}-\d{2}$/.test(v) ? v : null;
   return {A: per(o.A), B: per(o.B), hc: n(o.hc), ha: n(o.ha), hb: n(o.hb), asig: ['auto','A','B'].includes(o.asig) ? o.asig : 'auto', selA: d(o.selA), selB: d(o.selB), link: !!o.link, net: o.net==='neto' ? 'neto' : 'bruto'};
 }

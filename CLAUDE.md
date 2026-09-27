@@ -25,6 +25,13 @@ Pensada para compartir con compañeros (médicos del SAS). Autor: **Carlos J. Ga
   Voluntaria: hasta 24 meses, 35 años, tabla `COEF` (art. 208.2 LGSS; **corregida en 03.00**, la original
   era errónea salvo en 24 meses; verificada valor a valor contra el BOE). Involuntaria: hasta 48 meses, 33 años, tabla
   `COEF_INV`, tope = máxima −0,5 %/trimestre.
+- **DT 34.ª LGSS** (tope de la anticipada voluntaria cuando la pensión supera la máxima): `coefTope` = interpolación
+  lineal 2024-2033 entre 0,5 %/trimestre y los coeficientes completos, redondeada a 2 decimales; coincide con los
+  960 valores de las tablas del BOE (±0,01). El INSS la suspendió el 1-1-2026 y la restableció el 24-3-2026.
+  `DT34_CONF = 2026` = último año confirmado: por defecto (criterio prudente) solo se aplica hasta ese año y después
+  coeficientes completos; la opción «Aplicar la DT 34.ª hasta 2033» (`fDT34` / `S.dt34`, pareja `PS[k].dt34`)
+  la aplica todo el periodo. `dt34Txt()` explica en el desglose qué regla se aplicó. **Revisar `DT34_CONF` cada año**
+  según el criterio del INSS. (Aportación de Paco, 27/09/2026.)
 - **Validación oficial (25/09/2026):** contrastado con un informe real de «Tu Seguridad Social»
   (datos de Carlos, que NO se guardan en ningún fichero del repo): la ordinaria coincide exactamente
   (fecha, edad, días computables, base reguladora y pensión con tope de la máxima 2031). El Informe de
