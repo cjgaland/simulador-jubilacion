@@ -129,6 +129,19 @@ sobre degradado azul marino (`favicon.svg`; PNG generados desde él).
   para saltarse la caché. Al cargar la versión nueva se muestran sus novedades una vez
   (`localStorage` `simJubUltimaVersionVista`).
 
+## Rediseño 04.00 (en curso, rama `rediseno-04`)
+- **Foto fija**: etiqueta git `v03.00` (en GitHub) = versión publicada antes del rediseño. Para volver:
+  `git checkout main && git reset --hard v03.00` (**destructivo: pedir confirmación a Carlos**) o, sin riesgo,
+  `git checkout v03.00` para mirarla. También hay copias en `Backup/`.
+- Se trabaja en la rama `rediseno-04`; `main` (lo que ven los usuarios) no se toca hasta que Carlos dé el visto
+  bueno. `despliega.sh` se niega a publicar fuera de `main`.
+- **Vista previa privada**: `bash scripts/vista-previa.sh` (localhost:8080 y la IP del Mac en la Wi-Fi para el móvil).
+- Plan acordado: navegación por páginas (hash routing, todas las secciones siguen en el DOM y solo se muestra
+  una), menú lateral en ordenador/tablet y hamburguesa en móvil; «Tus datos» + «¿Cuándo te quieres jubilar?»
+  juntos en «Mi simulación»; mini barra fija con fecha y pensión. Redibujar línea temporal/gráficos al mostrar
+  su página. Empezar por una maqueta visual para que Carlos la apruebe.
+- **Al publicar el rediseño**: integrar `rediseno-04` en `main`, subir a 04.00 y «Despliega» desde `main`.
+
 ## «Despliega»
 Cuando Carlos diga **«Despliega»**:
 1. Sube la versión y rellena las novedades en los 4 sitios de arriba (en lenguaje sencillo, para usuarios).

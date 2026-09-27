@@ -11,6 +11,15 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
+# Solo se publica desde main: GitHub Pages sirve esa rama. Las ramas de trabajo (p. ej. rediseno-04)
+# se prueban en privado con scripts/vista-previa.sh y se integran en main cuando estén listas.
+RAMA=$(git branch --show-current)
+if [ "$RAMA" != "main" ]; then
+  echo "✗ Estás en la rama «$RAMA». Solo se despliega desde «main» (lo que ven los usuarios)."
+  echo "  Para publicar: integra la rama en main y ejecuta de nuevo el despliegue desde main."
+  exit 1
+fi
+
 MSG="${1:-}"
 [ -n "$MSG" ] || { echo "Uso: bash scripts/despliega.sh \"Mensaje del commit\""; exit 1; }
 
