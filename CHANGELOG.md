@@ -6,6 +6,17 @@ Formato de versión `XX.YY` (cambios menores `01.01`, cambios grandes `02.00`).
 > Al publicar una versión nueva, actualiza también `APP_VERSION` y `CHANGES` en `index.html`
 > y `version.json`. Los usuarios verán el aviso «Ha habido cambios» y, al actualizar, las novedades.
 
+## [02.00] - 2026-09-27
+
+- **Modo pareja**: selector «Solo yo / En pareja» en la portada. Ficha por persona (nombre, nacimiento, días, vida laboral en PDF por botón o arrastrando sobre su ficha, sueldo neto, IRPF, complemento por hijos, cotización, tipo de anticipada, base de cotización o base reguladora).
+- Hijos en común / propios de cada uno; complemento por hijos en común asignado automáticamente al de pensión más baja (art. 60 LGSS), modificable.
+- Planificador: fechas mes a mes de cada uno (anticipada → +5 años), opción de moverlas a la vez, y planes sugeridos (cada uno a su edad, jubilarnos juntos, equilibrio, máximo a largo plazo, lo antes posible) calculados probando todas las combinaciones.
+- Resultado conjunto en euros de hoy: pensión del hogar y aportación de cada uno, pensiones cobradas hasta los 85, ingresos netos del hogar año a año (sueldos + pensiones) con sus tres etapas, consejos personalizados y desglose por persona.
+- Viudedad: pensión que quedaría a cada uno (52 % de la base reguladora del fallecido, con el límite de la pensión máxima).
+- Informe PDF, enlace para compartir (`#p=`), guardar y restablecer en modo pareja.
+- Ayuda: regímenes cubiertos (Clases Pasivas/MUFACE, mutualidades, cómputo recíproco) y viudedad.
+- «Requisitos» y «Ayuda» pasan a ocupar todo el ancho, comunes a los dos modos.
+
 ## [01.05] - 2026-09-26
 
 - Ayuda ampliada: dónde ver la base de cotización (nómina, Informe de bases de cotización de Import@ss, recibo de autónomos), qué es y cómo se calcula la base reguladora (RDL 2/2023, opción más favorable) y requisitos del complemento para la reducción de la brecha de género (art. 60 LGSS).

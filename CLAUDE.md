@@ -50,6 +50,19 @@ Pensada para compartir con compañeros (médicos del SAS). Autor: **Carlos J. Ga
   (para pruebas, copiarlos al scratchpad y servirlos desde allí).
 - No es posible conectar con la Seguridad Social con certificado digital desde la app (sin API pública,
   requiere su sede); por eso se sube el PDF.
+- **Modo pareja (02.00)**: selector `.mode-sel` en la portada (`MODE` 'ind'|'par', `body.par`, guardado en
+  `localStorage` `simJubModo`). UI en `#pairApp` (construida por `buildPairUI()`), estado `PS`
+  (`simJubPareja` al pulsar Guardar; enlace `#p=`; `cleanPair` sanea). **No duplica fórmulas**:
+  `withPerson(P, fn)` carga los datos de una persona en `S`/`ORD`/`EARLY`/`ORDC`, llama al motor
+  individual y lo restaura. `personPlan()` = todas sus fechas mes a mes (anticipada → +5 años);
+  `evalPair()` = resultado conjunto (complemento hijos: comunes al de menor pensión si `asig:'auto'`,
+  máx. 4 por persona; importes del hogar en € de hoy); `computePresets()` prueba todas las
+  combinaciones (ref, juntos = mismo mes con máx. total a 85, equilibrio = mínima distancia con total
+  a 85 ≥ ref, largo, antes). Ingresos del hogar año a año con sueldo neto opcional (constante en € de
+  hoy). Viudedad = 52 % BR del fallecido limitada a máxima − pensión propia.
+- `#requisitos` y `#ayuda` están en `.common` (fuera de `.grid`), visibles en los dos modos.
+- **html2canvas no entiende `color-mix()`**: no usarlo en nada que salga en el Informe PDF.
+- Pendiente (acordado con Carlos): cálculo de **Clases Pasivas** (MUFACE/ISFAS/MUGEJU pre-2011).
 
 ## Estructura de la página
 Cabecera (tema, Nuevo, Restablecer, Guardar, Imprimir) → **Portada** (icono grande, título,
@@ -113,3 +126,5 @@ Chrome headless se cuelga; funciona un script Swift con `NSImage` (lee SVG nativ
 
 ## Ideas pendientes (propuestas a Carlos)
 - (Hechas en 01.01: anticipada involuntaria, informe PDF, compartir por enlace, modo sin conexión.)
+- (Hecho en 02.00: modo pareja con viudedad y sueldos.)
+- Clases Pasivas (haberes reguladores por grupo + % por años de servicio, LPGE de cada año).

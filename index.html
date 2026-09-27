@@ -153,6 +153,8 @@ details.adv .inner{padding-top:14px}
 .vl-box .btn{width:100%;justify-content:center;height:42px;font-size:13.5px;border-color:transparent;color:var(--navy);font-weight:600}
 .vl-box .hint a{color:var(--navy)}
 .vl-ok{color:var(--green)!important;font-weight:500}
+.advice:empty{display:none}
+body.par.dragging::after{content:"📄  Suelta el PDF sobre la ficha de la persona";inset:12px 12px auto;padding:16px 20px;font-size:18px}
 body.dragging::after{content:"📄  Suelta aquí tu Informe de Vida Laboral (PDF)";position:fixed;inset:12px;z-index:80;display:grid;place-items:center;border:3px dashed var(--gold);border-radius:24px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);font-family:Fraunces,Georgia,serif;font-size:clamp(20px,3vw,30px);color:var(--navy);pointer-events:none;text-align:center;padding:20px}
 .early-sel{display:flex;align-items:center;gap:8px;position:relative;z-index:1}
 .early-sel > span{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
@@ -295,6 +297,135 @@ footer .ver button:hover{color:var(--gold)}
 .cover-desc{color:var(--muted);max-width:640px;margin:0 auto 18px;font-size:16px}
 .credit{color:var(--muted);font-size:12.5px;letter-spacing:.02em;margin:18px 0 0;opacity:.85}
 
+/* selector de modo: individual / pareja */
+.mode-sel{display:inline-grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;margin-top:22px;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+.mode-sel button{display:flex;align-items:center;gap:10px;border:0;background:none;padding:10px 18px;border-radius:13px;cursor:pointer;color:var(--muted);text-align:left;transition:background .2s,color .2s}
+.mode-sel button span{display:flex;flex-direction:column;line-height:1.25}
+.mode-sel b{font-size:14px;color:var(--ink);font-weight:600}
+.mode-sel small{font-size:11.5px}
+.mode-sel button.on{background:var(--navy);color:var(--surface)}
+.mode-sel button.on b,.mode-sel button.on small{color:var(--surface)}
+@media (max-width:420px){.mode-sel button{padding:9px 12px;gap:8px}.mode-sel small{display:none}}
+body.par .grid{display:none}
+.common{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;margin-top:22px}
+#pairApp{display:grid;grid-template-columns:minmax(0,1fr);gap:22px}
+#pairApp[hidden]{display:none}
+
+/* modo pareja */
+[data-p="A"]{--pc:var(--navy);--pcs:var(--navy-soft)}
+[data-p="B"]{--pc:var(--gold);--pcs:var(--gold-soft)}
+.pcard-wrap{padding:24px 26px}
+.pcard-wrap > .sub{color:var(--muted);font-size:13.5px;margin:-8px 0 18px}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:820px){.pgrid{grid-template-columns:1fr}}
+.pcard{border:1px solid var(--line);border-top:4px solid var(--pc);border-radius:18px;padding:16px 18px 6px;background:var(--surface-2);transition:box-shadow .2s}
+.pcard.drop{box-shadow:0 0 0 3px var(--pc)}
+.who{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.who i{flex:none;width:34px;height:34px;border-radius:50%;background:var(--pc);color:var(--surface);display:grid;place-items:center;font-style:normal;font-weight:700;font-size:14px}
+.who input{flex:1;min-width:0;border:0;border-bottom:1px dashed var(--line);background:transparent;font-family:Fraunces,Georgia,serif;font-size:19px;padding:4px 2px;outline:none}
+.who input:focus{border-bottom-color:var(--pc)}
+.pcard .vlp{width:100%;justify-content:center;height:40px;font-size:13px;color:var(--pc);font-weight:600;margin-bottom:6px}
+.pcard .vl-ok{margin:0 0 8px}
+.pfields{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0 14px}
+.pf label,.pf .plbl{display:block;font-size:12px;font-weight:600;margin-bottom:6px}
+.pf .opt{font-weight:400;color:var(--muted)}
+.pf input[type=number],.pf input[type=date]{height:44px;font-size:14.5px}
+.pf.full{grid-column:1/-1}
+@media (max-width:420px){.pfields{grid-template-columns:1fr}}
+.pcard .switch{margin:0 0 10px}
+.pcard details.adv .inner{padding-top:10px}
+.phijos{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px;padding:16px 18px;border-radius:16px;background:var(--surface-2);border:1px solid var(--line)}
+@media (max-width:620px){.phijos{grid-template-columns:1fr}}
+.phijos h3{grid-column:1/-1;margin:0;font-family:Fraunces,Georgia,serif;font-weight:500;font-size:16px}
+.stepper{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden}
+.stepper button{width:40px;height:40px;border:0;background:none;font-size:18px;cursor:pointer;color:var(--navy)}
+.stepper button:hover{background:var(--navy-soft)}
+.stepper b{min-width:34px;text-align:center;font-size:16px;font-variant-numeric:tabular-nums}
+.seg3{grid-template-columns:1.3fr 1fr 1fr!important;margin:0!important}
+.pactions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+body.par-empty .needs-pair{display:none!important}
+.pempty{display:none;padding:34px 26px;text-align:center}
+body.par-empty .pempty{display:block}
+.pempty h2{font-family:Fraunces,Georgia,serif;font-weight:400;font-size:24px;margin:0 0 6px}
+.pempty p{color:var(--muted);max-width:460px;margin:0 auto}
+
+.pplan{padding:24px 26px}
+.pplan .q{margin-bottom:14px}
+.presets{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:8px}
+@media (max-width:420px){.preset{padding:10px 11px}.preset small:first-of-type{display:none}}
+.preset{text-align:left;border:1px solid var(--line);background:var(--surface-2);border-radius:14px;padding:11px 13px;cursor:pointer;transition:border-color .2s,box-shadow .2s;color:inherit;font:inherit}
+.preset:hover{border-color:var(--gold)}
+.preset.on{border-color:var(--gold);background:var(--surface);box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 22%,transparent)}
+.preset b{display:block;font-size:13.5px;margin-bottom:2px}
+.preset small{display:block;color:var(--muted);font-size:11.5px;line-height:1.35}
+.preset .d{display:block;font-size:12px;font-weight:600;margin-top:6px}
+.preset .d.up{color:var(--green)} .preset .d.down{color:var(--red)} .preset .d.eq{color:var(--muted)}
+.preset:disabled{opacity:.45;cursor:not-allowed}
+.ptrack{padding:14px 0 8px;border-top:1px dashed var(--line)}
+.ptrack .head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:2px}
+.ptrack .nm{font-weight:600;display:flex;align-items:center;gap:8px}
+.ptrack .nm i{width:10px;height:10px;border-radius:50%;background:var(--pc)}
+.ptrack .val{font-size:13px;color:var(--muted)}
+.ptrack .val b{color:var(--ink)}
+.ptrack input[type=range]{--c:var(--pc)}
+.ptscale{position:relative;height:18px;font-size:10.5px;color:var(--muted);margin:0 11px}
+.ptscale span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.ptscale span:first-child{transform:none;left:0!important}
+.ptscale span:last-child{transform:translateX(-100%)}
+.ptype{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;padding:2px 8px;border-radius:99px;background:color-mix(in srgb,var(--tc) 14%,transparent);color:var(--tc)}
+.plink{margin:12px 0 0!important}
+.hsum{display:grid;grid-template-columns:1.15fr 1fr;gap:24px;margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
+@media (max-width:700px){.hsum{grid-template-columns:1fr;gap:16px}}
+.hbig{font-family:Fraunces,Georgia,serif;font-size:clamp(32px,5vw,46px);font-weight:500;line-height:1.05;margin:8px 0 6px;color:var(--navy);font-variant-numeric:tabular-nums}
+.split{display:flex;height:14px;border-radius:99px;overflow:hidden;margin:14px 0 8px;background:var(--line)}
+.split i{display:block;height:100%;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.split-leg{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;flex-wrap:wrap}
+.split-leg span{display:flex;align-items:center;gap:6px}
+.split-leg i{width:10px;height:10px;border-radius:50%;background:var(--pc)}
+.pmini{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-content:start}
+.pmini > div{border-radius:14px;padding:12px 14px;background:var(--surface-2);border-left:4px solid var(--pc);font-size:13px;line-height:1.45}
+.pmini .n{font-weight:600;font-size:13.5px}
+.pmini .dt{font-family:Fraunces,Georgia,serif;font-size:17px;margin:2px 0}
+.pmini .m{font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;margin-top:4px}
+.pmini small{display:block;color:var(--muted);font-size:11.5px}
+.advice{margin-top:18px;border-radius:14px;padding:14px 16px 12px;background:var(--gold-soft);font-size:13.5px}
+.advice h3{margin:0 0 6px;font-size:14px;display:flex;align-items:center;gap:8px}
+.advice ul{margin:0;padding-left:18px}
+.advice li{margin:4px 0}
+.hogar-card,.pdet-card{padding:24px 26px}
+.hogar-card h2,.pdet-card h2{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:20px;margin:0}
+.hogar-card > p,.pdet-card > p{margin:2px 0 0;color:var(--muted);font-size:13px}
+.hchart{display:flex;align-items:flex-end;gap:3px;height:220px;border-bottom:1px solid var(--line);margin-top:18px;position:relative}
+.hbar{flex:1;min-width:0;height:100%;display:flex;flex-direction:column-reverse;cursor:default}
+.hbar i{display:block;width:100%;transition:height .5s cubic-bezier(.2,.8,.2,1)}
+.hbar:hover{filter:brightness(1.08)}
+/* sin color-mix: html2canvas (Informe PDF) no lo entiende */
+.s-sa{background:var(--navy);opacity:.32}
+.s-pa{background:var(--navy)}
+.s-sb{background:var(--gold);opacity:.4}
+.s-pb{background:var(--gold)}
+.hx{display:flex;gap:3px;margin-top:6px;font-size:10px;color:var(--muted)}
+.hx span{flex:1;min-width:0;text-align:center;overflow:visible;white-space:nowrap}
+.hleg{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:12px;margin-top:12px;color:var(--muted)}
+.hleg span{display:flex;align-items:center;gap:6px}
+.hleg i{width:12px;height:12px;border-radius:3px}
+.phases{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+@media (max-width:640px){.phases{grid-template-columns:1fr}}
+.phases div{border-radius:12px;padding:10px 12px;background:var(--surface-2);border:1px solid var(--line)}
+.phases span{display:block;font-size:11.5px;color:var(--muted)}
+.phases b{font-size:16px;font-variant-numeric:tabular-nums}
+.phases small{display:block;font-size:11.5px;color:var(--muted)}
+.pdet{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:10px}
+@media (max-width:760px){.pdet{grid-template-columns:1fr}}
+.pdet h3{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:17px;margin:8px 0 0;display:flex;align-items:center;gap:8px}
+.pdet h3 i{width:10px;height:10px;border-radius:50%;background:var(--pc)}
+.viu{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+@media (max-width:640px){.viu{grid-template-columns:1fr}}
+.viu > div{border-radius:14px;padding:12px 14px;background:var(--surface-2);border-left:4px solid var(--pc);font-size:13px}
+.viu b.big{display:block;font-size:18px;font-variant-numeric:tabular-nums;margin:4px 0}
+.viu small{display:block;color:var(--muted);font-size:11.5px;line-height:1.4}
+.pdet-card h2.second{margin-top:26px}
+
 /* menú de apartados */
 .secnav{position:sticky;top:0;z-index:30;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:10px 0;margin:0 0 18px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .secnav::-webkit-scrollbar{display:none}
@@ -302,7 +433,7 @@ footer .ver button:hover{color:var(--gold)}
 .secnav a:hover{color:var(--ink);border-color:var(--line)}
 .secnav a.on{background:var(--navy);color:var(--surface)}
 .secnav a.off{opacity:.45}
-.card,#datos{scroll-margin-top:72px}
+.card,#datos,#pDatos,#pPlan,#pHogar,#pDetalle{scroll-margin-top:72px}
 
 /* ayuda */
 .ayuda{padding:24px 26px}
@@ -403,7 +534,12 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
   body.report-mode #report{display:block!important}
   body.report-mode{background:#fff!important;color:#1b2130!important;font-size:10.5pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
-#report{color:#1b2130;font-family:Inter,system-ui,sans-serif;line-height:1.45}
+#report{color:#1b2130;font-family:Inter,system-ui,sans-serif;line-height:1.45;
+  --bg:#f5f2ec;--surface:#fffdf9;--surface-2:#f8f4ec;--ink:#1b2130;--muted:#6a7080;--line:#e6dfd2;
+  --navy:#1f3a5f;--navy-soft:#e8eef6;--gold:#a8844d;--gold-soft:#f3ead9;--green:#3d7a58;--green-soft:#e5f1ea;--red:#a9503a;--red-soft:#f7e6e0}
+#report .pmini,#report .split,#report .split-leg,#report .phases,#report .viu,#report .hchart,#report .hx,#report .hleg{font-size:9pt}
+#report .advice{font-size:9pt}
+#report .hchart{height:150px}
 #report .rp-head{display:flex;align-items:center;gap:14px;border-bottom:2px solid #1f3a5f;padding-bottom:12px;margin-bottom:16px}
 #report .rp-head svg{width:52px;height:52px;border-radius:12px;flex:none}
 #report .rp-head h1{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:20pt;margin:0;color:#1f3a5f;line-height:1.1}
@@ -455,16 +591,20 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
   <section class="cover" id="inicio">
     <div class="cover-icon" aria-hidden="true"><svg viewBox="0 0 512 512"><defs><linearGradient id="cvBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1f3a5f"/><stop offset="1" stop-color="#12243d"/></linearGradient><linearGradient id="cvGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c9a56a"/><stop offset="1" stop-color="#a8844d"/></linearGradient></defs><rect width="512" height="512" fill="url(#cvBg)"/><circle cx="256" cy="256" r="150" fill="none" stroke="#f3ead9" stroke-opacity=".22" stroke-width="16"/><path d="M256 128v14M384 256h-14M256 384v-14M128 256h14" stroke="#f3ead9" stroke-opacity=".55" stroke-width="8" stroke-linecap="round"/><path d="M256 106 A150 150 0 1 1 126.1 331" fill="none" stroke="url(#cvGold)" stroke-width="16" stroke-linecap="round"/><circle cx="126.1" cy="331" r="17" fill="#a8844d" stroke="#f3ead9" stroke-width="6"/><path d="M256 176v80l52 34" fill="none" stroke="#f3ead9" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><circle cx="256" cy="256" r="13" fill="#a8844d"/></svg></div>
     <h1 class="serif">¿Cuándo y con cuánto<br>te podrás <em>jubilar</em>?</h1>
-    <p class="cover-desc">Calcula tu fecha de jubilación y tu pensión en el Régimen General de la Seguridad Social con solo tres datos, y compara al instante cuánto cobrarías si te jubilas antes o si decides retrasarlo, según la normativa vigente en 2026.</p>
+    <p class="cover-desc">Calcula tu fecha de jubilación y tu pensión en el Régimen General de la Seguridad Social con solo tres datos, y compara al instante cuánto cobrarías si te jubilas antes o si decides retrasarlo, según la normativa vigente en 2026. Y si lo planificáis en pareja, encontrad juntos vuestra mejor fecha.</p>
     <span class="privacy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Tus datos no salen de tu dispositivo</span>
+    <div class="mode-sel" role="group" aria-label="Tipo de simulación">
+      <button type="button" data-m="ind" class="on"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span><b>Solo yo</b><small>Simulación individual</small></span></button>
+      <button type="button" data-m="par"><svg width="22" height="18" viewBox="0 0 28 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="8" r="3.6"/><circle cx="19" cy="8" r="3.6"/><path d="M2 21a7 7 0 0 1 14 0M12 21a7 7 0 0 1 14 0"/></svg><span><b>En pareja</b><small>Planificad juntos</small></span></button>
+    </div>
     <p class="credit">Creado por Carlos J. Galán Doval – Ver. <span class="js-ver"></span> – 2026</p>
   </section>
 
   <nav class="secnav" id="secnav" aria-label="Apartados">
-    <a href="#datos">Datos</a>
-    <a href="#mainCard" data-need>¿Cuándo jubilarte?</a>
-    <a href="#grafico" data-need>Gráfico</a>
-    <a href="#detail" data-need>Desglose</a>
+    <a href="#datos" data-par="#pDatos">Datos</a>
+    <a href="#mainCard" data-par="#pPlan" data-need>¿Cuándo jubilarte?</a>
+    <a href="#grafico" data-par="#pHogar" data-need>Gráfico</a>
+    <a href="#detail" data-par="#pDetalle" data-need>Desglose</a>
     <a href="#requisitos">Requisitos</a>
     <a href="#ayuda">Ayuda</a>
   </nav>
@@ -602,6 +742,14 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 
       <section class="card detail needs-data" id="detail"></section>
 
+    </main>
+  </div>
+
+  <!-- ============ MODO PAREJA ============ -->
+  <div id="pairApp" hidden></div>
+
+  <!-- ============ COMÚN A LOS DOS MODOS ============ -->
+  <div class="common">
       <section class="card info" id="requisitos">
         <details>
           <summary>Requisitos de edad ordinaria por año</summary>
@@ -636,7 +784,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
             <p><b>Jubilación activa</b>: permite compatibilizar trabajo y pensión (del 45 % al 100 % según la demora). En los Servicios de Salud solo está regulada para <b>Médicos de Familia y Pediatras de AP</b> menores de 70 años (75 % de la pensión).</p>
             <p><b>Prolongación en el SNS</b>: el personal estatutario puede solicitar seguir en activo, en general, hasta los 70 años.</p>
             <p><b>Anticipada involuntaria</b> (despido colectivo u objetivo, ERE, cierre de la empresa…): hasta 4 años antes con 33 años cotizados y 6 meses inscrito como demandante de empleo. Coeficientes reductores de hasta el 30 % (art. 207 LGSS) y tope de la pensión máxima reducido un 0,5 % por trimestre. Actívala con el selector «Anticipada: Involuntaria».</p>
-            <p><b>Viudedad</b>: se calcula sobre la pensión inicial sin tope (52 % con carácter general).</p>
+            <p><b>Viudedad</b>: el 52 % de la base reguladora del fallecido con carácter general (60 % si el superviviente tiene 65 años o más y no tiene otros ingresos relevantes; 70 % con cargas familiares e ingresos bajos). Es compatible con la pensión propia, pero la suma de pensiones públicas no puede superar la pensión máxima. En el modo pareja verás cuánto os quedaría a cada uno.</p>
           </div>
         </details>
         <div class="sources"><b>Fuentes:</b> Ley 27/2011, RDL 2/2023 y Ley 21/2021 · «Jubilación ordinaria del Médico en 2026: cuándo, cómo y cuánto» (Centro de Estudios SIMEG) · Metodología de proyección del simulador oficial de «Tu Seguridad Social» (2 % anual + 0,115 % en la pensión máxima).</div>
@@ -662,6 +810,16 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
             <li><b>5</b><div><strong>Consulta los requisitos.</strong> Tabla de edad ordinaria por año y explicación de cómo se calcula la pensión.</div></li>
             <li><b>6</b><div><strong>Guarda o comparte el resultado.</strong> <b>«Informe PDF»</b> crea un PDF completo (tus datos, el escenario elegido con su desglose y la comparativa de todas las opciones). En el ordenador se descarga; en el móvil pulsa <b>«Guardar o compartir»</b> para guardarlo en Archivos o enviarlo. <b>«Compartir escenario»</b> crea un enlace que abre la misma simulación en otro dispositivo.</div></li>
           </ol>
+          <h3>👥 Modo pareja</h3>
+          <p>Pulsa <b>«En pareja»</b> en la portada para planificar la jubilación de los dos a la vez:</p>
+          <ol class="steps">
+            <li><b>1</b><div><strong>Rellenad la ficha de cada uno</strong> (o cargad su vida laboral en PDF): fecha de nacimiento, días cotizados, IRPF y, si queréis, el <b>sueldo neto</b> actual. En «Ajustes avanzados», la base de cotización o la base reguladora y el tipo de anticipada, de cada uno por separado.</div></li>
+            <li><b>2</b><div><strong>Indicad los hijos</strong>: en común, solo de uno y solo del otro. El complemento por los hijos en común lo cobra <b>solo uno</b>: la app se lo asigna al de pensión más baja, como dice la ley, y podéis cambiarlo.</div></li>
+            <li><b>3</b><div><strong>Elegid un plan sugerido</strong> o moved la fecha de cada uno mes a mes: <b>Cada uno a su edad</b> (referencia), <b>Jubilarnos juntos</b> (el mismo mes, con el mejor resultado), <b>Equilibrio</b> (las fechas más próximas sin perder dinero a largo plazo), <b>Máximo a largo plazo</b> y <b>Lo antes posible</b>. Con «Mover las dos fechas a la vez» mantenéis la distancia entre ambas.</div></li>
+            <li><b>4</b><div><strong>Mirad el resultado</strong>: la pensión del hogar y lo que aporta cada uno, los ingresos netos año a año (sueldos y pensiones), los consejos personalizados, el desglose de cada pensión y qué pasaría si falta uno (pensión de viudedad).</div></li>
+          </ol>
+          <p>Los importes del hogar se muestran en <b>euros de hoy</b> para poder sumar pensiones que empiezan en años distintos. El informe PDF y el enlace para compartir incluyen el plan de los dos.</p>
+
           <h3>Tipos de jubilación anticipada</h3>
           <ul>
             <li><b>Voluntaria</b>: por decisión propia. Hasta <b>2 años</b> antes de tu edad ordinaria, con al menos <b>35 años</b> cotizados.</li>
@@ -679,6 +837,14 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
         </div>
 
         <div class="tab-panel" data-panel="datos" hidden>
+          <h3>¿Sirve para mi caso?</h3>
+          <p>El simulador calcula la jubilación del <b>Régimen General de la Seguridad Social</b> (trabajadores por cuenta ajena, incluido el personal estatutario del SNS y los funcionarios que ingresaron <b>desde 2011</b>). A los <b>autónomos</b> les sirve como aproximación, porque las reglas básicas son las mismas.</p>
+          <ul>
+            <li><b>Funcionarios de Clases Pasivas</b> (MUFACE, ISFAS o MUGEJU, ingresados <b>antes de 2011</b>, por ejemplo muchos docentes): su pensión <b>no</b> se calcula con bases de cotización, sino con unos haberes reguladores por grupo (A1, A2, C1…) que fija cada año la Ley de Presupuestos y un porcentaje según los años de servicio. Este simulador todavía no lo calcula; está previsto añadirlo.</li>
+            <li><b>Mutualidades alternativas</b> (abogados, arquitectos…): son sistemas de ahorro individual, y la pensión depende del capital acumulado en cada plan. Hay que usar el simulador de la propia mutualidad.</li>
+            <li><b>Cómputo recíproco:</b> si has trabajado en varios regímenes (por ejemplo, Seguridad Social y Clases Pasivas), los años cotizados se suman para tener derecho a la pensión, que la paga el régimen en el que termines. Consulta tu caso en la Seguridad Social.</li>
+          </ul>
+
           <h3>La forma más rápida: tu Informe de Vida Laboral</h3>
           <p>Descarga tu <b>Informe de Vida Laboral</b> en PDF desde la Seguridad Social (con certificado digital, Cl@ve o SMS) y pulsa <b>«Cargar mi Informe de Vida Laboral (PDF)»</b> o, en el ordenador, <b>arrastra el PDF</b> a la ventana de la app. La app lee la fecha de nacimiento y el <b>total de días efectivamente computables</b>; si el informe es de días atrás y sigues de alta, suma los días hasta hoy. El PDF se lee en tu dispositivo y <b>no se envía a ningún sitio</b>.</p>
           <p>⚠️ El Informe de Vida Laboral <b>no incluye los días de bonificación por cuidado de hijos</b> (art. 236 LGSS: periodos por nacimiento o adopción con interrupción de la cotización). Si te corresponden, súmalos a mano en «Días cotizados»; los verás en la simulación oficial de «Tu Seguridad Social» («Bonificaciones aplicadas»).</p>
@@ -763,7 +929,6 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 
         <div class="tab-panel" data-panel="versiones" hidden><div id="verList"></div></div>
       </section>
-    </main>
   </div>
 
   <footer>Simulación orientativa sin validez oficial. Para una cifra definitiva consulta «Tu Seguridad Social» (sede.seg-social.gob.es) o la asesoría de tu Colegio de Médicos.
@@ -803,8 +968,17 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 /* ---------- Versión ----------
    Al desplegar: sube APP_VERSION (formato 01.00 → 01.01 cambios menores, 02.00 cambios grandes),
    añade la entrada arriba del todo en CHANGES, y actualiza version.json y CHANGELOG.md con la misma versión. */
-const APP_VERSION = '01.05';
+const APP_VERSION = '02.00';
 const CHANGES = [
+  {v:'02.00', date:'2026-09-27', items:[
+    'Nuevo modo «En pareja» 👥: planificad la jubilación de los dos a la vez, con la ficha de cada uno (datos, vida laboral en PDF, base, IRPF y sueldo).',
+    'Hijos en común y de cada uno: el complemento por los hijos en común se asigna automáticamente al de pensión más baja, como dice la ley, y se puede cambiar.',
+    'Planes sugeridos: cada uno a su edad, jubilarnos juntos, equilibrio, máximo a largo plazo y lo antes posible. Además, podéis mover la fecha de cada uno mes a mes.',
+    'Resultado conjunto: pensión del hogar y lo que aporta cada uno, ingresos netos año a año con sueldos y pensiones, consejos personalizados y desglose de cada pensión.',
+    '«¿Y si falta uno?»: pensión de viudedad que le quedaría a cada uno.',
+    'Informe PDF y enlace para compartir también en modo pareja.',
+    'Ayuda: qué regímenes cubre el simulador (MUFACE y Clases Pasivas, mutualidades, cómputo recíproco).'
+  ]},
   {v:'01.05', date:'2026-09-26', items:[
     'Ayuda ampliada (en «Datos que necesitas»): dónde ver tu base de cotización, qué es la base reguladora y cómo se calcula, y quién tiene derecho al complemento por hijos.',
     'Nuevo enlace «¿Dónde la veo?» junto a la base de cotización, y acceso directo al Informe de bases de cotización de la Seguridad Social.'
@@ -855,7 +1029,7 @@ const pct = n => n.toLocaleString('es-ES',{maximumFractionDigits:2})+' %';
 const fDate = d => d.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'});
 const fShort = d => d.toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric',timeZone:'UTC'});
 const plural = (n,s,p) => `${n} ${n===1?s:p}`;
-const fMonths = m => { const y = Math.floor(m/12), r = m%12; return `${plural(y,'año','años')}${r?` y ${plural(r,'mes','meses')}`:''}`; };
+const fMonths = m => { const y = Math.floor(m/12), r = m%12; return y ? `${plural(y,'año','años')}${r?` y ${plural(r,'mes','meses')}`:''}` : plural(r,'mes','meses'); };
 const fCot = d => { const y = Math.floor(d/365); const m = Math.floor((d - y*365)/365*12 + 1e-9); return `${plural(y,'año','años')}${m?` y ${plural(m,'mes','meses')}`:''}`; };
 function ageYMD(b,D){
   let y=D.getUTCFullYear()-b.getUTCFullYear(), m=D.getUTCMonth()-b.getUTCMonth(), d=D.getUTCDate()-b.getUTCDate();
@@ -1361,17 +1535,28 @@ document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) checkUp
 
 // Menú de apartados
 const navLinks = [...document.querySelectorAll('#secnav a')];
+// En modo pareja cada enlace apunta a su apartado equivalente (data-par)
+const isPar = () => document.body.classList.contains('par');
+const navHref = a => isPar() && a.dataset.par ? a.dataset.par : a.getAttribute('href');
+const needsData = a => a.hasAttribute('data-need') && document.body.classList.contains(isPar() ? 'par-empty' : 'is-empty');
 navLinks.forEach(a=>a.onclick = e => {
   e.preventDefault();
-  let t = document.querySelector(a.getAttribute('href'));
-  if(a.hasAttribute('data-need') && document.body.classList.contains('is-empty')){ t = document.querySelector('.empty-card'); toast('Primero introduce tu fecha de nacimiento y tus días cotizados'); }
-  t.scrollIntoView({behavior:'smooth', block:'start'});
+  let t = document.querySelector(navHref(a));
+  if(needsData(a)){
+    t = document.querySelector(isPar() ? '#pDatos' : '.empty-card');
+    toast(isPar() ? 'Primero rellenad la fecha de nacimiento y los días cotizados de los dos' : 'Primero introduce tu fecha de nacimiento y tus días cotizados');
+  }
+  if(t) t.scrollIntoView({behavior:'smooth', block:'start'});
 });
-if('IntersectionObserver' in window){
-  const io = new IntersectionObserver(ents=>{ ents.forEach(en=>{ if(en.isIntersecting){ const id = '#'+en.target.id; navLinks.forEach(a=>{ const on = a.getAttribute('href')===id; a.classList.toggle('on', on); if(on){ const nav = $('#secnav'); nav.scrollTo({left: a.offsetLeft - (nav.clientWidth - a.offsetWidth)/2, behavior:'smooth'}); } }); } }); }, {rootMargin:'-35% 0px -60% 0px'});
-  navLinks.forEach(a=>{ const t = document.querySelector(a.getAttribute('href')); if(t) io.observe(t); });
+let navIO = null;
+function navObserve(){
+  if(!('IntersectionObserver' in window)) return;
+  if(navIO) navIO.disconnect();
+  navIO = new IntersectionObserver(ents=>{ ents.forEach(en=>{ if(en.isIntersecting){ const id = '#'+en.target.id; navLinks.forEach(a=>{ const on = navHref(a)===id; a.classList.toggle('on', on); if(on){ const nav = $('#secnav'); nav.scrollTo({left: a.offsetLeft - (nav.clientWidth - a.offsetWidth)/2, behavior:'smooth'}); } }); } }); }, {rootMargin:'-35% 0px -60% 0px'});
+  navLinks.forEach(a=>{ [a.getAttribute('href'), a.dataset.par].forEach(sel=>{ const t = sel && document.querySelector(sel); if(t) navIO.observe(t); }); });
 }
-const syncNav = () => navLinks.forEach(a=>a.classList.toggle('off', a.hasAttribute('data-need') && document.body.classList.contains('is-empty')));
+navObserve();
+const syncNav = () => navLinks.forEach(a=>a.classList.toggle('off', needsData(a)));
 new MutationObserver(syncNav).observe(document.body, {attributes:true, attributeFilter:['class']});
 
 /* ---------- Compartir escenario por enlace ---------- */
@@ -1404,6 +1589,7 @@ let shared = null;
 
 /* ---------- Informe PDF (se imprime o se guarda como PDF desde el diálogo del navegador) ---------- */
 function buildReport(){
+  if(isPar()) return buildPairReport();
   if(document.body.classList.contains('is-empty') || !scen.length) return false;
   const s = scen[S.sc], ord = scen[1], f = 1-S.irpf;
   const icon = $('.cover-icon svg').outerHTML.replaceAll('cvBg','rpBg').replaceAll('cvGold','rpGold');
@@ -1477,7 +1663,7 @@ async function makePdf(){
       if(i) pdf.addPage();
       pdf.addImage(part.toDataURL('image/jpeg',0.92), 'JPEG', 0, 0, 210, (b-a)*mmPx);
     });
-    const name = `Informe jubilación ${fShort(TODAY).replaceAll('/','-')}.pdf`;
+    const name = `${isPar() ? 'Plan jubilación pareja' : 'Informe jubilación'} ${fShort(TODAY).replaceAll('/','-')}.pdf`;
     return new File([pdf.output('blob')], name, {type:'application/pdf'});
   } finally { el.classList.remove('capture'); }
 }
@@ -1539,12 +1725,22 @@ $('#fileVL').addEventListener('change', e => { const file = e.target.files[0]; e
 let dragN = 0;
 const esFichero = e => [...(e.dataTransfer?.types || [])].includes('Files');
 addEventListener('dragenter', e => { if(!esFichero(e)) return; e.preventDefault(); dragN++; document.body.classList.add('dragging'); });
-addEventListener('dragover', e => { if(!esFichero(e)) return; e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; });
+addEventListener('dragover', e => {
+  if(!esFichero(e)) return; e.preventDefault(); e.dataTransfer.dropEffect = 'copy';
+  const card = isPar() && e.target.closest && e.target.closest('.pcard');
+  document.querySelectorAll('.pcard.drop').forEach(c=>{ if(c!==card) c.classList.remove('drop'); });
+  if(card) card.classList.add('drop');
+});
 addEventListener('dragleave', e => { if(!esFichero(e)) return; if(--dragN <= 0){ dragN = 0; document.body.classList.remove('dragging'); } });
 addEventListener('drop', e => {
   if(!esFichero(e)) return; e.preventDefault(); dragN = 0; document.body.classList.remove('dragging');
   const file = [...e.dataTransfer.files].find(f => f.type==='application/pdf' || /\.pdf$/i.test(f.name));
-  if(file) cargarVL(file); else toast('Suelta un PDF: tu Informe de Vida Laboral');
+  const card = isPar() && e.target.closest && e.target.closest('.pcard');
+  document.querySelectorAll('.pcard.drop').forEach(c=>c.classList.remove('drop'));
+  if(!file){ toast('Suelta un PDF: el Informe de Vida Laboral'); return; }
+  if(!isPar()) cargarVL(file);
+  else if(card) cargarVLPar(file, card.dataset.p);
+  else toast('Suelta el PDF sobre la ficha de la persona a la que pertenece');
 });
 async function cargarVL(file){
   $('#datos').scrollIntoView({behavior:'smooth', block:'start'});
@@ -1569,12 +1765,530 @@ async function cargarVL(file){
   }finally{ btn.classList.remove('busy'); lbl.textContent = txt0; }
 }
 
+/* =====================================================================
+   MODO PAREJA — dos personas, plan conjunto, ingresos del hogar y viudedad.
+   Reutiliza el motor individual (findOrdinary, findEarly, scenario) cargando
+   temporalmente los datos de cada persona en S (withPerson): no hay fórmulas duplicadas.
+   ===================================================================== */
+const PKEY = 'simJubPareja', MKEY = 'simJubModo';
+const PERSONA0 = {name:'',fNac:'',dias:'',cont:true,early:'vol',brMode:'est',base:'5101.20',brMan:'',irpf:'23',sueldo:'',derecho:true};
+const PEMPTY = {A:{...PERSONA0}, B:{...PERSONA0}, hc:0, ha:0, hb:0, asig:'auto', selA:null, selB:null, link:false};
+// Pareja de ejemplo 100 % ficticia
+const PDEMO = {A:{name:'Antonio',fNac:'1964-11-10',dias:'14200',cont:true,early:'vol',brMode:'est',base:'4400.00',brMan:'',irpf:'21',sueldo:'3100',derecho:false},
+               B:{name:'Lucía',fNac:'1968-05-22',dias:'11300',cont:true,early:'vol',brMode:'est',base:'2900.00',brMan:'',irpf:'15',sueldo:'2150',derecho:true},
+               hc:2, ha:0, hb:0, asig:'auto', selA:null, selB:null, link:false};
+const clonar = o => JSON.parse(JSON.stringify(o));
+const isoD = d => d.toISOString().slice(0,10);
+let PS = clonar(PEMPTY), MODE = 'ind', PR = null;   // estado de la pareja, modo actual y último cálculo
+const pName = k => (PS[k].name||'').trim() || (k==='A' ? 'Persona 1' : 'Persona 2');
+const pInitial = k => ((PS[k].name||'').trim()[0] || (k==='A' ? '1' : '2')).toUpperCase();
+const monthYear = d => d.toLocaleDateString('es-ES',{month:'long',year:'numeric',timeZone:'UTC'});
+const typeTxt = o => o.type==='Anticipada' ? `con anticipada (${plural(o.months,'mes','meses')} antes)` : o.type==='Ordinaria' ? 'a su edad ordinaria' : `con ${fMonths(o.demM)} de demora`;
+
+function personIn(p){
+  const birth = parse(p.fNac), days = Math.max(0, Math.round(+p.dias || 0));
+  if(!birth || !(days > 0) || birth >= TODAY) return null;
+  return {birth, days, cont: p.cont!==false, base: +p.base || 0, brMan: +p.brMan || 0, brMode: p.brMode==='man' ? 'man' : 'est',
+          irpf: Math.min(60, Math.max(0, +p.irpf || 0))/100, early: p.early==='inv' ? 'inv' : 'vol'};
+}
+function withPerson(P, fn){
+  const bak = Object.assign({}, S), g = [ORD, EARLY, ORDC];
+  Object.assign(S, {birth:P.birth, days:P.days, cont:P.cont, base:P.base, brMan:P.brMan, brMode:P.brMode, irpf:P.irpf, hijos:0, brecha:false, early:P.early});
+  try{ return fn(); }
+  finally{ for(const k in S) delete S[k]; Object.assign(S, bak); [ORD, EARLY, ORDC] = g; }
+}
+// Todas las fechas posibles de una persona, mes a mes: anticipada → ordinaria → +5 años
+function personPlan(P){
+  return withPerson(P, ()=>{
+    ORD = findOrdinary(); EARLY = findEarly();
+    const opts = [];
+    if(EARLY) for(let k=0; k<60; k++){ const D = addMonths(EARLY,k); if(D >= ORD || D >= ORDC) break; opts.push(scenario(D,'ant')); }
+    const nAnt = opts.length;
+    for(let m=0; m<=60; m++) opts.push(scenario(addMonths(ORD,m), m ? 'dem' : 'ord'));
+    let first = opts.findIndex(o=>o.D >= TODAY); if(first < 0) first = opts.length-1;
+    return {P, opts: opts.slice(first), iOrd: Math.max(0, nAnt-first), ORD};
+  });
+}
+const sameMonth = (x,y) => x.getUTCFullYear()===y.getUTCFullYear() && x.getUTCMonth()===y.getUTCMonth();
+// Resultado conjunto para una fecha de cada uno (ia, ib = índices en sus listas de fechas)
+function evalPair(R, ia, ib){
+  const a = R.A.opts[ia], b = R.B.opts[ib], hc = +PS.hc || 0;
+  let to = PS.asig;
+  if(to==='auto') to = PS.A.derecho && PS.B.derecho ? ((a.total||0) <= (b.total||0) ? 'A' : 'B') : PS.A.derecho ? 'A' : PS.B.derecho ? 'B' : 'none';
+  if(!hc) to = 'none';
+  const nA = Math.min(4, (PS.A.derecho ? +PS.ha||0 : 0) + (to==='A' ? hc : 0));
+  const nB = Math.min(4, (PS.B.derecho ? +PS.hb||0 : 0) + (to==='B' ? hc : 0));
+  const one = (o, n, P, k) => {
+    if(!o || !o.ok) return {o, ok:false, k};
+    const brecha = n ? n*brechaHijo(o.Y) : 0, total = o.total + brecha;
+    const def = Math.pow(1.02, Math.max(0, yf(TODAY,o.D))), hoy = total/def;
+    return {o, ok:true, k, n, brecha, total, neto: total*(1-P.irpf), hoy, netoHoy: hoy*(1-P.irpf), def,
+            to85: hoy*14*Math.max(0, 85-yf(P.birth,o.D))};
+  };
+  const A = one(a, nA, R.A.P, 'A'), B = one(b, nB, R.B.P, 'B'), ok = A.ok && B.ok;
+  return {ia, ib, A, B, to, ok, hoy: ok ? A.hoy+B.hoy : 0, netoHoy: ok ? A.netoHoy+B.netoHoy : 0, to85: ok ? A.to85+B.to85 : 0,
+          gap: ok ? Math.abs(Math.round((a.D-b.D)/DAY/30.4375)) : 0, juntos: ok && sameMonth(a.D,b.D)};
+}
+const PRESETS = [
+  {k:'ref',    t:'Cada uno a su edad',     s:'Los dos a vuestra edad ordinaria (referencia)'},
+  {k:'juntos', t:'🤝 Jubilarnos juntos',    s:'El mismo mes, con el mejor resultado a largo plazo'},
+  {k:'equil',  t:'⚖️ Equilibrio',          s:'Las fechas más próximas sin perder en el total cobrado hasta los 85'},
+  {k:'largo',  t:'📈 Máximo a largo plazo', s:'Lo máximo cobrado en pensiones hasta los 85'},
+  {k:'antes',  t:'⏩ Lo antes posible',     s:'Los dos en la primera fecha posible'}
+];
+function computePresets(R){
+  const out = {ref: evalPair(R, R.A.iOrd, R.B.iOrd), antes: evalPair(R, 0, 0)}, refT = out.ref.to85;
+  let juntos = null, equil = null, largo = null;
+  for(let i=0; i<R.A.opts.length; i++) for(let j=0; j<R.B.opts.length; j++){
+    const e = evalPair(R, i, j); if(!e.ok) continue;
+    if(!largo || e.to85 > largo.to85 + 0.5) largo = e;
+    if(e.juntos && (!juntos || e.to85 > juntos.to85 + 0.5)) juntos = e;
+    if(e.to85 >= refT - 0.5 && (!equil || e.gap < equil.gap || (e.gap===equil.gap && e.to85 > equil.to85 + 0.5))) equil = e;
+  }
+  return Object.assign(out, {juntos, equil, largo});
+}
+const idxOf = (plan, s) => { if(!s) return plan.iOrd; const t = parse(s); if(!t) return plan.iOrd; let best = plan.iOrd, bd = Infinity; plan.opts.forEach((o,i)=>{ const d = Math.abs(o.D - t); if(d < bd){ bd = d; best = i; } }); return best; };
+
+/* ---------- Interfaz del modo pareja ---------- */
+const svgPdf = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M12 17v-6M9.5 13.5L12 11l2.5 2.5"/></svg>';
+const stepper = k => `<div class="stepper" data-k="${k}"><button type="button" data-d="-1" aria-label="Menos">−</button><b>0</b><button type="button" data-d="1" aria-label="Más">+</button></div>`;
+const pcardHTML = k => `
+<div class="pcard" data-p="${k}">
+  <div class="who"><i class="js-ini">${k==='A'?'1':'2'}</i><input type="text" data-f="name" maxlength="24" placeholder="${k==='A'?'Nombre (p. ej. Carlos)':'Nombre (p. ej. María)'}" aria-label="Nombre de la persona ${k==='A'?1:2}"></div>
+  <button type="button" class="btn vlp" data-vl>${svgPdf}<span>Cargar su vida laboral (PDF)</span></button>
+  <input type="file" accept="application/pdf,.pdf" hidden data-file>
+  <div class="hint vl-ok" data-vlnote hidden></div>
+  <div class="pfields">
+    <div class="pf"><label>Fecha de nacimiento</label><input type="date" data-f="fNac"></div>
+    <div class="pf"><label>Días cotizados hoy</label><input type="number" data-f="dias" min="0" max="18250" step="1" inputmode="numeric" placeholder="0"></div>
+    <div class="pf"><label>Sueldo neto al mes <span class="opt">(opcional)</span></label><div class="input-suffix"><input type="number" data-f="sueldo" min="0" step="10" inputmode="decimal" placeholder="—"><span>€</span></div></div>
+    <div class="pf"><label>IRPF de la pensión</label><div class="input-suffix"><input type="number" data-f="irpf" min="0" max="45" step="0.5" inputmode="decimal"><span>%</span></div></div>
+  </div>
+  <label class="switch"><input type="checkbox" data-f="derecho"><span class="tg"></span><span class="tx">Tiene derecho al complemento por hijos<small>Mujeres con hijos; hombres solo si su carrera se vio perjudicada por el nacimiento (ver Ayuda).</small></span></label>
+  <details class="adv"><summary>Ajustes avanzados</summary><div class="inner">
+    <label class="switch"><input type="checkbox" data-f="cont"><span class="tg"></span><span class="tx">Seguirá cotizando hasta jubilarse<small>Desactívalo si ya no trabaja.</small></span></label>
+    <div class="pf" style="margin-bottom:12px"><span class="plbl">Jubilación anticipada</span><div class="seg" data-seg="early"><button type="button" data-v="vol">Voluntaria</button><button type="button" data-v="inv">Involuntaria</button></div></div>
+    <div class="pf" style="margin-bottom:12px"><span class="plbl">Base reguladora</span><div class="seg" data-seg="brMode"><button type="button" data-v="est">Estimar</button><button type="button" data-v="man">La conozco</button></div>
+      <div data-box="est"><div class="input-suffix"><input type="number" data-f="base" step="0.01" inputmode="decimal" aria-label="Base de cotización mensual"><span>€</span></div><div class="hint">Base de cotización mensual actual (nómina: «Base contingencias comunes»).</div></div>
+      <div data-box="man" hidden><div class="input-suffix"><input type="number" data-f="brMan" step="0.01" inputmode="decimal" aria-label="Base reguladora"><span>€</span></div><div class="hint">La de su simulación oficial de «Tu Seguridad Social».</div></div>
+    </div>
+  </div></details>
+</div>`;
+const trackHTML = k => `<div class="ptrack" id="pTrack${k}" data-p="${k}"><div class="head"><span class="nm"><i></i><span></span></span><span class="ptype"></span></div><div class="val"></div><input type="range" min="0" max="1" step="1" value="0" aria-label="Fecha de jubilación de la persona ${k==='A'?1:2}"><div class="ptscale"></div></div>`;
+
+function buildPairUI(){
+  $('#pairApp').innerHTML = `
+  <section class="card pcard-wrap" id="pDatos">
+    <div class="step"><b>1</b><h2>Vuestros datos</h2></div>
+    <p class="sub">Rellenad los datos de cada uno o cargad su vida laboral en PDF (en el ordenador también podéis arrastrarla sobre su ficha). Todo se calcula en este dispositivo.</p>
+    <div class="pgrid">${pcardHTML('A')}${pcardHTML('B')}</div>
+    <div class="phijos">
+      <h3>Hijos</h3>
+      <div class="pf"><span class="plbl">En común</span>${stepper('hc')}</div>
+      <div class="pf"><span class="plbl">Solo de <span class="js-nA"></span></span>${stepper('ha')}</div>
+      <div class="pf"><span class="plbl">Solo de <span class="js-nB"></span></span>${stepper('hb')}</div>
+      <div class="pf full" id="pAsigBox"><span class="plbl">¿Quién cobra el complemento por los hijos en común?</span><div class="seg seg3" id="pAsig"><button type="button" data-v="auto">Automático (ley)</button><button type="button" data-v="A" class="js-nA"></button><button type="button" data-v="B" class="js-nB"></button></div><div class="hint">Por ley lo cobra solo uno de los dos: el de pensión más baja. Cámbialo si esa persona no cumple los requisitos.</div></div>
+    </div>
+    <div class="pactions"><button type="button" class="btn" id="pDemo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3l14 9-14 9z"/></svg>Ver un ejemplo de pareja</button></div>
+  </section>
+  <section class="card pempty">
+    <h2>Rellenad los datos de los dos</h2>
+    <p>Con la fecha de nacimiento y los días cotizados de cada uno veréis vuestro plan conjunto: fechas, pensión del hogar, ingresos año a año y qué pasaría si falta uno.</p>
+  </section>
+  <section class="card pplan needs-pair" id="pPlan">
+    <div class="q"><div class="step" style="margin:0"><b>2</b><h2>¿Cuándo os jubiláis?</h2></div></div>
+    <div class="label" style="margin-bottom:8px">Planes sugeridos · toca uno para aplicarlo</div>
+    <div class="presets" id="pPresets"></div>
+    ${trackHTML('A')}${trackHTML('B')}
+    <label class="switch plink"><input type="checkbox" id="pLink"><span class="tg"></span><span class="tx">Mover las dos fechas a la vez<small>Al mover una, la otra se desplaza lo mismo y mantenéis la distancia entre ambas.</small></span></label>
+    <div id="pSum"></div>
+    <div class="advice" id="pAdvice"></div>
+    <div class="share-row">
+      <button class="btn" id="pShare"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>Compartir plan</button>
+      <button class="btn" id="pReport"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M9 13h6M9 17h6"/></svg>Informe PDF</button>
+    </div>
+  </section>
+  <section class="card hogar-card needs-pair" id="pHogar">
+    <h2>Ingresos netos del hogar, año a año</h2>
+    <p>Sueldos y pensiones netos de los dos, en euros de hoy. Pasa el dedo o el ratón por una barra para ver el detalle.</p>
+    <div id="pHogarBody"></div>
+  </section>
+  <section class="card pdet-card needs-pair" id="pDetalle">
+    <h2>Desglose de cada uno</h2>
+    <p>Cómo se calcula cada pensión en la fecha elegida.</p>
+    <div id="pDetBody"></div>
+  </section>`;
+
+  let pT; const pRecalc = () => { clearTimeout(pT); pT = setTimeout(computePair, 150); };
+  document.querySelectorAll('#pairApp .pcard').forEach(card=>{
+    const k = card.dataset.p;
+    card.querySelectorAll('[data-f]').forEach(el=>{
+      el.addEventListener(el.type==='checkbox' ? 'change' : 'input', ()=>{
+        PS[k][el.dataset.f] = el.type==='checkbox' ? el.checked : el.value;
+        if(el.dataset.f==='name') refreshNames();
+        pRecalc();
+      });
+    });
+    card.querySelectorAll('[data-seg]').forEach(seg=>seg.querySelectorAll('button').forEach(b=>b.onclick = ()=>{
+      PS[k][seg.dataset.seg] = b.dataset.v; fillPairForm(); computePair();
+    }));
+    const file = card.querySelector('[data-file]');
+    card.querySelector('[data-vl]').onclick = () => file.click();
+    file.addEventListener('change', e=>{ const f = e.target.files[0]; e.target.value = ''; if(f) cargarVLPar(f, k); });
+  });
+  document.querySelectorAll('#pairApp .stepper').forEach(st=>st.querySelectorAll('button').forEach(b=>b.onclick = ()=>{
+    const k = st.dataset.k; PS[k] = Math.min(6, Math.max(0, (+PS[k]||0) + +b.dataset.d)); fillPairForm(); computePair();
+  }));
+  document.querySelectorAll('#pAsig button').forEach(b=>b.onclick = ()=>{ PS.asig = b.dataset.v; fillPairForm(); computePair(); });
+  $('#pLink').addEventListener('change', e=>{ PS.link = e.target.checked; updatePairSaveState(); });
+  $('#pDemo').onclick = () => { PS = clonar(PDEMO); document.querySelectorAll('#pairApp [data-vlnote]').forEach(n=>n.hidden = true); fillPairForm(); computePair(); $('#pPlan').scrollIntoView({behavior:'smooth'}); toast('Ejemplo cargado: pareja ficticia (Antonio y Lucía)'); };
+  ['A','B'].forEach(k=>{
+    const r = $(`#pTrack${k} input`);
+    r.addEventListener('input', ()=>{
+      if(!PR) return;
+      const i = +r.value, prev = k==='A' ? PR.ia : PR.ib, o = PR[k].opts[i];
+      if(k==='A') PR.ia = i; else PR.ib = i;
+      PS['sel'+k] = isoD(o.D);
+      if(PS.link){
+        const q = k==='A' ? 'B' : 'A', cur = q==='A' ? PR.ia : PR.ib, j = Math.min(PR[q].opts.length-1, Math.max(0, cur + i - prev));
+        if(q==='A') PR.ia = j; else PR.ib = j;
+        PS['sel'+q] = isoD(PR[q].opts[j].D);
+      }
+      refreshSelection();
+    });
+  });
+  $('#pShare').onclick = sharePair;
+  $('#pReport').onclick = reportPdf;
+}
+function fillPairForm(){
+  ['A','B'].forEach(k=>{
+    const c = $(`#pairApp .pcard[data-p="${k}"]`), p = PS[k];
+    c.querySelectorAll('[data-f]').forEach(el=>{ const f = el.dataset.f; if(el.type==='checkbox') el.checked = !!p[f]; else el.value = p[f] ?? ''; });
+    c.querySelectorAll('[data-seg]').forEach(s=>s.querySelectorAll('button').forEach(b=>b.classList.toggle('on', b.dataset.v===p[s.dataset.seg])));
+    c.querySelector('[data-box="est"]').hidden = p.brMode==='man';
+    c.querySelector('[data-box="man"]').hidden = p.brMode!=='man';
+  });
+  ['hc','ha','hb'].forEach(k=>{ $(`#pairApp .stepper[data-k="${k}"] b`).textContent = +PS[k] || 0; });
+  document.querySelectorAll('#pAsig button').forEach(b=>b.classList.toggle('on', b.dataset.v===PS.asig));
+  $('#pLink').checked = !!PS.link;
+  refreshNames();
+}
+function refreshNames(){
+  document.querySelectorAll('.js-nA').forEach(e=>e.textContent = pName('A'));
+  document.querySelectorAll('.js-nB').forEach(e=>e.textContent = pName('B'));
+  ['A','B'].forEach(k=>{ const i = $(`#pairApp .pcard[data-p="${k}"] .js-ini`); if(i) i.textContent = pInitial(k); });
+  $('#pAsigBox').style.display = +PS.hc ? '' : 'none';
+}
+
+/* ---------- Cálculo y pintado ---------- */
+function computePair(){
+  const PA = personIn(PS.A), PB = personIn(PS.B), ok = !!(PA && PB);
+  document.body.classList.toggle('par-empty', !ok);
+  refreshNames(); updatePairSaveState();
+  if(!ok){ PR = null; return; }
+  const R = {A: personPlan(PA), B: personPlan(PB)};
+  R.ia = idxOf(R.A, PS.selA); R.ib = idxOf(R.B, PS.selB);
+  R.pre = computePresets(R);
+  PR = R;
+  renderTracks(); renderPresets(); refreshSelection();
+}
+function refreshSelection(){
+  if(!PR) return;
+  PR.ev = evalPair(PR, PR.ia, PR.ib);
+  paintTracks(); markPresets(); renderSummary(); renderHogar(); renderPDetail(); updatePairSaveState();
+}
+function renderTracks(){
+  ['A','B'].forEach(k=>{
+    const plan = PR[k], n = plan.opts.length, el = $(`#pTrack${k}`), r = el.querySelector('input');
+    r.max = Math.max(0, n-1);
+    const pos = i => n > 1 ? i/(n-1)*100 : 0;
+    el.querySelector('.ptscale').innerHTML = (plan.iOrd > 0 ? `<span>Anticipada</span><span style="left:${pos(plan.iOrd)}%">Ordinaria</span>` : '<span>Ordinaria</span>') + '<span style="left:100%">+5 años</span>';
+  });
+}
+function paintTracks(){
+  ['A','B'].forEach(k=>{
+    const plan = PR[k], i = k==='A' ? PR.ia : PR.ib, o = plan.opts[i], el = $(`#pTrack${k}`), r = el.querySelector('input'), n = plan.opts.length;
+    r.value = i; r.style.setProperty('--p', (n > 1 ? i/(n-1)*100 : 0)+'%');
+    el.querySelector('.nm span').textContent = pName(k);
+    const t = !o.ok ? 'No disponible' : o.type==='Anticipada' ? `Anticipada · −${pct(o.coef)}` : o.type==='Ordinaria' ? 'Ordinaria' : `Demorada · +${o.pctDem} %`;
+    const ty = el.querySelector('.ptype'); ty.textContent = t; ty.style.setProperty('--tc', TYPES[o.type] || TYPES.Ordinaria);
+    el.querySelector('.val').innerHTML = `<b>${fDate(o.D)}</b> · ${fAgeShort(o.age)}${o.type==='Anticipada' ? ` · ${plural(o.months,'mes','meses')} antes` : o.demM ? ` · ${fMonths(o.demM)} de demora` : ''}`;
+  });
+}
+function renderPresets(){
+  const ref = PR.pre.ref;
+  $('#pPresets').innerHTML = PRESETS.map(p=>{
+    const e = PR.pre[p.k];
+    if(!e || !e.ok) return `<button type="button" class="preset" disabled><b>${p.t}</b><small>No es posible con vuestros datos</small></button>`;
+    const d = e.hoy - ref.hoy;
+    const dates = `${pInitial('A')}: ${fShort(e.A.o.D).slice(3)} · ${pInitial('B')}: ${fShort(e.B.o.D).slice(3)}`;
+    const diff = p.k==='ref' || Math.abs(d) < 0.5 ? `<span class="d eq">${eur0(e.hoy)}/mes${p.k==='ref' ? ' · referencia' : ''}</span>` : `<span class="d ${d>0?'up':'down'}">${eur0(e.hoy)}/mes (${d>0?'+':'−'}${eur0(Math.abs(d))})</span>`;
+    return `<button type="button" class="preset" data-k="${p.k}"><b>${p.t}</b><small>${p.s}</small><small>${dates}</small>${diff}</button>`;
+  }).join('');
+  document.querySelectorAll('#pPresets .preset[data-k]').forEach(b=>b.onclick = ()=>{
+    const e = PR.pre[b.dataset.k]; PR.ia = e.ia; PR.ib = e.ib;
+    PS.selA = isoD(PR.A.opts[e.ia].D); PS.selB = isoD(PR.B.opts[e.ib].D);
+    refreshSelection();
+  });
+}
+function markPresets(){
+  document.querySelectorAll('#pPresets .preset[data-k]').forEach(b=>{ const e = PR.pre[b.dataset.k]; b.classList.toggle('on', !!e && e.ia===PR.ia && e.ib===PR.ib); });
+}
+function renderSummary(){
+  const e = PR.ev, ref = PR.pre.ref;
+  if(!e.ok){
+    $('#pSum').innerHTML = `<div class="alert red">${ico}<div>${[e.A,e.B].filter(x=>!x.ok).map(x=>`<b>${pName(x.k)}</b>: ${(x.o && x.o.reason) || 'no alcanza el mínimo de 15 años cotizados.'}`).join('<br>')}</div></div>`;
+    $('#pAdvice').innerHTML = ''; return;
+  }
+  const pA = e.A.hoy/e.hoy*100, d = e.hoy - ref.hoy, dl = e.to85 - ref.to85, isRef = e.ia===ref.ia && e.ib===ref.ib;
+  const later = e.A.o.D > e.B.o.D ? e.A.o.D : e.B.o.D;
+  const delta = isRef ? '<span class="delta eq">Plan de referencia: cada uno a su edad ordinaria</span>'
+    : `<span class="delta ${d>=0?'up':'down'}">${d>=0?'▲ +':'▼ −'}${eur0(Math.abs(d))}/mes · ${dl>=0?'+':'−'}${eur0(Math.abs(dl))} hasta los 85, frente a la referencia</span>`;
+  const mini = x => `<div data-p="${x.k}"><div class="n">${pName(x.k)}</div><div class="dt">${fDate(x.o.D)}</div><small>${fAgeShort(x.o.age)} · ${x.o.type}</small><div class="m">${eur(x.total)}/mes</div><small>brutos en ${x.o.Y} · ${eur(x.hoy)} de hoy · neto ${eur(x.netoHoy)}</small>${x.n ? `<small>Incluye complemento por ${plural(x.n,'hijo','hijos')}: +${eur(x.brecha)}</small>` : ''}</div>`;
+  const comp = !(+PS.hc) ? 'Sin hijos en común' : e.to==='none' ? 'Nadie (sin derecho)' : pName(e.to) + (PS.asig==='auto' ? ' (automático)' : '');
+  $('#pSum').innerHTML = `
+    <div class="hsum">
+      <div>
+        <div class="label">Pensión del hogar con los dos jubilados</div>
+        <div class="hbig">${eur(e.hoy)}<span style="font-size:.42em;color:var(--muted)"> /mes</span></div>
+        <div class="meta">Brutos, 14 pagas, en euros de hoy · neto aprox. <b>${eur(e.netoHoy)}</b>/mes</div>
+        <div class="split"><i style="width:${pA}%;background:var(--navy)"></i><i style="width:${100-pA}%;background:var(--gold)"></i></div>
+        <div class="split-leg"><span data-p="A"><i></i>${pName('A')}: <b>${eur0(e.A.hoy)}</b> (${Math.round(pA)} %)</span><span data-p="B"><i></i>${pName('B')}: <b>${eur0(e.B.hoy)}</b> (${100-Math.round(pA)} %)</span></div>
+        <div style="margin-top:10px">${delta}</div>
+      </div>
+      <div class="pmini">${mini(e.A)}${mini(e.B)}</div>
+    </div>
+    <div class="stats">
+      <div><span>Os separan</span><b>${e.gap ? fMonths(e.gap) : 'Nada: a la vez'}</b></div>
+      <div><span>Los dos jubilados desde</span><b>${fShort(later)}</b></div>
+      <div><span>Pensiones hasta los 85 (hogar, € hoy)</span><b>${eur0(e.to85)}</b></div>
+      <div><span>Complemento por hijos en común</span><b>${comp}</b></div>
+    </div>`;
+  renderAdvice();
+}
+function renderAdvice(){
+  const e = PR.ev, P = PR.pre, tips = [], lab = x => pName(x.k), isRef = e.ia===P.ref.ia && e.ib===P.ref.ib;
+  if(!isRef){ const d = e.hoy - P.ref.hoy, dl = e.to85 - P.ref.to85; tips.push(`Frente a jubilaros cada uno a su edad ordinaria, este plan ${d>=0?'suma':'resta'} <b>${eur0(Math.abs(d))}/mes</b> a la pensión del hogar y ${dl>=0?'gana':'pierde'} <b>${eur0(Math.abs(dl))}</b> en pensiones cobradas hasta los 85.`); }
+  if(P.juntos && !e.juntos) tips.push(`<b>Para jubilaros juntos</b>, la mejor fecha es <b>${monthYear(P.juntos.A.o.D)}</b>: ${lab(P.juntos.A)} ${typeTxt(P.juntos.A.o)} y ${lab(P.juntos.B)} ${typeTxt(P.juntos.B.o)}. El hogar cobraría ${eur0(P.juntos.hoy)}/mes.`);
+  if(!P.juntos) tips.push('No hay ningún mes en el que podáis jubilaros a la vez dentro de lo posible (de la anticipada más temprana a +5 años de demora).');
+  if(P.equil && e.gap > P.equil.gap + 2) tips.push(`<b>Equilibrio:</b> podéis acercar vuestras fechas a ${P.equil.gap ? fMonths(P.equil.gap) : 'el mismo mes'} sin perder frente a la referencia (${lab(P.equil.A)}: ${monthYear(P.equil.A.o.D)}; ${lab(P.equil.B)}: ${monthYear(P.equil.B.o.D)}).`);
+  [e.A, e.B].forEach(x=>{ if(x.o.type==='Anticipada') tips.push(`La anticipada reduce la pensión de ${lab(x)} un <b>${pct(x.o.coef)}</b> para toda la vida.`); });
+  [e.A, e.B].forEach(x=>{
+    const s = +PS[x.k].sueldo || 0; if(!(s > 0)) return;
+    const dif = s*12 - x.netoHoy*14;
+    if(dif >= 1200) tips.push(`Cada año que ${lab(x)} sigue trabajando, el hogar ingresa unos <b>${eur0(dif)}</b> netos más que con su pensión.`);
+    else if(dif > -1200) tips.push(`El sueldo y la pensión netos de ${lab(x)} son casi iguales: seguir trabajando apenas suma ingresos al hogar, aunque puede mejorar su pensión si retrasa la jubilación.`);
+    else tips.push(`La pensión neta de ${lab(x)} supera a su sueldo neto actual: jubilarse no reduce los ingresos del hogar.`);
+  });
+  if(!(+PS.A.sueldo) && !(+PS.B.sueldo)) tips.push('Añadid el <b>sueldo neto</b> de cada uno para ver cómo cambian los ingresos del hogar año a año.');
+  if(+PS.hc && PS.asig==='auto' && e.to!=='none') tips.push(`El complemento por los hijos en común lo cobraría <b>${pName(e.to)}</b>, por tener la pensión más baja (art. 60 LGSS).`);
+  $('#pAdvice').innerHTML = tips.length ? `<h3>💡 Qué os conviene saber</h3><ul>${tips.map(t=>`<li>${t}</li>`).join('')}</ul>` : '';
+}
+function renderHogar(){
+  const e = PR.ev; if(!e.ok){ $('#pHogarBody').innerHTML = ''; return; }
+  const sal = k => +PS[k].sueldo || 0, y0 = TODAY.getUTCFullYear() + 1;
+  const y1 = Math.max(PR.A.P.birth.getUTCFullYear(), PR.B.P.birth.getUTCFullYear()) + 85;
+  const years = [];
+  for(let y=y0; y<=y1; y++){
+    const v = {y, sa:0, pa:0, sb:0, pb:0};
+    for(let m=0; m<12; m++){
+      const D = U(y,m,15);
+      if(D < e.A.o.D) v.sa += sal('A'); else v.pa += e.A.netoHoy*14/12;
+      if(D < e.B.o.D) v.sb += sal('B'); else v.pb += e.B.netoHoy*14/12;
+    }
+    v.t = v.sa + v.pa + v.sb + v.pb; years.push(v);
+  }
+  const mx = Math.max(...years.map(v=>v.t), 1), h = x => (x/mx*100).toFixed(2)+'%';
+  const tip = v => `${v.y} · ${eur0(v.t)} netos al año\n${pName('A')}: ${v.sa ? 'sueldo '+eur0(v.sa) : ''}${v.sa && v.pa ? ' + ' : ''}${v.pa ? 'pensión '+eur0(v.pa) : ''}\n${pName('B')}: ${v.sb ? 'sueldo '+eur0(v.sb) : ''}${v.sb && v.pb ? ' + ' : ''}${v.pb ? 'pensión '+eur0(v.pb) : ''}`;
+  const bars = years.map(v=>`<div class="hbar" title="${tip(v)}"><i class="s-pa" style="height:${h(v.pa)}"></i><i class="s-sa" style="height:${h(v.sa)}"></i><i class="s-pb" style="height:${h(v.pb)}"></i><i class="s-sb" style="height:${h(v.sb)}"></i></div>`).join('');
+  const xs = years.map((v,i)=>`<span>${v.y%5===0 || i===0 ? v.y : ''}</span>`).join('');
+  const first = e.A.o.D <= e.B.o.D ? e.A : e.B, second = first===e.A ? e.B : e.A, anySal = sal('A') || sal('B');
+  const ph1 = (sal('A') + sal('B'))*12, ph2 = first.netoHoy*14 + sal(second.k)*12, ph3 = e.netoHoy*14;
+  const chg = x => ph1 ? ` <small>${x>=ph1?'+':'−'}${Math.abs(Math.round((x/ph1-1)*100))} % frente a hoy</small>` : '';
+  const phases = `<div class="phases">
+      <div><span>Los dos trabajando · hasta ${fShort(first.o.D).slice(3)}</span><b>${anySal ? eur0(ph1)+'/año' : '—'}</b>${anySal ? '' : '<small>Añadid los sueldos netos</small>'}</div>
+      ${e.juntos ? `<div><span>Os jubiláis a la vez</span><b>—</b><small>No hay etapa intermedia</small></div>` : `<div><span>Con ${pName(first.k)} jubilado/a · ${fShort(first.o.D).slice(3)} a ${fShort(second.o.D).slice(3)}</span><b>${eur0(ph2)}/año</b>${chg(ph2)}</div>`}
+      <div><span>Los dos jubilados · desde ${fShort(second.o.D).slice(3)}</span><b>${eur0(ph3)}/año</b>${chg(ph3)}</div>
+    </div>`;
+  $('#pHogarBody').innerHTML = `<div class="hchart">${bars}</div><div class="hx">${xs}</div>
+    <div class="hleg"><span><i class="s-sa"></i>Sueldo ${pName('A')}</span><span><i class="s-pa"></i>Pensión ${pName('A')}</span><span><i class="s-sb"></i>Sueldo ${pName('B')}</span><span><i class="s-pb"></i>Pensión ${pName('B')}</span></div>
+    ${phases}
+    <p class="hint" style="margin-top:10px">En euros de hoy: se supone que sueldos y pensiones mantienen su poder adquisitivo. Hasta que el más joven cumpla 85 años.</p>`;
+}
+// Pensión de viudedad del que queda (en € de hoy): 52 % de la base reguladora del fallecido,
+// limitada para que su pensión propia + viudedad no superen la pensión máxima.
+function viudedad(dead, alive){
+  const later = dead.o.D > alive.o.D ? dead.o.D : alive.o.D, defL = Math.pow(1.02, Math.max(0, yf(TODAY,later)));
+  const base = 0.52 * dead.o.br / dead.def, mpHoy = maxP(later.getUTCFullYear()) / defL, propia = alive.o.pension / alive.def;
+  const viu = Math.max(0, Math.min(base, mpHoy - propia));
+  return {base, viu, limit: viu < base - 0.5, total: alive.hoy + viu};
+}
+function personRows(x){
+  const o = x.o, P = PR[x.k].P;
+  const row = (a,b,cls='',sm='') => `<tr class="${cls}"><td>${a}${sm ? `<small>${sm}</small>` : ''}</td><td>${b}</td></tr>`;
+  let h = '<table class="dl">';
+  h += row('Fecha de jubilación', fShort(o.D), '', fAge(o.age));
+  h += row('Modalidad', o.type==='Anticipada' ? `Anticipada ${P.early==='inv' ? 'involuntaria' : 'voluntaria'}` : o.type);
+  h += row('Días cotizados computables', num(o.c)+' días', '', fCot(o.c));
+  h += row('Edad ordinaria', fShort(PR[x.k].ORD));
+  h += row('Base reguladora', eur(o.br), '', P.brMode==='man' ? 'Introducida (ajustada a la fecha)' : 'Estimada a partir de la base de cotización');
+  h += row('Porcentaje por años cotizados', pct(o.pct));
+  if(o.type==='Anticipada'){ h += row('Meses de anticipación', o.months); h += row('Coeficiente reductor', '−'+pct(o.coef), 'neg', 'Para toda la vida'); }
+  else { h += row('Meses de demora', o.demM); h += row('Porcentaje adicional por demora', o.pctDem ? '+'+o.pctDem+' %' : 'No aplicable', o.pctDem ? 'pos' : ''); }
+  h += row('Pensión inicial', eur(o.initial), '', 'Base reguladora × porcentaje');
+  h += row(o.type==='Anticipada' ? 'Límite pensión anticipada' : `Límite pensión máxima ${o.Y}`, eur(o.type==='Anticipada' ? o.limitEarly : o.mp));
+  h += row('Pensión reconocida', eur(o.pension));
+  if(o.comp) h += row('Complemento por demora', '+'+eur(o.comp), 'pos', 'Puede superar la pensión máxima');
+  if(x.brecha) h += row(`Complemento por hijos (${x.n})`, '+'+eur(x.brecha), 'pos', 'No computa para el tope');
+  h += row('Total bruto mensual (14 pagas)', eur(x.total), 'tot');
+  h += row(`Neto estimado (IRPF ${pct(P.irpf*100)})`, eur(x.neto));
+  h += row('En euros de hoy', eur(x.hoy), '', 'Deflactado al 2 % anual');
+  return h + '</table>';
+}
+function renderPDetail(){
+  const e = PR.ev; if(!e.ok){ $('#pDetBody').innerHTML = ''; return; }
+  const col = x => `<div data-p="${x.k}"><h3><i></i>${pName(x.k)}</h3>${personRows(x)}</div>`;
+  const vcard = (dead, alive) => {
+    const v = viudedad(dead, alive), caida = Math.round((1 - v.total/e.hoy)*100);
+    return `<div data-p="${alive.k}">Si falta <b>${pName(dead.k)}</b>, ${pName(alive.k)} cobraría<b class="big">${eur(v.total)}/mes</b><small>Su pensión ${eur(alive.hoy)} + viudedad ${eur(v.viu)} (52 % de la base reguladora de ${pName(dead.k)}${v.limit ? ', recortada por el límite de la pensión máxima' : ''}).</small><small>La pensión del hogar pasaría de ${eur0(e.hoy)} a ${eur0(v.total)} al mes (−${caida} %).</small></div>`;
+  };
+  $('#pDetBody').innerHTML = `<div class="pdet">${col(e.A)}${col(e.B)}</div>
+    <h2 class="second" style="font-family:Fraunces,Georgia,serif;font-weight:500;font-size:20px;margin:26px 0 0">¿Y si falta uno? · Pensión de viudedad</h2>
+    <p style="color:var(--muted);font-size:13px;margin:2px 0 0">Con los dos ya jubilados; importes brutos mensuales en euros de hoy.</p>
+    <div class="viu">${vcard(e.A, e.B)}${vcard(e.B, e.A)}</div>
+    <p class="hint" style="margin-top:10px">Requiere matrimonio o pareja de hecho registrada que cumpla los requisitos de convivencia. Con pensión propia se aplica normalmente el 52 %; puede ser el 60 % (65 años o más sin otros ingresos relevantes) o el 70 % (con cargas familiares e ingresos bajos). La suma de pensiones públicas no puede superar la pensión máxima. Cálculo orientativo.</p>`;
+}
+
+/* ---------- Vida laboral por persona, guardar, compartir e informe ---------- */
+async function cargarVLPar(file, k){
+  const card = $(`#pairApp .pcard[data-p="${k}"]`), btn = card.querySelector('[data-vl]'), lbl = btn.querySelector('span'), t0 = lbl.textContent;
+  card.scrollIntoView({behavior:'smooth', block:'center'});
+  btn.classList.add('busy'); lbl.textContent = 'Leyendo el informe…';
+  try{
+    const r = await leerVidaLaboral(file);
+    if(!r.nac || !r.dias) throw new Error('datos');
+    let dias = r.dias, extra = 0;
+    if(r.fecha && r.fecha < TODAY && r.vigente){ extra = diffDays(r.fecha, TODAY); dias += extra; }
+    PS[k].fNac = isoD(r.nac); PS[k].dias = String(dias);
+    fillPairForm(); computePair();
+    const note = card.querySelector('[data-vlnote]');
+    note.innerHTML = `✓ Vida laboral${r.fecha ? ' del '+fShort(r.fecha) : ''}: ${num(r.dias)} días computables${extra ? ` + ${num(extra)} hasta hoy` : ''}. <span style="color:var(--muted);font-weight:400">No incluye la bonificación por cuidado de hijos (art. 236 LGSS).</span>`;
+    note.hidden = false;
+    toast(`Vida laboral de ${pName(k)} leída ✓`);
+  }catch(err){
+    toast(err.message==='no-vl' || err.message==='datos' ? 'Ese PDF no parece un Informe de Vida Laboral. Introduce los datos a mano.' : 'No se ha podido leer el PDF. Comprueba tu conexión e inténtalo de nuevo.');
+  }finally{ btn.classList.remove('busy'); lbl.textContent = t0; }
+}
+const pairKey = o => JSON.stringify([o.A, o.B, +o.hc||0, +o.ha||0, +o.hb||0, o.asig]);
+function getSavedPair(){ try{ return JSON.parse(localStorage.getItem(PKEY) || 'null'); }catch(e){ return null; } }
+function updatePairSaveState(){
+  if(MODE!=='par') return;
+  const sv = getSavedPair(), same = !!sv && pairKey(sv)===pairKey(PS), b = $('#btnSave');
+  b.classList.toggle('saved', same); b.classList.toggle('primary', !same);
+  $('#saveTxt').textContent = same ? 'Guardado' : 'Guardar';
+  $('#btnReset').disabled = !sv;
+  $('#btnReset').title = sv ? 'Volver a los datos guardados de la pareja' : 'Aún no habéis guardado datos';
+}
+function cleanPair(o){
+  if(!o || typeof o!=='object' || !o.A || !o.B) return null;
+  const txt = v => typeof v==='string' ? v.slice(0,24) : '';
+  const per = p => ({name: txt(p.name), fNac: txt(p.fNac), dias: txt(String(p.dias ?? '')), cont: p.cont!==false, early: p.early==='inv' ? 'inv' : 'vol',
+                     brMode: p.brMode==='man' ? 'man' : 'est', base: txt(String(p.base ?? '5101.20')), brMan: txt(String(p.brMan ?? '')),
+                     irpf: txt(String(p.irpf ?? '23')), sueldo: txt(String(p.sueldo ?? '')), derecho: p.derecho!==false});
+  const n = v => Math.min(6, Math.max(0, parseInt(v,10) || 0)), d = v => typeof v==='string' && /^\d{4}-\d{2}-\d{2}$/.test(v) ? v : null;
+  return {A: per(o.A), B: per(o.B), hc: n(o.hc), ha: n(o.ha), hb: n(o.hb), asig: ['auto','A','B'].includes(o.asig) ? o.asig : 'auto', selA: d(o.selA), selB: d(o.selB), link: !!o.link};
+}
+function sharePair(){
+  if(!PR){ toast('Rellenad antes los datos de los dos'); return; }
+  const base = /^https?:$/.test(location.protocol) ? location.origin + location.pathname : APP_URL;
+  const url = base + '#p=' + b64e(PS);
+  if(navigator.share && matchMedia('(pointer:coarse)').matches){ navigator.share({title:'Plan de jubilación en pareja', text:'Mira nuestro plan de jubilación:', url}).catch(()=>{}); return; }
+  navigator.clipboard.writeText(url).then(()=>toast('Enlace copiado ✓ Lleva los datos de los dos: compártelo solo con quien queráis'), ()=>prompt('Copia este enlace para compartir el plan:', url));
+}
+function buildPairReport(){
+  if(!PR || !PR.ev || !PR.ev.ok) return false;
+  const e = PR.ev, icon = $('.cover-icon svg').outerHTML.replaceAll('cvBg','rpBg').replaceAll('cvGold','rpGold');
+  const r3 = (a,x,y) => `<tr><td>${a}</td><td>${x}</td><td>${y}</td></tr>`, P = k => PR[k].P, S2 = k => PS[k];
+  const later = e.A.o.D > e.B.o.D ? e.A.o.D : e.B.o.D;
+  $('#report').innerHTML = `
+    <div class="rp-head">${icon}<div><h1>Plan de jubilación en pareja</h1><p>${pName('A')} y ${pName('B')} · Régimen General de la Seguridad Social · Generado el ${fDate(TODAY)}</p></div></div>
+    <div class="rp-hl">
+      <div><span>Pensión del hogar (€ de hoy)</span><b>${eur(e.hoy)}/mes</b></div>
+      <div><span>${pName('A')}</span><b>${fShort(e.A.o.D)}</b></div>
+      <div><span>${pName('B')}</span><b>${fShort(e.B.o.D)}</b></div>
+    </div>
+    <h2>Datos de la simulación</h2>
+    <table><tr><th></th><th>${pName('A')}</th><th>${pName('B')}</th></tr>
+      ${r3('Fecha de nacimiento', fShort(P('A').birth), fShort(P('B').birth))}
+      ${r3('Días cotizados hoy', num(P('A').days), num(P('B').days))}
+      ${r3('Sigue cotizando', P('A').cont ? 'Sí' : 'No', P('B').cont ? 'Sí' : 'No')}
+      ${r3('Base reguladora', P('A').brMode==='man' ? 'Conocida: '+eur(P('A').brMan) : 'Estimada ('+eur(P('A').base)+')', P('B').brMode==='man' ? 'Conocida: '+eur(P('B').brMan) : 'Estimada ('+eur(P('B').base)+')')}
+      ${r3('Retención IRPF', pct(P('A').irpf*100), pct(P('B').irpf*100))}
+      ${r3('Sueldo neto al mes', +S2('A').sueldo ? eur0(+S2('A').sueldo) : '—', +S2('B').sueldo ? eur0(+S2('B').sueldo) : '—')}
+      ${r3('Anticipada considerada', P('A').early==='inv' ? 'Involuntaria' : 'Voluntaria', P('B').early==='inv' ? 'Involuntaria' : 'Voluntaria')}
+      ${r3('Hijos propios', +PS.ha||0, +PS.hb||0)}
+      ${r3('Hijos en común', +PS.hc||0, '')}
+    </table>
+    <h2>Plan elegido</h2>
+    ${$('#pSum').innerHTML}
+    <div class="advice">${$('#pAdvice').innerHTML}</div>
+    <h2>Ingresos netos del hogar, año a año</h2>
+    ${$('#pHogarBody').innerHTML}
+    <h2>Desglose y viudedad</h2>
+    ${$('#pDetBody').innerHTML}
+    <div class="rp-note">Simulación orientativa y sin validez oficial, basada en la normativa vigente en 2026 y en la metodología de proyección de «Tu Seguridad Social» (+2 % anual). Los dos estaréis jubilados desde el ${fDate(later)}. Para cifras definitivas, solicitad vuestras simulaciones en la Sede Electrónica de la Seguridad Social.</div>
+    <div class="rp-foot">Simulador de Jubilación · ${APP_URL} · Creado por Carlos J. Galán Doval – Ver. ${APP_VERSION} – 2026</div>`;
+  return true;
+}
+
+/* ---------- Cambio de modo y botones de la cabecera ---------- */
+function setModeUI(m){
+  MODE = m === 'par' ? 'par' : 'ind'; lsSet(MKEY, MODE);
+  document.body.classList.toggle('par', MODE==='par');
+  $('#pairApp').hidden = MODE!=='par';
+  document.querySelectorAll('.mode-sel button').forEach(b=>b.classList.toggle('on', b.dataset.m===MODE));
+  if(MODE==='par') computePair(); else compute();
+  syncNav();
+}
+document.querySelectorAll('.mode-sel button').forEach(b=>b.onclick = ()=>{
+  if(b.dataset.m===MODE) return;
+  setModeUI(b.dataset.m);
+  $(MODE==='par' ? '#pDatos' : '#datos').scrollIntoView({behavior:'smooth', block:'start'});
+});
+{
+  const indSave = $('#btnSave').onclick, indReset = $('#btnReset').onclick, indClear = $('#btnClear').onclick;
+  $('#btnSave').onclick = e => {
+    if(MODE!=='par') return indSave(e);
+    if(!PR){ toast('Introducid al menos la fecha de nacimiento y los días cotizados de los dos'); return; }
+    lsSet(PKEY, JSON.stringify(PS)); toast('Datos de la pareja guardados en este dispositivo ✓'); updatePairSaveState();
+  };
+  $('#btnReset').onclick = e => {
+    if(MODE!=='par') return indReset(e);
+    const sv = cleanPair(getSavedPair()); if(!sv) return;
+    PS = sv; fillPairForm(); computePair(); toast('Se han cargado los datos guardados de la pareja');
+  };
+  $('#btnClear').onclick = e => {
+    if(MODE!=='par') return indClear(e);
+    PS = clonar(PEMPTY); document.querySelectorAll('#pairApp [data-vlnote]').forEach(n=>n.hidden = true);
+    fillPairForm(); computePair(); window.scrollTo({top:0, behavior:'smooth'});
+    toast(getSavedPair() ? 'Formulario vacío · los datos guardados siguen en «Restablecer»' : 'Formulario vacío');
+  };
+}
+
 /* ---------- Modo sin conexión (service worker «primero la red») ---------- */
 if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 
 apply(shared || getSaved() || EMPTY);
 compute();
 if(shared) toast('Simulación compartida cargada · no se guarda en tu dispositivo salvo que pulses «Guardar»');
+
+// Modo pareja: enlace compartido (#p=…), datos guardados y último modo usado
+let sharedPair = null;
+{ const m = location.hash.match(/[#&]p=([^&]+)/); if(m){ try{ sharedPair = cleanPair(b64d(m[1])); }catch(e){} history.replaceState(null,'',location.pathname); } }
+PS = sharedPair || cleanPair(getSavedPair()) || clonar(PEMPTY);
+buildPairUI(); fillPairForm(); navObserve();
+setModeUI(sharedPair ? 'par' : shared ? 'ind' : (lsGet(MKEY)==='par' ? 'par' : 'ind'));
+if(sharedPair) toast('Plan de pareja compartido cargado · no se guarda salvo que pulséis «Guardar»');
 })();
 </script>
 </body>

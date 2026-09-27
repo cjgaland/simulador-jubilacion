@@ -11,6 +11,7 @@ Introduces tus datos (fecha de nacimiento, días cotizados según tu Informe de 
 - Las alternativas de **jubilación anticipada** (voluntaria o involuntaria) y **demorada** (de +1 a +5 años), con sus coeficientes reductores o porcentajes adicionales.
 - Un **informe en PDF** listo para guardar o imprimir, y un enlace para **compartir** la simulación.
 - Funciona también **sin conexión** una vez abierta.
+- **Modo pareja** 👥: planificad la jubilación de los dos (fecha común, equilibrio, máximo a largo plazo…), con la pensión del hogar, los ingresos año a año, el desglose de cada uno y la pensión de viudedad si falta uno.
 - Una **línea temporal**, un gráfico comparativo de todas las opciones y el **desglose** completo del cálculo.
 
 Incluye la normativa vigente en 2026 (Ley 27/2011, RDL 2/2023, Ley 21/2021): pensión máxima, complemento por demora, complemento de brecha de género por hijos, etc.
