@@ -9,6 +9,7 @@ Backup/
 # Informes de la Seguridad Social (vida laboral, simulaciones…): la app no usa ningún PDF propio
 *.pdf
 Informes*/
+VidasLaborales/
 *.csv
 .env
 .env.*

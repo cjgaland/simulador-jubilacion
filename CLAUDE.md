@@ -48,6 +48,15 @@ Pensada para compartir con compañeros (médicos del SAS). Autor: **Carlos J. Ga
   (o tras «durante un total de» si no hay pluriempleo). Si el informe es anterior a hoy y hay alguna
   situación sin fecha de baja, suma los días hasta hoy. **Nunca guardar PDFs de vida laboral en el repo**
   (para pruebas, copiarlos al scratchpad y servirlos desde allí).
+- **También lee el Informe de Simulación de Jubilación** (02.01, misma función `leerVidaLaboral()`,
+  `tipo:'sim'`): «F. Nacimiento», «Fecha jubilación», «Fecha del cálculo», «Durante toda la vida laboral
+  N días» (días a la jubilación, ya con bonificación art. 236), «Base Reguladora X €», «Titular». Días hoy =
+  N − días(cálculo→jubilación) + días(cálculo→hoy). `prepararInforme()` normaliza la BR a la fecha
+  ordinaria (`brMan = BR / 1,02^años(ORD→fJub)`). Es la vía exacta: el Informe de Vida Laboral se queda
+  corto (no trae la bonificación por hijos). Validado 27/09/2026 con dos simulaciones oficiales reales.
+- `nombrePila()` saca el nombre de pila (todo menos los dos apellidos) para la ficha del modo pareja.
+- Carpeta `VidasLaborales/` (PDF reales de Carlos y de su pareja) ignorada en git. No escribir nombres,
+  fechas ni cifras de esos informes en ningún fichero del repo (ni en comentarios).
 - No es posible conectar con la Seguridad Social con certificado digital desde la app (sin API pública,
   requiere su sede); por eso se sube el PDF.
 - **Modo pareja (02.00)**: selector `.mode-sel` en la portada (`MODE` 'ind'|'par', `body.par`, guardado en

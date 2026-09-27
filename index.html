@@ -615,9 +615,9 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
       <div class="step"><b>1</b><h2>Tus datos</h2></div>
 
       <div class="vl-box">
-        <button type="button" class="btn" id="btnVL"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M12 17v-6M9.5 13.5L12 11l2.5 2.5"/></svg><span>Cargar mi Informe de Vida Laboral (PDF)</span></button>
+        <button type="button" class="btn" id="btnVL"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M12 17v-6M9.5 13.5L12 11l2.5 2.5"/></svg><span>Cargar mi vida laboral o simulación (PDF)</span></button>
         <input type="file" id="fileVL" accept="application/pdf,.pdf" hidden>
-        <div class="hint">Pulsa el botón o <b>arrastra el PDF</b> a esta ventana. Rellena solo la fecha de nacimiento y los días cotizados. El PDF se lee en tu dispositivo y <b>no se envía a ningún sitio</b>. <a href="https://portal.seg-social.gob.es/wps/portal/importass/importass/Categorias/Vida+laboral+e+informes/Informes+sobre+tu+situacion+laboral/Informe+de+tu+vida+laboral" target="_blank" rel="noopener">Descárgalo aquí</a> (Seguridad Social).</div>
+        <div class="hint">Pulsa el botón o <b>arrastra el PDF</b> a esta ventana. Sirve el <a href="https://portal.seg-social.gob.es/wps/portal/importass/importass/Categorias/Vida+laboral+e+informes/Informes+sobre+tu+situacion+laboral/Informe+de+tu+vida+laboral" target="_blank" rel="noopener">Informe de Vida Laboral</a> o, <b>más exacto</b>, el Informe de Simulación de Jubilación de <a href="https://sede.seg-social.gob.es" target="_blank" rel="noopener">«Tu Seguridad Social»</a>, que incluye la bonificación por hijos y tu base reguladora. El PDF se lee en tu dispositivo y <b>no se envía a ningún sitio</b>.</div>
         <div class="hint vl-ok" id="vlNote" hidden></div>
       </div>
 
@@ -845,8 +845,13 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
             <li><b>Cómputo recíproco:</b> si has trabajado en varios regímenes (por ejemplo, Seguridad Social y Clases Pasivas), los años cotizados se suman para tener derecho a la pensión, que la paga el régimen en el que termines. Consulta tu caso en la Seguridad Social.</li>
           </ul>
 
-          <h3>La forma más rápida: tu Informe de Vida Laboral</h3>
-          <p>Descarga tu <b>Informe de Vida Laboral</b> en PDF desde la Seguridad Social (con certificado digital, Cl@ve o SMS) y pulsa <b>«Cargar mi Informe de Vida Laboral (PDF)»</b> o, en el ordenador, <b>arrastra el PDF</b> a la ventana de la app. La app lee la fecha de nacimiento y el <b>total de días efectivamente computables</b>; si el informe es de días atrás y sigues de alta, suma los días hasta hoy. El PDF se lee en tu dispositivo y <b>no se envía a ningún sitio</b>.</p>
+          <h3>La forma más rápida y exacta: cargar un PDF oficial</h3>
+          <p>Pulsa <b>«Cargar mi vida laboral o simulación (PDF)»</b> o, en el ordenador, <b>arrastra el PDF</b> a la ventana. Sirven dos informes de la Seguridad Social:</p>
+          <ul>
+            <li><b>Informe de Simulación de Jubilación</b> de «Tu Seguridad Social» (<b>el más exacto</b>): la app toma tu fecha de nacimiento, tu nombre, los días cotizados que tendrás al jubilarte (con la <b>bonificación por cuidado de hijos</b> ya incluida) y tu <b>base reguladora</b>, y calcula los días que llevas hoy. Con él, la app reproduce la simulación oficial.</li>
+            <li><b>Informe de Vida Laboral</b>: fecha de nacimiento, nombre y días cotizados, explicado a continuación.</li>
+          </ul>
+          <p>Con el <b>Informe de Vida Laboral</b>, la app lee la fecha de nacimiento y el <b>total de días efectivamente computables</b>; si el informe es de días atrás y sigues de alta, suma los días hasta hoy. El PDF se lee en tu dispositivo y <b>no se envía a ningún sitio</b>.</p>
           <p>⚠️ El Informe de Vida Laboral <b>no incluye los días de bonificación por cuidado de hijos</b> (art. 236 LGSS: periodos por nacimiento o adopción con interrupción de la cotización). Si te corresponden, súmalos a mano en «Días cotizados»; los verás en la simulación oficial de «Tu Seguridad Social» («Bonificaciones aplicadas»).</p>
           <p>La app no puede conectarse ella sola a la Seguridad Social con tu certificado: la Seguridad Social no lo permite a aplicaciones externas, y así tus datos nunca pasan por ningún servidor.</p>
           <h3>Datos básicos</h3>
@@ -968,8 +973,13 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 /* ---------- Versión ----------
    Al desplegar: sube APP_VERSION (formato 01.00 → 01.01 cambios menores, 02.00 cambios grandes),
    añade la entrada arriba del todo en CHANGES, y actualiza version.json y CHANGELOG.md con la misma versión. */
-const APP_VERSION = '02.00';
+const APP_VERSION = '02.01';
 const CHANGES = [
+  {v:'02.01', date:'2026-09-27', items:[
+    'Ahora puedes cargar también el Informe de Simulación de Jubilación de «Tu Seguridad Social» (PDF): trae los días con la bonificación por hijos y tu base reguladora exacta, así que los resultados coinciden con la simulación oficial.',
+    'Al cargar un PDF se rellena también el nombre de pila en el modo pareja.',
+    'Modo pareja: para decidir quién cobra el complemento por los hijos en común, las pensiones se comparan en euros de hoy.'
+  ]},
   {v:'02.00', date:'2026-09-27', items:[
     'Nuevo modo «En pareja» 👥: planificad la jubilación de los dos a la vez, con la ficha de cada uno (datos, vida laboral en PDF, base, IRPF y sueldo).',
     'Hijos en común y de cada uno: el complemento por los hijos en común se asigna automáticamente al de pensión más baja, como dice la ley, y se puede cambiar.',
@@ -1702,13 +1712,38 @@ const loadPdfjs = () => pdfjsReady || (pdfjsReady = (async()=>{
 const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
 const fechaES = m => { if(!m) return null; const i = MESES.indexOf(m[2].toLowerCase()); return i<0 ? null : U(+m[3], i, +m[1]); };
 const maxDias = s => { let best = null; for(const m of s.matchAll(/(\d{1,3}(?:\.\d{3})*|\d+)\s*d[ií]as/gi)){ const n = +m[1].replace(/\./g,''); if(best==null || n>best) best = n; } return best; };
+const fechaNum = m => m ? U(+m[3], +m[2]-1, +m[1]) : null;
+const eurNum = s => +String(s).replace(/\./g,'').replace(',', '.');
+// Nombre de pila a partir del nombre completo en mayúsculas («ANA ISABEL PEREZ LOPEZ» → «Ana Isabel»):
+// en España los dos últimos términos suelen ser los apellidos.
+const nombrePila = full => {
+  const w = (full || '').trim().split(/\s+/).filter(Boolean); if(!w.length) return '';
+  return (w.length > 2 ? w.slice(0, w.length-2) : w.slice(0,1)).map(x=>x.charAt(0).toUpperCase() + x.slice(1).toLowerCase()).join(' ');
+};
+// Lee un PDF oficial de la Seguridad Social: Informe de Vida Laboral o Informe de Simulación de Jubilación
 async function leerVidaLaboral(file){
   await loadPdfjs();
   const doc = await pdfjsLib.getDocument({data: new Uint8Array(await file.arrayBuffer())}).promise;
   let txt = '';
   for(let p=1; p<=doc.numPages; p++){ const c = await (await doc.getPage(p)).getTextContent(); txt += ' ' + c.items.map(it=>it.str).join(' '); }
   txt = txt.replace(/\s+/g,' ');
+  if(/INFORME DE SIMULACI[OÓ]N DE JUBILACI[OÓ]N/i.test(txt)){
+    // «Cotizaciones acreditadas durante toda la vida laboral» = días a la fecha de jubilación simulada
+    // (ya incluye la bonificación por cuidado de hijos). Días de hoy = esos días − días hasta la jubilación.
+    const nac = fechaNum(txt.match(/F\.\s*Nacimiento:\s*(\d{2})\/(\d{2})\/(\d{4})/i));
+    const fJub = fechaNum(txt.match(/Fecha jubilaci[oó]n:\s*(\d{2})\/(\d{2})\/(\d{4})/i));
+    const fCalc = fechaNum(txt.match(/Fecha del c[aá]lculo\s*:\s*(\d{2})\/(\d{2})\/(\d{4})/i));
+    const tot = txt.match(/Durante toda la vida laboral\s+([\d.]+)\s*d[ií]as/i);
+    const br = txt.match(/Base Reguladora\s+([\d.]+,\d{2})\s*€/i);
+    const tit = txt.match(/Titular:\s*(.+?)\s+DNI/i);
+    const mod = txt.match(/Modalidad de jubilaci[oó]n:\s*(.+?)\s+Esta simulaci/i);
+    if(!nac || !fJub || !fCalc || !tot) throw new Error('datos');
+    const diasJub = +tot[1].replace(/\./g,'');
+    return {tipo:'sim', nac, fecha: fCalc, dias: diasJub - Math.max(0, diffDays(fCalc, fJub)), diasJub, vigente: true,
+            nombre: tit ? nombrePila(tit[1]) : '', br: br ? eurNum(br[1]) : null, fJub, modalidad: mod ? mod[1].trim() : ''};
+  }
   if(!/INFORME DE VIDA LABORAL/i.test(txt)) throw new Error('no-vl');
+  const tit = txt.match(/D\/D\S*\s+(.+?)\s*,\s*nacido\/a/i);
   const nac = fechaES(txt.match(/nacido\/a el\s+(\d{1,2}) de ([a-záéíóú]+) de (\d{4})/i));
   const fecha = fechaES(txt.match(/al d[ií]a\s+(\d{1,2}) de ([a-záéíóú]+) de (\d{4})/i));
   // Días: el «total de días efectivamente computables» si hay pluriempleo; si no, el total en alta
@@ -1717,7 +1752,24 @@ async function leerVidaLaboral(file){
   // ¿Sigue de alta? Una fila «fecha alta · fecha efecto · ---» (sin fecha de baja). Si delante hay otra
   // fecha, esos «---» son de la columna C.T. de una fila con baja, no cuentan.
   const vigente = [...txt.matchAll(/(\d{2}\.\d{2}\.\d{4} )?\d{2}\.\d{2}\.\d{4} \d{2}\.\d{2}\.\d{4} -{3}/g)].some(m=>!m[1]);
-  return {nac, fecha, dias, vigente};
+  return {tipo:'vl', nac, fecha, dias, vigente, nombre: tit ? nombrePila(tit[1]) : ''};
+}
+// Convierte lo leído en datos para el simulador: días a hoy y, si es una simulación oficial,
+// la base reguladora referida a la fecha ordinaria (como espera el modo «La conozco»).
+function prepararInforme(r, cont){
+  let dias = r.dias, extra = 0;
+  if(r.fecha && r.fecha < TODAY && r.vigente){ extra = diffDays(r.fecha, TODAY); dias += extra; }
+  let brMan = null;
+  if(r.br){
+    const P = {birth: r.nac, days: dias, cont: cont!==false, base: 0, brMan: 0, brMode: 'est', irpf: 0, early: 'vol'};
+    const ordD = withPerson(P, () => findOrdinary());
+    brMan = r.br / Math.pow(1.02, yf(ordD, r.fJub));
+  }
+  return {dias, extra, brMan};
+}
+function notaInforme(r, x, quien){
+  if(r.tipo==='sim') return `✓ Datos cargados de ${quien} simulación oficial del ${fShort(r.fecha)}: ${num(r.diasJub)} días cotizados al jubilarse el ${fShort(r.fJub)} → <b>${num(x.dias)} días hoy</b>${r.br ? `; base reguladora <b>${eur(r.br)}</b>` : ''}. Incluye la bonificación por cuidado de hijos.`;
+  return `✓ Datos cargados de ${quien} Informe de Vida Laboral${r.fecha ? ' del '+fShort(r.fecha) : ''}: ${num(r.dias)} días computables${x.extra ? ` + ${num(x.extra)} días en alta hasta hoy` : ''}. <span style="color:var(--muted);font-weight:400">No incluye la <b>bonificación por cuidado de hijos</b> (art. 236 LGSS): para la cifra exacta, carga la simulación oficial de «Tu Seguridad Social».</span>`;
 }
 $('#btnVL').onclick = () => $('#fileVL').click();
 $('#fileVL').addEventListener('change', e => { const file = e.target.files[0]; e.target.value = ''; if(file) cargarVL(file); });
@@ -1749,18 +1801,16 @@ async function cargarVL(file){
   try{
     const r = await leerVidaLaboral(file);
     if(!r.nac || !r.dias) throw new Error('datos');
-    let dias = r.dias, extra = 0;
-    if(r.fecha && r.fecha < TODAY && r.vigente){ extra = diffDays(r.fecha, TODAY); dias += extra; }
-    const iso = d => d.toISOString().slice(0,10);
-    $('#fNac').value = iso(r.nac); $('#fDias').value = dias;
+    const x = prepararInforme(r, $('#fCont').checked);
+    $('#fNac').value = r.nac.toISOString().slice(0,10); $('#fDias').value = x.dias;
+    if(x.brMan){ $('#fBR').value = x.brMan.toFixed(2); setMode('man'); }
     lastMoney = null; compute();
-    const nota = `✓ Datos cargados de tu Informe de Vida Laboral${r.fecha ? ' del '+fShort(r.fecha) : ''}: ${num(r.dias)} días computables${extra ? ` + ${num(extra)} días en alta hasta hoy` : ''}.`;
-    $('#vlNote').innerHTML = nota + ' <span style="color:var(--muted);font-weight:400">Ojo: este informe no incluye los días de <b>bonificación por cuidado de hijos</b> (art. 236 LGSS). Si te corresponden, súmalos; aparecen en la simulación oficial de «Tu Seguridad Social».</span>';
+    $('#vlNote').innerHTML = notaInforme(r, x, 'tu');
     $('#vlNote').hidden = false;
-    toast('Informe de vida laboral leído ✓');
+    toast(r.tipo==='sim' ? 'Simulación oficial leída ✓' : 'Informe de vida laboral leído ✓');
   }catch(err){
     toast(err.message==='no-vl' || err.message==='datos'
-      ? 'Ese PDF no parece un Informe de Vida Laboral de la Seguridad Social. Introduce los datos a mano.'
+      ? 'Ese PDF no parece un Informe de Vida Laboral ni una Simulación de Jubilación de la Seguridad Social. Introduce los datos a mano.'
       : 'No se ha podido leer el PDF. Comprueba tu conexión e inténtalo de nuevo.');
   }finally{ btn.classList.remove('busy'); lbl.textContent = txt0; }
 }
@@ -1814,7 +1864,9 @@ const sameMonth = (x,y) => x.getUTCFullYear()===y.getUTCFullYear() && x.getUTCMo
 function evalPair(R, ia, ib){
   const a = R.A.opts[ia], b = R.B.opts[ib], hc = +PS.hc || 0;
   let to = PS.asig;
-  if(to==='auto') to = PS.A.derecho && PS.B.derecho ? ((a.total||0) <= (b.total||0) ? 'A' : 'B') : PS.A.derecho ? 'A' : PS.B.derecho ? 'B' : 'none';
+  // Se compara en euros de hoy: las dos pensiones empiezan en años distintos
+  const real = o => o && o.ok ? o.total / Math.pow(1.02, Math.max(0, yf(TODAY,o.D))) : Infinity;
+  if(to==='auto') to = PS.A.derecho && PS.B.derecho ? (real(a) <= real(b) ? 'A' : 'B') : PS.A.derecho ? 'A' : PS.B.derecho ? 'B' : 'none';
   if(!hc) to = 'none';
   const nA = Math.min(4, (PS.A.derecho ? +PS.ha||0 : 0) + (to==='A' ? hc : 0));
   const nB = Math.min(4, (PS.B.derecho ? +PS.hb||0 : 0) + (to==='B' ? hc : 0));
@@ -1855,7 +1907,7 @@ const stepper = k => `<div class="stepper" data-k="${k}"><button type="button" d
 const pcardHTML = k => `
 <div class="pcard" data-p="${k}">
   <div class="who"><i class="js-ini">${k==='A'?'1':'2'}</i><input type="text" data-f="name" maxlength="24" placeholder="${k==='A'?'Nombre (p. ej. Carlos)':'Nombre (p. ej. María)'}" aria-label="Nombre de la persona ${k==='A'?1:2}"></div>
-  <button type="button" class="btn vlp" data-vl>${svgPdf}<span>Cargar su vida laboral (PDF)</span></button>
+  <button type="button" class="btn vlp" data-vl>${svgPdf}<span>Cargar su vida laboral o simulación (PDF)</span></button>
   <input type="file" accept="application/pdf,.pdf" hidden data-file>
   <div class="hint vl-ok" data-vlnote hidden></div>
   <div class="pfields">
@@ -2167,16 +2219,17 @@ async function cargarVLPar(file, k){
   try{
     const r = await leerVidaLaboral(file);
     if(!r.nac || !r.dias) throw new Error('datos');
-    let dias = r.dias, extra = 0;
-    if(r.fecha && r.fecha < TODAY && r.vigente){ extra = diffDays(r.fecha, TODAY); dias += extra; }
-    PS[k].fNac = isoD(r.nac); PS[k].dias = String(dias);
+    const x = prepararInforme(r, PS[k].cont);
+    PS[k].fNac = isoD(r.nac); PS[k].dias = String(x.dias);
+    if(x.brMan){ PS[k].brMode = 'man'; PS[k].brMan = x.brMan.toFixed(2); }
+    if(r.nombre && !(PS[k].name || '').trim()) PS[k].name = r.nombre;
     fillPairForm(); computePair();
     const note = card.querySelector('[data-vlnote]');
-    note.innerHTML = `✓ Vida laboral${r.fecha ? ' del '+fShort(r.fecha) : ''}: ${num(r.dias)} días computables${extra ? ` + ${num(extra)} hasta hoy` : ''}. <span style="color:var(--muted);font-weight:400">No incluye la bonificación por cuidado de hijos (art. 236 LGSS).</span>`;
+    note.innerHTML = notaInforme(r, x, 'su');
     note.hidden = false;
-    toast(`Vida laboral de ${pName(k)} leída ✓`);
+    toast(`${r.tipo==='sim' ? 'Simulación oficial' : 'Vida laboral'} de ${pName(k)} leída ✓`);
   }catch(err){
-    toast(err.message==='no-vl' || err.message==='datos' ? 'Ese PDF no parece un Informe de Vida Laboral. Introduce los datos a mano.' : 'No se ha podido leer el PDF. Comprueba tu conexión e inténtalo de nuevo.');
+    toast(err.message==='no-vl' || err.message==='datos' ? 'Ese PDF no parece un Informe de Vida Laboral ni una Simulación de Jubilación. Introduce los datos a mano.' : 'No se ha podido leer el PDF. Comprueba tu conexión e inténtalo de nuevo.');
   }finally{ btn.classList.remove('busy'); lbl.textContent = t0; }
 }
 const pairKey = o => JSON.stringify([o.A, o.B, +o.hc||0, +o.ha||0, +o.hb||0, o.asig]);

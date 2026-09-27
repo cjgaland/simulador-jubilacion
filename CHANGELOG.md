@@ -6,6 +6,12 @@ Formato de versión `XX.YY` (cambios menores `01.01`, cambios grandes `02.00`).
 > Al publicar una versión nueva, actualiza también `APP_VERSION` y `CHANGES` en `index.html`
 > y `version.json`. Los usuarios verán el aviso «Ha habido cambios» y, al actualizar, las novedades.
 
+## [02.01] - 2026-09-27
+
+- Lectura del **Informe de Simulación de Jubilación** (PDF de «Tu Seguridad Social»): nacimiento, titular, fecha de jubilación, días a la jubilación (con bonificación por hijos), base reguladora y fecha del cálculo → días de hoy y base reguladora «La conozco» normalizada a la fecha ordinaria. Validado con dos simulaciones oficiales reales: coinciden fecha, edad, días, base reguladora y pensión.
+- Nombre de pila leído del PDF (vida laboral o simulación) en el modo pareja, si la ficha no tiene nombre.
+- Asignación automática del complemento por hijos en común comparando las pensiones en euros de hoy.
+
 ## [02.00] - 2026-09-27
 
 - **Modo pareja**: selector «Solo yo / En pareja» en la portada. Ficha por persona (nombre, nacimiento, días, vida laboral en PDF por botón o arrastrando sobre su ficha, sueldo neto, IRPF, complemento por hijos, cotización, tipo de anticipada, base de cotización o base reguladora).
