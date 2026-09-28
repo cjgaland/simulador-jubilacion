@@ -6,6 +6,10 @@ Formato de versión `XX.YY` (cambios menores `01.01`, cambios grandes `02.00`).
 > Al publicar una versión nueva, actualiza también `APP_VERSION` y `CHANGES` en `index.html`
 > y `version.json`. Los usuarios verán el aviso «Ha habido cambios» y, al actualizar, las novedades.
 
+## [04.04] - 2026-09-28
+
+- **Jubilación parcial**: sueldo de un mes normal con `PAR.pagas` (14 | 12, selector `#segPP`). Resultado con «Un mes normal», meses con paga extra (pensión: junio y noviembre; sueldo: junio y diciembre) y total anual con las pagas reales (antes se multiplicaba por 12).
+
 ## [04.03] - 2026-09-28
 
 - **Sueldo de un mes normal y pagas extra** en pareja: `PS[k].pagas` ('14' | '12'; datos antiguos con sueldo → '12'). Cálculo mes a mes en `renderHogar` (`salMes`, `penMes`: extras de pensión en junio y noviembre en SS, junio y diciembre en CP).

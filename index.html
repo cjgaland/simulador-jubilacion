@@ -460,6 +460,17 @@ body.par-empty .pempty{display:block}
 .hs-v > span{white-space:nowrap}
 @media (max-width:560px){.hs-p{grid-template-columns:auto minmax(0,1fr) auto}.hs-v{grid-column:2/-1;grid-row:2;gap:2px 12px}}
 .phases [data-y]{cursor:pointer;transition:border-color .2s}
+.pr-sal{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+.pr-sal .seg{margin:0;grid-template-columns:auto auto}
+.pr-sal .seg button{padding:8px 12px}
+.pr-mes{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 8px}
+.pr-mes > div{border-radius:12px;padding:9px 11px;background:var(--surface);border:1px solid var(--line)}
+.pr-mes .ex{background:var(--gold-soft);border-color:var(--gold)}
+.pr-mes span{display:block;font-size:11px;color:var(--muted)}
+.pr-mes b{display:inline-block;margin-right:8px;font-size:15px;font-variant-numeric:tabular-nums}
+.pr-mes > div:first-child b{display:block;font-size:20px;font-family:Fraunces,Georgia,serif;font-weight:500;color:var(--navy)}
+.pr-mes small{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+@media (max-width:420px){.pr-mes{grid-template-columns:1fr}.pr-sal{grid-template-columns:1fr}}
 .extra-note{display:inline-block;margin-top:4px;font-size:12.5px;padding:3px 10px;border-radius:99px;background:var(--gold-soft);color:var(--ink)}
 .hs-mes{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0 10px}
 .hs-mes > div{border-radius:12px;padding:10px 12px;background:var(--surface);border:1px solid var(--line)}
@@ -1235,8 +1246,12 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 /* ---------- Versión ----------
    Al desplegar: sube APP_VERSION (formato 01.00 → 01.01 cambios menores, 02.00 cambios grandes),
    añade la entrada arriba del todo en CHANGES, y actualiza version.json y CHANGELOG.md con la misma versión. */
-const APP_VERSION = '04.03';
+const APP_VERSION = '04.04';
 const CHANGES = [
+  {v:'04.04', date:'2026-09-28', items:[
+    'Jubilación parcial: el sueldo es ahora el de un mes normal, sin paga extra, y eliges 14 pagas (extras en junio y diciembre) o 12 (prorrateadas), como en el modo pareja.',
+    'Verás lo que ingresarías en un mes normal (pensión parcial + sueldo reducido) y en los meses con paga extra, y el total del año comparado con seguir a jornada completa con las pagas correctas.'
+  ]},
   {v:'04.03', date:'2026-09-28', items:[
     'Modo pareja: el sueldo es ahora el de un mes normal, sin paga extra, y eliges si cobras 14 pagas (extras en junio y diciembre) o 12 (prorrateadas). Si ya tenías sueldos guardados, se mantienen como 12 pagas para que tus cifras no cambien.',
     'Al tocar un año en «Ingresos del hogar» ves bien destacado lo que entra en casa un mes normal y en los meses con paga extra, con una barra para cada mes del año y lo que cobra cada uno.',
@@ -1676,7 +1691,7 @@ function select(i, fromUser=true){
    Hasta 3 años antes de la edad legal «de haber seguido cotizando», con 33 años cotizados y 6 de antigüedad; reducción de
    jornada del 25 al 75 % (si se adelanta más de 2 años, el primer año del 20 al 33 %). Pensión parcial = pensión sin
    coeficientes reductores × % de reducción. Se cotiza como a jornada completa. */
-const PAR = {k:0, red:50, sueldo:''};
+const PAR = {k:0, red:50, sueldo:'', pagas:14};   // sueldo = un mes normal (sin paga extra)
 let PARCTX = null;
 function renderParcial(){
   const box = $('#parcialBody'); if(!box) return;
@@ -1697,7 +1712,10 @@ function renderParcial(){
     <div class="field" style="margin:6px 0"><div class="lbl"><label for="rPR">Reducción de tu jornada</label><span class="pill" id="pPR"></span></div>
       <input type="range" id="rPR" min="20" max="75" step="1" value="${PAR.red}"><div class="scale"><span id="prMin"></span><span id="prMax"></span></div>
       <div class="hint" id="prAviso"></div></div>
-    <div class="field" style="margin:6px 0 4px"><label for="fPS" class="lbl">Tu sueldo bruto mensual actual <span style="font-weight:400;color:var(--muted)">(opcional, con las pagas extra repartidas en 12)</span></label><div class="input-suffix"><input type="number" id="fPS" min="0" step="10" inputmode="decimal" placeholder="—" value="${PAR.sueldo}"><span>€</span></div></div>
+    <div class="field" style="margin:6px 0 4px"><label for="fPS" class="lbl">Tu sueldo bruto de un mes normal <span style="font-weight:400;color:var(--muted)">(opcional, sin paga extra)</span></label>
+      <div class="pr-sal"><div class="input-suffix"><input type="number" id="fPS" min="0" step="10" inputmode="decimal" placeholder="—" value="${PAR.sueldo}"><span>€</span></div>
+      <div class="seg" id="segPP"><button type="button" data-v="14" class="${PAR.pagas===14 ? 'on' : ''}">14 pagas</button><button type="button" data-v="12" class="${PAR.pagas===12 ? 'on' : ''}">12 pagas</button></div></div>
+      <div class="hint">Nómina de un mes sin paga extra: «Total devengado». Con 14 pagas, en junio y diciembre se suma la paga extra; si las tienes prorrateadas, elige 12.</div></div>
     <div id="prOut"></div>${despues}`;
   updParcial();
 }
@@ -1713,11 +1731,14 @@ function updParcial(){
   $('#pPR').textContent = PAR.red+' %'; $('#prMin').textContent = minR+' %'; $('#prMax').textContent = maxR+' %';
   $('#prAviso').innerHTML = meses > 24 ? 'Como adelantas más de 2 años, el <b>primer año</b> la reducción debe estar entre el 20 % y el 33 %; después, entre el 25 % y el 75 %.' : '';
   const full = Math.min(BR(D)*pctYears(Y, c)/100, maxP(Y)), parcial = full*PAR.red/100;
-  const sueldo = +PAR.sueldo || 0, sueldoRed = sueldo*(1-PAR.red/100), ordS = scen[1];
+  const sueldo = +PAR.sueldo || 0, sueldoRed = sueldo*(1-PAR.red/100), ordS = scen[1], n14 = PAR.pagas===14;
   $('#prOut').innerHTML = `<div class="pr-grid">
     <div class="pr-res"><div class="label">Pensión de jubilación parcial</div><div class="big">${eur(parcial)}/mes</div>
       <div class="meta">Brutos, 14 pagas · el ${PAR.red} % de tu pensión en esa fecha (${eur(full)}), <b>sin coeficientes reductores</b></div>
-      ${sueldo ? `<div class="meta" style="margin-top:8px">+ tu sueldo por la jornada que sigues trabajando: <b>${eur(sueldoRed)}/mes</b><br>Total al año: <b>${eur0(parcial*14 + sueldoRed*12)}</b> frente a ${eur0(sueldo*12)} a jornada completa</div>` : '<div class="hint" style="margin-top:8px">Indica tu sueldo para ver cuánto ingresarías en total.</div>'}</div>
+      ${sueldo ? `<div class="meta" style="margin-top:8px">+ tu sueldo por la jornada que sigues trabajando: <b>${eur(sueldoRed)}/mes</b>${n14 ? ' + extras en junio y diciembre' : ' (12 pagas)'}</div>
+      <div class="pr-mes"><div><span>Un mes normal</span><b>${eur0(parcial + sueldoRed)}</b><small>pensión ${eur0(parcial)} + sueldo ${eur0(sueldoRed)}</small></div>
+        <div class="ex"><span>Meses con paga extra</span><b>jun: ${eur0(2*parcial + (n14 ? 2 : 1)*sueldoRed)}</b><b>nov: ${eur0(2*parcial + sueldoRed)}</b>${n14 ? `<b>dic: ${eur0(parcial + 2*sueldoRed)}</b>` : ''}<small>Pensión: extras en junio y noviembre${n14 ? '; sueldo: en junio y diciembre' : ''}</small></div></div>
+      <div class="meta">Total al año: <b>${eur0(parcial*14 + sueldoRed*PAR.pagas)}</b> frente a ${eur0(sueldo*PAR.pagas)} a jornada completa</div>` : '<div class="hint" style="margin-top:8px">Indica tu sueldo para ver cuánto ingresarías en total, al mes y en los meses con paga extra.</div>'}</div>
     <div class="pr-res"><div class="label">Requisitos</div><ul class="pr-req">
       <li data-i="${c >= 12045 ? '✅' : '❌'}">33 años cotizados en esa fecha (tendrás ${fCot(c)})</li>
       <li data-i="✅">Hasta 3 años antes de tu edad legal (${fDate(ref)})</li>
@@ -1727,6 +1748,10 @@ function updParcial(){
     </ul><p class="hint" style="margin-top:8px">Mientras dura, tú y tu empresa cotizáis como si trabajaras a jornada completa, así que tu pensión al jubilarte del todo${ordS && ordS.ok ? ` (${eur(ordS.total)}/mes a tu edad ordinaria)` : ''} no se reduce.</p></div>
   </div>`;
 }
+$('#parcialBody').addEventListener('click', e=>{
+  const b = e.target.closest && e.target.closest('#segPP button'); if(!b) return;
+  PAR.pagas = +b.dataset.v; document.querySelectorAll('#segPP button').forEach(x=>x.classList.toggle('on', x===b)); updParcial();
+});
 $('#parcialBody').addEventListener('input', e=>{
   const id = e.target.id;
   if(id==='rPK') PAR.k = +e.target.value; else if(id==='rPR') PAR.red = +e.target.value; else if(id==='fPS') PAR.sueldo = e.target.value; else return;

@@ -102,7 +102,8 @@ Pensada para compartir con compañeros (médicos del SAS). Autor: **Carlos J. Ga
   (así estaban introducidos). Helpers `sal()`, `pagas()`, `salMes()`, `penMes()` (pensión 14 pagas: extras en junio y
   noviembre en SS, junio y diciembre en CP), `extrasTxt()`. `renderHogar` calcula mes a mes (`v.m`, `r.ex`); `hInspect`
   muestra «Un mes normal», «Meses con paga extra» y la tira mensual `.hmeses`. En individual, bajo la pensión:
-  «+ 2 pagas extra … en junio y noviembre». La jubilación parcial sigue pidiendo el sueldo prorrateado en 12.
+  «+ 2 pagas extra … en junio y noviembre». Jubilación parcial: igual (`PAR.pagas` 14|12, selector `#segPP`, sueldo de
+  un mes normal; muestra «Un mes normal» y los meses con paga extra: pensión en junio y noviembre, sueldo en junio y diciembre).
 - Bruto/neto en pareja (02.02): `PS.net` ('bruto'|'neto'), helpers `pv()` (persona), `hv()` (hogar),
   `t85()` y `bn()`; dos selectores `.pnet` sincronizados (plan y gráfico) + `.pchip`. Sueldos: `sueldoB`
   (bruto) y `sueldo` (neto), ambos opcionales, 12 pagas. Los planes sugeridos se ordenan siempre en bruto.
