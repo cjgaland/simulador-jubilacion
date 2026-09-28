@@ -97,6 +97,12 @@ Pensada para compartir con compañeros (médicos del SAS). Autor: **Carlos J. Ga
   (se conserva entre planes); las barras se animan desde su altura anterior; marcas `.hmk` en la fecha de
   jubilación de cada uno; las tarjetas de etapas (`.phases [data-y]`) desglosan por persona y seleccionan
   su primer año completo. En el Informe PDF se oculta `#hSel`.
+- **Sueldo real y pagas extra** (28/09/2026): el sueldo de la pareja es el de **un mes normal, sin paga extra**, con
+  `PS[k].pagas` '14' (extras en junio y diciembre) | '12' (prorrateadas); datos guardados antes con sueldo → '12'
+  (así estaban introducidos). Helpers `sal()`, `pagas()`, `salMes()`, `penMes()` (pensión 14 pagas: extras en junio y
+  noviembre en SS, junio y diciembre en CP), `extrasTxt()`. `renderHogar` calcula mes a mes (`v.m`, `r.ex`); `hInspect`
+  muestra «Un mes normal», «Meses con paga extra» y la tira mensual `.hmeses`. En individual, bajo la pensión:
+  «+ 2 pagas extra … en junio y noviembre». La jubilación parcial sigue pidiendo el sueldo prorrateado en 12.
 - Bruto/neto en pareja (02.02): `PS.net` ('bruto'|'neto'), helpers `pv()` (persona), `hv()` (hogar),
   `t85()` y `bn()`; dos selectores `.pnet` sincronizados (plan y gráfico) + `.pchip`. Sueldos: `sueldoB`
   (bruto) y `sueldo` (neto), ambos opcionales, 12 pagas. Los planes sugeridos se ordenan siempre en bruto.

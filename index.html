@@ -460,6 +460,26 @@ body.par-empty .pempty{display:block}
 .hs-v > span{white-space:nowrap}
 @media (max-width:560px){.hs-p{grid-template-columns:auto minmax(0,1fr) auto}.hs-v{grid-column:2/-1;grid-row:2;gap:2px 12px}}
 .phases [data-y]{cursor:pointer;transition:border-color .2s}
+.extra-note{display:inline-block;margin-top:4px;font-size:12.5px;padding:3px 10px;border-radius:99px;background:var(--gold-soft);color:var(--ink)}
+.hs-mes{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0 10px}
+.hs-mes > div{border-radius:12px;padding:10px 12px;background:var(--surface);border:1px solid var(--line)}
+.hs-mes span{display:block;font-size:11.5px;color:var(--muted);letter-spacing:.02em}
+.hs-norm b{display:block;font-size:22px;font-family:Fraunces,Georgia,serif;font-weight:500;color:var(--navy);font-variant-numeric:tabular-nums}
+.hs-ext{border-color:var(--gold)!important;background:var(--gold-soft)!important}
+.hs-ext b{display:inline-block;margin:2px 10px 0 0;font-size:15px;font-variant-numeric:tabular-nums}
+.hs-mes small{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
+@media (max-width:560px){.hs-mes{grid-template-columns:1fr}}
+.hmeses{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;align-items:end;height:118px;margin:4px 0 12px}
+.hm{display:flex;flex-direction:column;align-items:center;height:100%;min-width:0}
+.hm-v{font-size:9.5px;font-weight:700;color:var(--gold);white-space:nowrap;min-height:13px}
+.hm-c{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center;min-height:0}
+.hm-b{width:100%;max-width:34px;display:flex;flex-direction:column-reverse;border-radius:3px 3px 0 0;overflow:hidden;opacity:.7}
+.hm-b i{display:block;width:100%;flex:none}
+.hm.ex .hm-b{opacity:1;box-shadow:0 0 0 2px var(--gold)}
+.hm-l{font-size:10.5px;color:var(--muted);margin-top:3px}
+.hm.ex .hm-l{color:var(--ink);font-weight:700}
+.hm-x{font-size:8.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--gold);font-weight:700}
+@media (max-width:420px){.hm-v{font-size:8px}.hmeses{gap:2px}}
 .phases [data-y]:hover{border-color:var(--gold)}
 .phases .pp{display:flex;align-items:center;gap:6px;margin-top:3px}
 .phases .pp i{width:8px;height:8px;border-radius:50%;background:var(--pc);flex:none}
@@ -1215,8 +1235,13 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 /* ---------- Versión ----------
    Al desplegar: sube APP_VERSION (formato 01.00 → 01.01 cambios menores, 02.00 cambios grandes),
    añade la entrada arriba del todo en CHANGES, y actualiza version.json y CHANGELOG.md con la misma versión. */
-const APP_VERSION = '04.02';
+const APP_VERSION = '04.03';
 const CHANGES = [
+  {v:'04.03', date:'2026-09-28', items:[
+    'Modo pareja: el sueldo es ahora el de un mes normal, sin paga extra, y eliges si cobras 14 pagas (extras en junio y diciembre) o 12 (prorrateadas). Si ya tenías sueldos guardados, se mantienen como 12 pagas para que tus cifras no cambien.',
+    'Al tocar un año en «Ingresos del hogar» ves bien destacado lo que entra en casa un mes normal y en los meses con paga extra, con una barra para cada mes del año y lo que cobra cada uno.',
+    'Las pagas extra de la pensión aparecen en su mes: junio y noviembre en la Seguridad Social, junio y diciembre en Clases Pasivas. En tu simulación individual se indica bajo la pensión.'
+  ]},
   {v:'04.02', date:'2026-09-28', items:[
     'Tu base de cotización está ahora a la vista en «Tus datos» (antes estaba escondida en «Ajustes avanzados») y empieza vacía. Te explicamos dónde encontrarla: en tu nómina («Base contingencias comunes»), en el Informe de bases de cotización o en tu recibo de autónomo.',
     'Si no la indicas, la app calcula con la base máxima y te lo avisa bien a la vista (junto a tu pensión, en la barra superior y en el informe PDF): si cotizas por menos, tu pensión real será menor.',
@@ -1629,7 +1654,7 @@ function select(i, fromUser=true){
 
   if(s.ok){
     tween($('#oMoney'), lastMoney ?? s.total, s.total); lastMoney = s.total;
-    $('#oMoneySub').innerHTML = `<b>${eur(s.anual)}</b> al año · neto aprox. <b>${eur(s.neto)}</b>/mes`;
+    $('#oMoneySub').innerHTML = `<b>${eur(s.anual)}</b> al año · neto aprox. <b>${eur(s.neto)}</b>/mes<br><span class="extra-note">+ 2 pagas extra de ${eur(s.total)} en <b>${S.reg==='cp' ? 'junio y diciembre' : 'junio y noviembre'}</b></span>`;
     if(i===1) $('#oDelta').innerHTML = `<span class="delta eq">Escenario de referencia</span>`;
     else { const d = s.total-ord.total, pc = d/ord.total*100;
       $('#oDelta').innerHTML = `<span class="delta ${d>=0?'up':'down'}">${d>=0?'▲':'▼'} ${d>=0?'+':'−'}${eur(Math.abs(d))}/mes (${d>=0?'+':'−'}${Math.abs(pc).toFixed(1).replace('.',',')} %) frente a la ordinaria</span>`; }
@@ -2511,11 +2536,11 @@ async function cargarVL(file){
    temporalmente los datos de cada persona en S (withPerson): no hay fórmulas duplicadas.
    ===================================================================== */
 const PKEY = 'simJubPareja', MKEY = 'simJubModo';
-const PERSONA0 = {fuente:'',name:'',fNac:'',dias:'',cont:true,early:'vol',brMode:'est',base:'',brMan:'',irpf:'23',sueldo:'',sueldoB:'',derecho:true,reg:'ss',tipo:'lab',cp:CP0()};
+const PERSONA0 = {fuente:'',name:'',fNac:'',dias:'',cont:true,early:'vol',brMode:'est',base:'',brMan:'',irpf:'23',sueldo:'',sueldoB:'',pagas:'14',derecho:true,reg:'ss',tipo:'lab',cp:CP0()};
 const PEMPTY = {A:JSON.parse(JSON.stringify(PERSONA0)), B:JSON.parse(JSON.stringify(PERSONA0)), hc:0, ha:0, hb:0, asig:'auto', selA:null, selB:null, link:false, net:'bruto'};
 // Pareja de ejemplo 100 % ficticia
-const PDEMO = {A:{name:'Antonio',fNac:'1964-11-10',dias:'14200',cont:true,early:'vol',brMode:'est',base:'4400.00',brMan:'',irpf:'21',sueldo:'3100',sueldoB:'4350',derecho:false,reg:'ss',tipo:'lab',cp:CP0()},
-               B:{name:'Lucía',fNac:'1968-05-22',dias:'',cont:true,early:'vol',brMode:'est',base:'5101.20',brMan:'',irpf:'15',sueldo:'2650',sueldoB:'3600',derecho:true,reg:'cp',cp:{t:[{g:'A1',a:'24',m:'0'}],ssA:'3',ssM:'0'}},
+const PDEMO = {A:{name:'Antonio',fNac:'1964-11-10',dias:'14200',cont:true,early:'vol',brMode:'est',base:'4400.00',brMan:'',irpf:'21',sueldo:'2660',sueldoB:'3730',pagas:'14',derecho:false,reg:'ss',tipo:'lab',cp:CP0()},
+               B:{name:'Lucía',fNac:'1968-05-22',dias:'',cont:true,early:'vol',brMode:'est',base:'5101.20',brMan:'',irpf:'15',sueldo:'2270',sueldoB:'3085',pagas:'14',derecho:true,reg:'cp',cp:{t:[{g:'A1',a:'24',m:'0'}],ssA:'3',ssM:'0'}},
                hc:2, ha:0, hb:0, asig:'auto', selA:null, selB:null, link:false, net:'bruto'};
 const clonar = o => JSON.parse(JSON.stringify(o));
 const isoD = d => d.toISOString().slice(0,10);
@@ -2628,10 +2653,11 @@ const pcardHTML = k => `
   <div class="pfields">
     <div class="pf"><label>Fecha de nacimiento</label><input type="date" data-f="fNac"></div>
     <div class="pf ss-only"><label>Días cotizados hoy</label><input type="number" data-f="dias" min="0" max="18250" step="1" inputmode="numeric" placeholder="0"></div>
-    <div class="pf"><label>Sueldo bruto al mes <span class="opt">(opcional)</span></label><div class="input-suffix"><input type="number" data-f="sueldoB" min="0" step="10" inputmode="decimal" placeholder="—"><span>€</span></div></div>
-    <div class="pf"><label>Sueldo neto al mes <span class="opt">(opcional)</span></label><div class="input-suffix"><input type="number" data-f="sueldo" min="0" step="10" inputmode="decimal" placeholder="—"><span>€</span></div></div>
+    <div class="pf"><label>Sueldo bruto de un mes normal <span class="opt">(opcional)</span></label><div class="input-suffix"><input type="number" data-f="sueldoB" min="0" step="10" inputmode="decimal" placeholder="—"><span>€</span></div></div>
+    <div class="pf"><label>Sueldo neto de un mes normal <span class="opt">(opcional)</span></label><div class="input-suffix"><input type="number" data-f="sueldo" min="0" step="10" inputmode="decimal" placeholder="—"><span>€</span></div></div>
     <div class="pf"><label>IRPF de la pensión</label><div class="input-suffix"><input type="number" data-f="irpf" min="0" max="45" step="0.5" inputmode="decimal"><span>%</span></div></div>
-    <div class="pf"><span class="plbl">&nbsp;</span><div class="hint" style="margin:0">Sueldo con las pagas extra repartidas en 12 meses (nómina: «Total devengado» y «Líquido a percibir»).</div></div>
+    <div class="pf"><span class="plbl">Pagas del sueldo</span><div class="seg" data-seg="pagas"><button type="button" data-v="14">14 pagas</button><button type="button" data-v="12">12 pagas</button></div></div>
+    <div class="pf full"><div class="hint" style="margin:0">Lo que cobras <b>un mes sin paga extra</b> (nómina: «Total devengado» en bruto y «Líquido a percibir» en neto). Con <b>14 pagas</b>, en <b>junio y diciembre</b> se suma la paga extra; si tus extras van <b>prorrateadas</b> cada mes, elige 12 pagas.</div></div>
   </div>
   <div class="pf ss-only pbase"><span class="plbl">Base de cotización <span class="req rc">Recomendado</span></span><div class="seg" data-seg="brMode"><button type="button" data-v="est">Base de cotización</button><button type="button" data-v="man">Base reguladora oficial</button></div>
     <div data-box="est"><div class="input-suffix"><input type="number" data-f="base" step="0.01" min="0" inputmode="decimal" placeholder="Base mensual (máx. 5.101,20)" aria-label="Base de cotización mensual"><span>€</span></div>
@@ -2869,7 +2895,7 @@ function renderAdvice(){
   [e.A, e.B].forEach(x=>{ if(x.o.type==='Anticipada') tips.push(`La anticipada reduce la pensión de ${lab(x)} un <b>${pct(x.o.coef)}</b> para toda la vida.`); });
   [e.A, e.B].forEach(x=>{
     const s = +PS[x.k].sueldo || 0; if(!(s > 0)) return;
-    const dif = s*12 - x.netoHoy*14;
+    const dif = s*pagas(x.k) - x.netoHoy*14;
     if(dif >= 1200) tips.push(`Cada año que ${lab(x)} sigue trabajando, el hogar ingresa unos <b>${eur0(dif)}</b> netos más que con su pensión.`);
     else if(dif > -1200) tips.push(`El sueldo y la pensión netos de ${lab(x)} son casi iguales: seguir trabajando apenas suma ingresos al hogar, aunque puede mejorar su pensión si retrasa la jubilación.`);
     else tips.push(`La pensión neta de ${lab(x)} supera a su sueldo neto actual: jubilarse no reduce los ingresos del hogar.`);
@@ -2887,17 +2913,30 @@ function renderAdvice(){
 // se ve el desglose de ese año de cada uno (#hSel). HSEL = año elegido; se conserva al cambiar de plan.
 // Las barras parten de la altura anterior para que el cambio se vea animado.
 let HSEL = null, HYEARS = [];
+// Sueldo de un mes normal (sin paga extra) y número de pagas: 14 (extras en junio y diciembre) o 12 (prorrateadas)
+const sal = k => +(isNet() ? PS[k].sueldo : PS[k].sueldoB) || 0;
+const pagas = k => PS[k].pagas==='12' ? 12 : 14;
+const salMes = (k, m) => sal(k) * (pagas(k)===14 && (m===5 || m===11) ? 2 : 1);
+// Pensión en 14 pagas: extras en junio y noviembre (Seguridad Social) o en junio y diciembre (Clases Pasivas)
+const penMes = (x, m) => pv(x) * (m===5 || m===(x.o.reg==='cp' ? 11 : 10) ? 2 : 1);
+const extrasTxt = (x, corto) => x.o.reg==='cp' ? (corto ? 'jun. y dic.' : 'junio y diciembre') : (corto ? 'jun. y nov.' : 'junio y noviembre');
+const MES3 = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 function renderHogar(){
   const e = PR.ev, body = $('#pHogarBody'); if(!e.ok){ body.innerHTML = ''; HYEARS = []; return; }
-  const sal = k => +(isNet() ? PS[k].sueldo : PS[k].sueldoB) || 0, y0 = TODAY.getUTCFullYear() + 1;
+  const y0 = TODAY.getUTCFullYear() + 1;
   const y1 = Math.max(PR.A.P.birth.getUTCFullYear(), PR.B.P.birth.getUTCFullYear()) + 85;
   const years = [];
+  // Mes a mes, con las pagas extra en su mes (sueldo: junio y diciembre si son 14 pagas; pensión: ver extrasPen)
   for(let y=y0; y<=y1; y++){
-    const v = {y, sa:0, pa:0, sb:0, pb:0};
+    const v = {y, sa:0, pa:0, sb:0, pb:0, m:[]};
     for(let m=0; m<12; m++){
-      const D = U(y,m,15);
-      if(D < e.A.o.D) v.sa += sal('A'); else v.pa += pv(e.A)*14/12;
-      if(D < e.B.o.D) v.sb += sal('B'); else v.pb += pv(e.B)*14/12;
+      const D = U(y,m,15), r = {sa:0, pa:0, sb:0, pb:0};
+      if(D < e.A.o.D) r.sa = salMes('A', m); else r.pa = penMes(e.A, m);
+      if(D < e.B.o.D) r.sb = salMes('B', m); else r.pb = penMes(e.B, m);
+      for(const q in r) v[q] += r[q];
+      r.t = r.sa + r.pa + r.sb + r.pb;
+      r.ex = (r.sa && salMes('A', m) > sal('A')) || (r.sb && salMes('B', m) > sal('B')) || (r.pa && penMes(e.A, m) > pv(e.A)) || (r.pb && penMes(e.B, m) > pv(e.B));
+      v.m.push(r);
     }
     v.t = v.sa + v.pa + v.sb + v.pb; years.push(v);
   }
@@ -2915,15 +2954,17 @@ function renderHogar(){
     const l = (i + d.getUTCMonth()/12)/n*100;
     return `<div class="hmk${l > 62 ? ' r' : ''}" data-p="${x.k}" style="left:${l.toFixed(2)}%"><span style="top:${row*17}px">${escH(pName(x.k))} se jubila</span></div>`; };
   const xs = years.map(()=>'<span></span>').join('');
-  const ma = (t, mes, n) => `${t} ${eur0(mes)}/mes · ${eur0(mes*n)}/año`; // al mes y al año
+  // al mes (un mes normal, sin paga extra) + las pagas extra, y el total del año
+  const ma = (t, mes, n, cuando) => `${t} ${eur0(mes)}/mes${n===14 ? ` + 2 extras (${cuando})` : ''} · ${eur0(mes*n)}/año`;
+  const maS = k => ma('sueldo', sal(k), pagas(k), 'jun. y dic.'), maP = x => ma('pensión', pv(x), 14, extrasTxt(x, true));
   const pp = (k, t) => `<span class="pp" data-p="${k}"><i></i>${escH(pName(k))}: ${t}</span>`;
-  const ph1 = (sal('A') + sal('B'))*12, ph2 = pv(first)*14 + sal(second.k)*12, ph3 = hv(e)*14;
+  const ph1 = sal('A')*pagas('A') + sal('B')*pagas('B'), ph2 = pv(first)*14 + sal(second.k)*pagas(second.k), ph3 = hv(e)*14;
   const chg = x => ph1 ? ` <small>${x>=ph1?'+':'−'}${Math.abs(Math.round((x/ph1-1)*100))} % frente a hoy</small>` : '';
   const yF = first.o.D.getUTCFullYear(), yS = second.o.D.getUTCFullYear();
   const phases = `<div class="phases">
-      <div data-y="${clampY(Math.min(y0, yF))}"><span>Los dos trabajando · hasta ${fShort(first.o.D).slice(3)}</span><b>${anySal ? eur0(ph1)+'/año' : '—'}</b>${anySal ? `<small>${pp('A', ma('sueldo', sal('A'), 12))}${pp('B', ma('sueldo', sal('B'), 12))}</small>` : `<small>Añadid los sueldos ${bn()}</small>`}</div>
-      ${e.juntos ? `<div><span>Os jubiláis a la vez</span><b>—</b><small>No hay etapa intermedia</small></div>` : `<div data-y="${clampY(Math.min(yF + 1, yS))}"><span>Con ${escH(pName(first.k))} jubilado/a · ${fShort(first.o.D).slice(3)} a ${fShort(second.o.D).slice(3)}</span><b>${eur0(ph2)}/año</b>${chg(ph2)}<small>${pp(first.k, ma('pensión', pv(first), 14))}${pp(second.k, sal(second.k) ? ma('sueldo', sal(second.k), 12) : 'sueldo sin indicar')}</small></div>`}
-      <div data-y="${clampY(yS + 1)}"><span>Los dos jubilados · desde ${fShort(second.o.D).slice(3)}</span><b>${eur0(ph3)}/año</b>${chg(ph3)}<small>${pp('A', ma('pensión', pv(e.A), 14))}${pp('B', ma('pensión', pv(e.B), 14))}</small></div>
+      <div data-y="${clampY(Math.min(y0, yF))}"><span>Los dos trabajando · hasta ${fShort(first.o.D).slice(3)}</span><b>${anySal ? eur0(ph1)+'/año' : '—'}</b>${anySal ? `<small>${pp('A', maS('A'))}${pp('B', maS('B'))}</small>` : `<small>Añadid los sueldos ${bn()}</small>`}</div>
+      ${e.juntos ? `<div><span>Os jubiláis a la vez</span><b>—</b><small>No hay etapa intermedia</small></div>` : `<div data-y="${clampY(Math.min(yF + 1, yS))}"><span>Con ${escH(pName(first.k))} jubilado/a · ${fShort(first.o.D).slice(3)} a ${fShort(second.o.D).slice(3)}</span><b>${eur0(ph2)}/año</b>${chg(ph2)}<small>${pp(first.k, maP(first))}${pp(second.k, sal(second.k) ? maS(second.k) : 'sueldo sin indicar')}</small></div>`}
+      <div data-y="${clampY(yS + 1)}"><span>Los dos jubilados · desde ${fShort(second.o.D).slice(3)}</span><b>${eur0(ph3)}/año</b>${chg(ph3)}<small>${pp('A', maP(e.A))}${pp('B', maP(e.B))}</small></div>
     </div>`;
   body.innerHTML = `<div class="hchart">${bars}${mk(e.A,0)}${mk(e.B,1)}</div><div class="hx">${xs}</div>
     <div class="hleg"><span><i class="s-sa"></i>Sueldo ${escH(pName('A'))}</span><span><i class="s-pa"></i>Pensión ${escH(pName('A'))}</span><span><i class="s-sb"></i>Sueldo ${escH(pName('B'))}</span><span><i class="s-pb"></i>Pensión ${escH(pName('B'))}</span></div>
@@ -2950,15 +2991,28 @@ function hInspect(i){
   const who = (k, sv, pvv) => {
     const x = e[k], yJ = x.o.D.getUTCFullYear();
     const est = yJ > v.y ? 'Trabajando' : yJ < v.y ? `Jubilado/a · ${x.o.type.toLowerCase()}` : `Se jubila en ${x.o.D.toLocaleDateString('es-ES', {month:'long', timeZone:'UTC'})}`;
-    // Primero lo que cobra al mes (sueldo en 12 pagas, pensión en 14) y después el total del año
-    const salM = +(isNet() ? PS[k].sueldo : PS[k].sueldoB) || 0;
+    // Primero lo que cobra un mes normal (sin paga extra), luego sus pagas extra y el total del año
+    const salM = sal(k), n = pagas(k);
     const salTxt = sv ? `${eur0(salM)}/mes` : yJ >= v.y && !salM ? 'sin indicar' : '—';
     return `<div class="hs-p" data-p="${k}"><i></i><div><b>${escH(pName(k))}</b><small>${est}</small></div>
-      <div class="hs-v"><span>Sueldo <b>${salTxt}</b>${sv ? ' <small>12 pagas</small>' : ''}</span><span>Pensión <b>${pvv ? eur0(pv(x))+'/mes' : '—'}</b>${pvv ? ' <small>14 pagas</small>' : ''}</span></div>
+      <div class="hs-v"><span>Sueldo <b>${salTxt}</b>${sv ? ` <small>${n===14 ? '+ extras en junio y diciembre' : '12 pagas (extras prorrateadas)'}</small>` : ''}</span><span>Pensión <b>${pvv ? eur0(pv(x))+'/mes' : '—'}</b>${pvv ? ` <small>+ extras en ${extrasTxt(x)}</small>` : ''}</span></div>
       <b class="hs-t">${eur0(sv + pvv)}<small>al año</small></b></div>`;
   };
-  const media = k => eur0((k==='A' ? v.sa + v.pa : v.sb + v.pb)/12);
-  box.innerHTML = `<div class="hs-h"><span class="yr">${v.y}</span><span>Hogar: <b>${eur0(v.t)}</b> ${bn()} al año · unos <b>${eur0(v.t/12)}</b> al mes (${escH(pName('A'))} ${media('A')} · ${escH(pName('B'))} ${media('B')})</span></div>
+  // Mes normal = el importe sin paga extra que más se repite ese año; y los meses con paga extra
+  const cnt = {}; v.m.forEach(r=>{ if(r.ex) return; const key = Math.round(r.t); cnt[key] = (cnt[key]||0) + 1; });
+  const normal = +(Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a] || a-b)[0] ?? Math.round(v.m[0].t));
+  const normA = v.m.find(r=>!r.ex && Math.round(r.t)===normal) || v.m[0];
+  const extras = v.m.map((r,i)=>({i, r})).filter(q=>q.r.ex);
+  const mxM = Math.max(...v.m.map(r=>r.t), 1), hh = x => (x/mxM*100).toFixed(1)+'%';
+  const meses = v.m.map((r,i)=>{ const ex = r.ex;
+    return `<div class="hm${ex ? ' ex' : ''}" title="${MES3[i]} ${v.y}: ${eur0(r.t)}"><span class="hm-v">${ex ? eur0(r.t) : ''}</span>
+      <div class="hm-c"><div class="hm-b" style="height:${hh(r.t)}">${['pa','sa','pb','sb'].map(q=>`<i class="s-${q}" style="height:${r.t ? (r[q]/r.t*100).toFixed(1) : 0}%"></i>`).join('')}</div></div><span class="hm-l">${MES3[i]}</span>${ex ? '<span class="hm-x">extra</span>' : ''}</div>`; }).join('');
+  box.innerHTML = `<div class="hs-h"><span class="yr">${v.y}</span><span>Hogar: <b>${eur0(v.t)}</b> ${bn()} al año</span></div>
+    <div class="hs-mes">
+      <div class="hs-norm"><span>Un mes normal (sin paga extra)</span><b>${eur0(normal)}</b><small>${escH(pName('A'))} ${eur0(normA.sa + normA.pa)} · ${escH(pName('B'))} ${eur0(normA.sb + normA.pb)}</small></div>
+      <div class="hs-ext"><span>Meses con paga extra</span>${extras.length ? extras.map(q=>`<b>${MES3[q.i]}: ${eur0(q.r.t)}</b>`).join('') : '<b>—</b>'}<small>${extras.length ? 'Esos meses se suma la paga extra de quien la cobra (sueldo: junio y diciembre; pensión de la Seguridad Social: junio y noviembre; de Clases Pasivas: junio y diciembre)' : 'Sin pagas extra aparte (prorrateadas)'}</small></div>
+    </div>
+    <div class="hmeses" aria-label="Ingresos del hogar mes a mes en ${v.y}">${meses}</div>
     ${who('A', v.sa, v.pa)}${who('B', v.sb, v.pb)}`;
 }
 // Pensión de viudedad del que queda (en € de hoy): 52 % de la base reguladora del fallecido,
@@ -3067,7 +3121,7 @@ function cleanPair(o){
   const txt = v => typeof v==='string' ? v.slice(0,24) : '';
   const per = p => ({fuente: p.fuente==='sim' ? 'sim' : '', name: txt(p.name), fNac: txt(p.fNac), dias: txt(String(p.dias ?? '')), cont: p.cont!==false, early: p.early==='inv' ? 'inv' : 'vol',
                      brMode: p.brMode==='man' ? 'man' : 'est', base: txt(String(p.base ?? '')), brMan: txt(String(p.brMan ?? '')),
-                     irpf: txt(String(p.irpf ?? '23')), sueldo: txt(String(p.sueldo ?? '')), sueldoB: txt(String(p.sueldoB ?? '')), derecho: p.derecho!==false, subsidio: !!p.subsidio, dt34: !!p.dt34, reg: p.reg==='cp' ? 'cp' : 'ss', tipo: ['est','fun'].includes(p.tipo) ? p.tipo : 'lab', cp: cleanCP(p.cp)});
+                     irpf: txt(String(p.irpf ?? '23')), sueldo: txt(String(p.sueldo ?? '')), sueldoB: txt(String(p.sueldoB ?? '')), pagas: p.pagas==='12' || p.pagas==='14' ? p.pagas : (p.sueldo || p.sueldoB ? '12' : '14'), derecho: p.derecho!==false, subsidio: !!p.subsidio, dt34: !!p.dt34, reg: p.reg==='cp' ? 'cp' : 'ss', tipo: ['est','fun'].includes(p.tipo) ? p.tipo : 'lab', cp: cleanCP(p.cp)});
   const n = v => Math.min(6, Math.max(0, parseInt(v,10) || 0)), d = v => typeof v==='string' && /^\d{4}-\d{2}-\d{2}$/.test(v) ? v : null;
   return {A: per(o.A), B: per(o.B), hc: n(o.hc), ha: n(o.ha), hb: n(o.hb), asig: ['auto','A','B'].includes(o.asig) ? o.asig : 'auto', selA: d(o.selA), selB: d(o.selB), link: !!o.link, net: o.net==='neto' ? 'neto' : 'bruto'};
 }
@@ -3098,8 +3152,9 @@ function buildPairReport(){
       ${r3('Sigue cotizando', P('A').cont ? 'Sí' : 'No', P('B').cont ? 'Sí' : 'No')}
       ${r3('Base reguladora', P('A').reg==='cp' ? 'Haber regulador de su grupo' : P('A').brMode==='man' ? 'Conocida: '+eur(P('A').brMan) : (P('A').baseDef ? 'Base máxima (no indicada)' : 'Estimada ('+eur(P('A').base)+')'), P('B').reg==='cp' ? 'Haber regulador de su grupo' : P('B').brMode==='man' ? 'Conocida: '+eur(P('B').brMan) : (P('B').baseDef ? 'Base máxima (no indicada)' : 'Estimada ('+eur(P('B').base)+')'))}
       ${r3('Retención IRPF', pct(P('A').irpf*100), pct(P('B').irpf*100))}
-      ${r3('Sueldo bruto al mes', +S2('A').sueldoB ? eur0(+S2('A').sueldoB) : '—', +S2('B').sueldoB ? eur0(+S2('B').sueldoB) : '—')}
-      ${r3('Sueldo neto al mes', +S2('A').sueldo ? eur0(+S2('A').sueldo) : '—', +S2('B').sueldo ? eur0(+S2('B').sueldo) : '—')}
+      ${r3('Pagas del sueldo', pagas('A'), pagas('B'))}
+      ${r3('Sueldo bruto de un mes normal', +S2('A').sueldoB ? eur0(+S2('A').sueldoB) : '—', +S2('B').sueldoB ? eur0(+S2('B').sueldoB) : '—')}
+      ${r3('Sueldo neto de un mes normal', +S2('A').sueldo ? eur0(+S2('A').sueldo) : '—', +S2('B').sueldo ? eur0(+S2('B').sueldo) : '—')}
       ${r3('Anticipada considerada', P('A').reg==='cp' ? 'Voluntaria (sin reducción)' : P('A').early==='inv' ? 'Involuntaria' : 'Voluntaria', P('B').reg==='cp' ? 'Voluntaria (sin reducción)' : P('B').early==='inv' ? 'Involuntaria' : 'Voluntaria')}
       ${r3('Hijos propios', +PS.ha||0, +PS.hb||0)}
       ${r3('Hijos en común', +PS.hc||0, '')}

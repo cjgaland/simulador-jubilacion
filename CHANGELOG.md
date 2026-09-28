@@ -6,6 +6,11 @@ Formato de versión `XX.YY` (cambios menores `01.01`, cambios grandes `02.00`).
 > Al publicar una versión nueva, actualiza también `APP_VERSION` y `CHANGES` en `index.html`
 > y `version.json`. Los usuarios verán el aviso «Ha habido cambios» y, al actualizar, las novedades.
 
+## [04.03] - 2026-09-28
+
+- **Sueldo de un mes normal y pagas extra** en pareja: `PS[k].pagas` ('14' | '12'; datos antiguos con sueldo → '12'). Cálculo mes a mes en `renderHogar` (`salMes`, `penMes`: extras de pensión en junio y noviembre en SS, junio y diciembre en CP).
+- `hInspect`: «Un mes normal», «Meses con paga extra» y tira mensual `.hmeses`; etapas con «+ 2 extras». Individual: «+ 2 pagas extra … en junio y noviembre» bajo la pensión. Informe PDF de pareja con las pagas.
+
 ## [04.02] - 2026-09-28
 
 - **Base de cotización visible y vacía por defecto** (`#baseField` en «Tus datos»; en pareja, en la ficha). Vacía → `BASE_MAX` (5.101,20 €) con `S.baseDef` y avisos: `#baseWarnF`, `#oBaseWarn` (botón «Introducir mi base»), «⚠️ base máx.» en la minibarra, `[data-basewarn]` y `#pBaseWarn` en pareja, e informe PDF. Selector «Base de cotización / Base reguladora oficial». Paso 3 en la lista del inicio y en «Datos que necesitas».
