@@ -32,6 +32,21 @@ Pensada para compartir con compañeros (médicos del SAS). Autor: **Carlos J. Ga
   coeficientes completos; la opción «Aplicar la DT 34.ª hasta 2033» (`fDT34` / `S.dt34`, pareja `PS[k].dt34`)
   la aplica todo el periodo. `dt34Txt()` explica en el desglose qué regla se aplicó. **Revisar `DT34_CONF` cada año**
   según el criterio del INSS. (Aportación de Paco, 27/09/2026.)
+- **Base de cotización** (28/09/2026): campo visible en «Tus datos» (`#baseField`, antes en «Ajustes avanzados»),
+  **vacío por defecto**. Vacío → se calcula con `BASE_MAX` (5.101,20 €, base máxima 2026; **actualizar cada año**)
+  y `S.baseDef = true` (pareja: `personIn` → `baseDef`), con avisos bien visibles: `#baseWarnF` bajo el campo,
+  `#oBaseWarn` en la tarjeta principal (botón «Introducir mi base»), «⚠️ base máx.» en la minibarra
+  (`body.base-def`), `[data-basewarn]` en cada ficha de pareja y `#pBaseWarn` en el plan (`pairBaseWarn()`); el
+  informe PDF lo indica. Selector renombrado: «Base de cotización» / «Base reguladora oficial» (`S.brMode` 'est'|'man').
+  Motivo: la app ya no es solo para médicos; con la máxima por defecto la pensión salía inflada.
+  **La simulación oficial en PDF rellena la base** (`baseSim()`): tabla «BASES DE COTIZACIÓN», fila «BI» del año de
+  la «Fecha del cálculo», mes de esa fecha (los siguientes son estimaciones de la SS; si falta el año, el anterior).
+  Simulador oficial: https://prestaciones.seg-social.es/simulador-servicio/simulador-pension-jubilacion.html
+  (informe v1.11, 9 páginas). Probado el 28/09/2026 con una simulación real de Carlos (resultado idéntico al oficial).
+- **Orden de preferencia de los PDF**: 1.º simulación de jubilación, 2.º vida laboral (solo si no se puede obtener la
+  simulación); no hace falta subir los dos. `IND_FUENTE` / `PS[k].fuente` = 'sim' tras cargar una simulación: una vida
+  laboral posterior de la **misma persona** (misma fecha de nacimiento) no cambia nada y avisa; «Nuevo» lo desbloquea.
+  Se guarda en el snapshot / `cleanPair`.
 - **Validación oficial (25/09/2026):** contrastado con un informe real de «Tu Seguridad Social»
   (datos de Carlos, que NO se guardan en ningún fichero del repo): la ordinaria coincide exactamente
   (fecha, edad, días computables, base reguladora y pensión con tope de la máxima 2031). El Informe de

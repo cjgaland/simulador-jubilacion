@@ -581,6 +581,14 @@ body[data-page="inicio"] .minibar,body:not(.par).is-empty .minibar,body.par.par-
 .steps li div{flex:1;min-width:0}
 .req{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:99px;margin-left:6px;vertical-align:1px}
 .req.ob{background:var(--navy-soft);color:var(--navy)}
+.req.rc{background:var(--gold-soft);color:var(--gold)}
+.lbl .req{margin-left:6px;text-transform:uppercase}
+.basewarn{margin-top:8px;padding:9px 12px;border-radius:10px;background:var(--gold-soft);color:var(--ink);font-size:12.5px;line-height:1.45;border-left:3px solid var(--gold)}
+.basewarn-card{border-left:4px solid var(--gold)}
+.basewarn-card > div{flex:1}
+.linkbtn{border:0;background:none;padding:0;color:var(--navy);font:inherit;font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.pbase{margin:4px 0 14px}
+.minibar .mb-warn{color:var(--gold);font-weight:700}
 .req.op{background:var(--gold-soft);color:var(--gold)}
 .tip{border-radius:14px;padding:12px 14px;background:var(--green-soft);color:var(--ink);font-size:13.5px;margin-top:14px}
 .src{list-style:none;padding:0!important}
@@ -773,7 +781,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
       <div class="vl-box">
         <button type="button" class="btn" id="btnVL"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M12 17v-6M9.5 13.5L12 11l2.5 2.5"/></svg><span>Cargar un PDF oficial</span></button>
         <input type="file" id="fileVL" accept="application/pdf,.pdf" hidden>
-        <div class="hint">Pulsa el botón o <b>arrastra el PDF</b> a esta ventana. <b>Seguridad Social:</b> sirve el <a href="https://portal.seg-social.gob.es/wps/portal/importass/importass/Categorias/Vida+laboral+e+informes/Informes+sobre+tu+situacion+laboral/Informe+de+tu+vida+laboral" target="_blank" rel="noopener">Informe de Vida Laboral</a> o, <b>más exacto</b>, el Informe de Simulación de Jubilación de <a href="https://sede.seg-social.gob.es" target="_blank" rel="noopener">«Tu Seguridad Social»</a>, que incluye la bonificación por hijos y tu base reguladora. <b>Clases Pasivas:</b> la <b>certificación de servicios (Modelo C.S.)</b> en PDF rellenable. El PDF se lee en tu dispositivo y <b>no se envía a ningún sitio</b>.</div>
+        <div class="hint">Pulsa el botón o <b>arrastra el PDF</b> a esta ventana. <b>Seguridad Social:</b> sube tu <a href="https://prestaciones.seg-social.es/simulador-servicio/simulador-pension-jubilacion.html" target="_blank" rel="noopener">Informe de Simulación de Jubilación</a> (<b>lo mejor</b>: con certificado digital o Cl@ve; trae tus días con la bonificación por hijos, tu base reguladora y tu base de cotización). Si no puedes obtenerlo, tu <a href="https://portal.seg-social.gob.es/wps/portal/importass/importass/Categorias/Vida+laboral+e+informes/Informes+sobre+tu+situacion+laboral/Informe+de+tu+vida+laboral" target="_blank" rel="noopener">Informe de Vida Laboral</a> (en Import@ss, incluso con un selfi y tu DNI). No hace falta subir los dos. <b>Clases Pasivas:</b> la <b>certificación de servicios (Modelo C.S.)</b> en PDF rellenable. El PDF se lee en tu dispositivo y <b>no se envía a ningún sitio</b>.</div>
         <div class="hint vl-ok" id="vlNote" hidden></div>
       </div>
 
@@ -790,6 +798,20 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
         <input type="range" id="rDias" min="0" max="18250" step="1" value="0" aria-label="Días cotizados">
         <div class="scale"><span>0</span><span>10 años</span><span>20</span><span>30</span><span>40</span><span>50</span></div>
         <div class="hint">Aparecen en tu <b>Informe de Vida Laboral</b>. Incluye los días de bonificación por hijos o partos.</div>
+      </div>
+
+      <div class="field ss-only" id="baseField">
+        <div class="lbl"><span>Tu base de cotización <span class="req rc">Recomendado</span></span></div>
+        <div class="seg" id="segBR"><button data-v="est" class="on">Base de cotización</button><button data-v="man">Base reguladora oficial</button></div>
+        <div id="boxEst">
+          <div class="input-suffix"><input type="number" id="fBase" value="" placeholder="Tu base mensual (máx. 5.101,20)" step="0.01" min="0" inputmode="decimal" aria-label="Base de cotización mensual"><span>€</span></div>
+          <div class="basewarn" id="baseWarnF" hidden>⚠️ Sin tu base, la app calcula con la <b>base máxima</b> (5.101,20 € en 2026). Si cotizas por menos, tu pensión real será <b>menor</b>.</div>
+          <div class="hint"><b>Lo más fácil y exacto:</b> carga arriba tu <a href="https://prestaciones.seg-social.es/simulador-servicio/simulador-pension-jubilacion.html" target="_blank" rel="noopener">simulación oficial de jubilación</a> en PDF y la app toma tu base sola. <b>También</b> está en tu <b>nómina</b>, «Base contingencias comunes» (o «B.C.C.C.»); si no tienes una a mano, en el <a href="https://portal.seg-social.gob.es/wps/portal/importass/importass/Categorias/Vida+laboral+e+informes/Informes+de+tus+cotizaciones/Informe+de+bases+de+cotizacion" target="_blank" rel="noopener">Informe de bases de cotización</a> de Import@ss; si eres <b>autónomo</b>, en tu recibo mensual. <a href="#ayuda" class="js-help-datos" style="color:var(--navy)">Más ayuda</a></div>
+        </div>
+        <div id="boxMan" hidden>
+          <div class="input-suffix"><input type="number" id="fBR" value="" step="0.01" inputmode="decimal" aria-label="Base reguladora"><span>€</span></div>
+          <div class="hint">La de tu <b>simulación oficial</b> de «Tu Seguridad Social», referida a tu fecha ordinaria (se rellena sola si cargas ese PDF). Es la opción más exacta. Se ajusta ±2 % por año en los demás escenarios.</div>
+        </div>
       </div>
 
       <div class="field">
@@ -812,19 +834,6 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
           <label class="switch ss-only"><input type="checkbox" id="fDT34"><span class="tg"></span>
             <span class="tx">Aplicar la DT 34.ª hasta 2033<small>Solo afecta a la anticipada voluntaria cuando tu pensión supera la máxima. Desactivado (criterio prudente), el periodo transitorio más suave solo se aplica en 2026, el último año confirmado por la Seguridad Social. <a href="#ayuda" class="js-help-dt34" style="color:var(--navy)">Más información</a></small></span></label>
 
-          <div class="field ss-only">
-            <div class="lbl">Base reguladora</div>
-            <div class="seg" id="segBR"><button data-v="est" class="on">Estimar</button><button data-v="man">La conozco</button></div>
-            <div id="boxEst">
-              <div class="input-suffix"><input type="number" id="fBase" value="5101.20" step="0.01" inputmode="decimal" aria-label="Base de cotización mensual"><span>€</span></div>
-              <div class="hint">Tu base de cotización mensual actual: en tu nómina, «Base contingencias comunes». Máxima 2026: 5.101,20 €. Se proyecta un +2 % anual. <a href="#ayuda" class="js-help-datos" style="color:var(--navy)">¿Dónde la veo?</a></div>
-            </div>
-            <div id="boxMan" hidden>
-              <div class="input-suffix"><input type="number" id="fBR" value="" step="0.01" inputmode="decimal" aria-label="Base reguladora"><span>€</span></div>
-              <div class="hint">La de tu simulación oficial, referida a tu fecha ordinaria. Se ajusta ±2 %/año en los demás escenarios.</div>
-            </div>
-          </div>
-
           <div class="field" style="margin-bottom:6px">
             <div class="lbl"><label for="rIrpf">Retención IRPF</label><span class="pill" id="pIrpf"></span></div>
             <input type="range" id="rIrpf" min="0" max="45" step="0.5" value="23" aria-label="Retención IRPF">
@@ -843,7 +852,8 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
         <ol>
           <li id="chk1"><b>1</b>Tu fecha de nacimiento</li>
           <li id="chk2"><b>2</b><span id="chk2t">Los días cotizados que figuran en tu vida laboral</span></li>
-          <li id="chk3"><b>3</b>Tu número de hijos <span class="meta">&nbsp;(opcional)</span></li>
+          <li id="chkB" class="ss-only"><b>3</b>Tu base de cotización <span class="meta">&nbsp;(recomendado)</span></li>
+          <li id="chk3"><b>4</b>Tu número de hijos <span class="meta">&nbsp;(opcional)</span></li>
         </ol>
         <div class="actions"><button class="btn" id="btnDemo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3l14 9-14 9z"/></svg>Ver un ejemplo</button></div>
       </section>
@@ -873,6 +883,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
           </div>
         </div>
 
+        <div class="alert gold basewarn-card" id="oBaseWarn" hidden><div>⚠️ <b>Calculado con la base de cotización máxima</b> (5.101,20 €), porque no has indicado la tuya. Si cotizas por menos, tu pensión será <b>menor</b> que la que ves. <button type="button" class="linkbtn" id="btnBaseGo">Introducir mi base</button></div></div>
         <div class="alert" id="oAlert"></div>
 
         <div class="tl-title">Tu línea temporal <span id="tlRange"></span></div>
@@ -1067,10 +1078,10 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
           <p>Para contrastar, Hacienda tiene su propio simulador oficial: <a href="https://www.igae.pap.hacienda.gob.es/simula/inicio" target="_blank" rel="noopener">Simul@</a>.</p>
 
           <h3>La forma más rápida y exacta: cargar un PDF oficial</h3>
-          <p>Pulsa <b>«Cargar mi vida laboral o simulación (PDF)»</b> o, en el ordenador, <b>arrastra el PDF</b> a la ventana. Sirven dos informes de la Seguridad Social:</p>
+          <p>Pulsa <b>«Cargar un PDF oficial»</b> o, en el ordenador, <b>arrastra el PDF</b> a la ventana (en pareja, sobre la ficha de cada uno). Sirven dos informes de la Seguridad Social, <b>por este orden de preferencia</b>; <b>no hace falta subir los dos</b>, porque la simulación ya incluye todo lo de la vida laboral:</p>
           <ul>
-            <li><b>Informe de Simulación de Jubilación</b> de «Tu Seguridad Social» (<b>el más exacto</b>): la app toma tu fecha de nacimiento, tu nombre, los días cotizados que tendrás al jubilarte (con la <b>bonificación por cuidado de hijos</b> ya incluida) y tu <b>base reguladora</b>, y calcula los días que llevas hoy. Con él, la app reproduce la simulación oficial.</li>
-            <li><b>Informe de Vida Laboral</b>: fecha de nacimiento, nombre y días cotizados, explicado a continuación.</li>
+            <li><b>1.º Informe de Simulación de Jubilación</b> (<b>el mejor</b>), del <a href="https://prestaciones.seg-social.es/simulador-servicio/simulador-pension-jubilacion.html" target="_blank" rel="noopener">simulador de la Seguridad Social</a> con certificado digital o Cl@ve: la app toma tu fecha de nacimiento, tu nombre, los días cotizados que tendrás al jubilarte (con la <b>bonificación por cuidado de hijos</b> ya incluida), tu <b>base reguladora</b> y tu <b>base de cotización</b>, y calcula los días que llevas hoy. Con él, la app reproduce la simulación oficial.</li>
+            <li><b>2.º Informe de Vida Laboral</b>, si no puedes obtener la simulación (se descarga en Import@ss incluso con un selfi y el DNI): fecha de nacimiento, nombre y días cotizados, explicado a continuación. Si ya cargaste la simulación, la app no la sustituye por la vida laboral.</li>
           </ul>
           <p>Con el <b>Informe de Vida Laboral</b>, la app lee la fecha de nacimiento y el <b>total de días efectivamente computables</b>; si el informe es de días atrás y sigues de alta, suma los días hasta hoy. El PDF se lee en tu dispositivo y <b>no se envía a ningún sitio</b>.</p>
           <p>⚠️ El Informe de Vida Laboral <b>no incluye los días de bonificación por cuidado de hijos</b> (art. 236 LGSS: periodos por nacimiento o adopción con interrupción de la cotización). Si te corresponden, súmalos a mano en «Días cotizados»; los verás en la simulación oficial de «Tu Seguridad Social» («Bonificaciones aplicadas»).</p>
@@ -1079,27 +1090,27 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
           <ul>
             <li><b>Fecha de nacimiento</b> <span class="req ob">Obligatorio</span><br>Determina tu edad ordinaria de jubilación y las fechas de cada escenario.</li>
             <li><b>Días cotizados a día de hoy</b> <span class="req ob">Obligatorio</span><br>Aparecen en tu <b>Informe de Vida Laboral</b>, que puedes descargar al momento en la Sede Electrónica o en Import@ss de la Seguridad Social (ver «Fuentes oficiales»). Incluye los días de bonificación por hijos o partos si te los reconocen.</li>
+            <li><b>Base de cotización</b> <span class="req rc">Recomendado</span><br>Tu base mensual actual, que está en tu <b>nómina</b> («Base contingencias comunes»). Con ella se estima tu base reguladora. <b>Si no la indicas, la app calcula con la base máxima</b> (5.101,20 € en 2026) y te avisa: si cotizas por menos, tu pensión real será menor. Si cargas la <b>simulación oficial</b> en PDF se rellena sola (y además trae tu base reguladora exacta). Más abajo, en «¿Dónde veo mi base de cotización?», tienes todas las formas de encontrarla.</li>
             <li><b>Número de hijos</b> <span class="req op">Opcional</span><br>Solo influye si activas <b>«Cobraré el complemento por hijos»</b> (complemento para la reducción de la brecha de género: 36,90 €/mes por hijo en 2026, máximo 4). Lo cobra uno solo de los progenitores, normalmente el de menor pensión.</li>
           </ul>
           <h3>Ajustes avanzados <span class="req op">Voluntarios</span></h3>
           <p>Están en el desplegable «Ajustes avanzados», al final de «Tus datos». Si no los tocas, se usan valores razonables por defecto.</p>
           <ul>
             <li><b>Seguiré cotizando hasta jubilarme</b>: suma los días desde hoy hasta la fecha de jubilación. Desactívalo si ya no trabajas.</li>
-            <li><b>Base reguladora · Estimar</b>: introduce tu <b>base de cotización mensual</b> actual (en tu nómina, «base de contingencias comunes»; máxima 2026: 5.101,20 €). Se proyecta con un +2 % anual para estimar tu base reguladora.</li>
-            <li><b>Base reguladora · La conozco</b>: si tienes una simulación oficial de «Tu Seguridad Social», escribe su base reguladora (referida a tu fecha ordinaria). Se ajusta ±2 % por año en los demás escenarios. Es la opción más precisa.</li>
             <li><b>Aplicar la DT 34.ª hasta 2033</b>: solo cambia la anticipada voluntaria de quien supera la pensión máxima. Desactivado, el periodo transitorio solo se aplica en 2026 (ver «Pensión máxima en la anticipada» en Requisitos).</li>
             <li><b>Retención IRPF</b>: solo sirve para estimar el neto; no cambia el bruto. Un pensionista con la pensión máxima ronda el 23 %.</li>
           </ul>
-          <div class="tip">💡 <b>Consejo:</b> para afinar al máximo, pide tu simulación en «Tu Seguridad Social», copia la base reguladora en «La conozco» y compara el resultado.</div>
+          <div class="tip">💡 <b>Consejo:</b> para afinar al máximo, pide tu simulación en «Tu Seguridad Social», cárgala en PDF (o copia su base reguladora en «Base reguladora oficial») y compara el resultado.</div>
 
           <h3>¿Dónde veo mi base de cotización?</h3>
-          <p>Es la cantidad sobre la que cotizas cada mes a la Seguridad Social. Hay tres formas de conocerla:</p>
+          <p>Es la cantidad sobre la que cotizas cada mes a la Seguridad Social. Hay varias formas de conocerla:</p>
           <ul>
+            <li><b>La más cómoda: tu simulación oficial en PDF.</b> Entra en el <a href="https://prestaciones.seg-social.es/simulador-servicio/simulador-pension-jubilacion.html" target="_blank" rel="noopener">simulador de pensión de jubilación de la Seguridad Social</a> con certificado digital o Cl@ve, descarga el «Informe de simulación de jubilación» y cárgalo en la app: toma tu base de cotización actual (de su tabla de bases mes a mes), tus días cotizados con la bonificación por hijos y tu base reguladora exacta. Así además puedes cotejar la app con la cifra oficial.</li>
             <li><b>En tu nómina</b> (lo más rápido): busca el apartado de <b>bases de cotización a la Seguridad Social</b> y el importe de <b>«Base contingencias comunes»</b> (a veces «B.C.C.C.» o «Base C. Comunes»). Es tu salario del mes más la parte proporcional de las pagas extra, con un tope de <b>5.101,20 €</b> en 2026. Si cobras guardias u horas extra y superas ese tope, tu base será justo 5.101,20 €.</li>
             <li><b>En el Informe de bases de cotización</b> de la Seguridad Social: trae todas tus bases, mes a mes, de toda tu vida laboral. Se descarga en PDF al momento en <a href="https://portal.seg-social.gob.es/wps/portal/importass/importass/Categorias/Vida+laboral+e+informes/Informes+de+tus+cotizaciones/Informe+de+bases+de+cotizacion" target="_blank" rel="noopener">Import@ss · Informe de bases de cotización</a>, con certificado digital, Cl@ve o, si no tienes identificación electrónica, con un selfi y una foto de tu DNI.</li>
             <li><b>Si eres autónomo</b>: es la base que elegiste, y aparece en tu recibo mensual de autónomos.</li>
           </ul>
-          <p>En la app, escríbela en <b>Ajustes avanzados › Base reguladora › Estimar</b>.</p>
+          <p>En la app, escríbela en <b>Tus datos › Tu base de cotización</b>. Si tienes la base reguladora de tu simulación oficial, elige «Base reguladora oficial»: es aún más exacto.</p>
 
           <h3>¿Qué es la base reguladora y cómo se calcula?</h3>
           <p>Es como tu «sueldo medio» de los últimos años: la pensión es la base reguladora multiplicada por el porcentaje que te corresponde por años cotizados. La Seguridad Social calcula dos opciones y <b>te aplica la más favorable</b> (RDL 2/2023):</p>
@@ -1108,7 +1119,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
             <li><b>Sistema nuevo</b>: se toman los <b>últimos 29 años</b> y se <b>descartan los 24 peores meses</b> (324 mejores bases entre 378). Se implanta poco a poco hasta 2037; mientras tanto se usan periodos algo más cortos.</li>
           </ul>
           <p>Las bases de los 2 últimos años cuentan por su valor real y las anteriores se actualizan con el IPC. Los meses sin cotizar («lagunas») se rellenan con la base mínima.</p>
-          <p><b>Cómo conocerla:</b> la cifra exacta te la da la <b>simulación oficial de «Tu Seguridad Social»</b>; escríbela en «La conozco». Con el Informe de bases de cotización podrías calcularla a mano. La opción «Estimar» de la app es una aproximación que supone que llevas años con bases parecidas a la actual.</p>
+          <p><b>Cómo conocerla:</b> la cifra exacta te la da la <b>simulación oficial de «Tu Seguridad Social»</b>; cárgala en PDF o escríbela en «Base reguladora oficial». Con el Informe de bases de cotización podrías calcularla a mano. La opción «Base de cotización» de la app es una aproximación que supone que llevas años con bases parecidas a la actual.</p>
           <p>Si tu base reguladora es alta, la pensión puede quedar limitada por la <b>pensión máxima</b>. En ese caso, una base reguladora algo mayor o menor no cambia la pensión ordinaria, aunque sí la anticipada y el complemento por demora.</p>
 
           <h3>¿Tengo derecho al complemento por hijos?</h3>
@@ -1204,8 +1215,14 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 /* ---------- Versión ----------
    Al desplegar: sube APP_VERSION (formato 01.00 → 01.01 cambios menores, 02.00 cambios grandes),
    añade la entrada arriba del todo en CHANGES, y actualiza version.json y CHANGELOG.md con la misma versión. */
-const APP_VERSION = '04.01';
+const APP_VERSION = '04.02';
 const CHANGES = [
+  {v:'04.02', date:'2026-09-28', items:[
+    'Tu base de cotización está ahora a la vista en «Tus datos» (antes estaba escondida en «Ajustes avanzados») y empieza vacía. Te explicamos dónde encontrarla: en tu nómina («Base contingencias comunes»), en el Informe de bases de cotización o en tu recibo de autónomo.',
+    'Si no la indicas, la app calcula con la base máxima y te lo avisa bien a la vista (junto a tu pensión, en la barra superior y en el informe PDF): si cotizas por menos, tu pensión real será menor.',
+    'Al cargar tu simulación oficial de jubilación en PDF, la app toma también tu base de cotización actual. Es la forma más cómoda y exacta, y te permite cotejar la app con la cifra oficial.',
+    'Qué PDF subir: mejor la simulación de jubilación; si no puedes obtenerla, la vida laboral. No hace falta subir los dos: si ya cargaste la simulación, una vida laboral posterior no cambia tus datos.'
+  ]},
   {v:'04.01', date:'2026-09-27', items:[
     'Jubilación anticipada voluntaria con pensión por encima de la máxima (DT 34.ª LGSS): la rebaja de la pensión máxima usa ahora exactamente las tablas del BOE y, con criterio prudente, el periodo transitorio más suave solo se aplica en 2026, el último año confirmado por la Seguridad Social (que lo suspendió en enero y lo restableció en marzo).',
     'Nueva opción en «Ajustes avanzados»: «Aplicar la DT 34.ª hasta 2033», por si se prorroga (también en cada persona del modo pareja).',
@@ -1350,7 +1367,8 @@ const DT34_CONF = 2026;   // actualizar cada año según el criterio del INSS
 const dt34Rige = Y => Y >= 2024 && Y <= 2033 && (!!S.dt34 || Y <= DT34_CONF);
 const coefTope =(Y,months,coef) => { if(!dt34Rige(Y)) return coef; const old = 0.5*Math.ceil(months/3), f = (Y-2023)/10; return Math.round((old + (coef-old)*f)*100)/100; };
 const maxP = Y => 3359.60*Math.pow(1.02115, Y-2026);
-const topeMes14 = Y => 5101.20*Math.pow(1.02, Y-2026)*12/14;
+const BASE_MAX = 5101.20;   // base máxima de cotización 2026 (se usa si el usuario no indica la suya)
+const topeMes14 = Y => BASE_MAX*Math.pow(1.02, Y-2026)*12/14;
 const brechaHijo = Y => 36.90*Math.pow(1.02, Y-2026);
 
 /* ---------- Clases Pasivas del Estado (RDLeg 670/1987, TRLCP) ---------- */
@@ -1458,7 +1476,7 @@ function scenarioCP(D, key){
 }
 
 /* ---------- Estado ---------- */
-const EMPTY = {fNac:'',fDias:'',fBase:'5101.20',fBR:'',rHijos:'0',rIrpf:'23',fCont:true,fBrecha:false,brMode:'est',early:'vol',sc:1,barMode:'mes',netMode:'bruto',reg:'ss',cp:CP0()};
+const EMPTY = {fNac:'',fDias:'',fBase:'',fBR:'',rHijos:'0',rIrpf:'23',fCont:true,fBrecha:false,brMode:'est',early:'vol',sc:1,barMode:'mes',netMode:'bruto',reg:'ss',cp:CP0()};
 // Perfiles de ejemplo 100 % ficticios (el botón «Ver un ejemplo» los va alternando)
 const DEMOS = [
   {txt:'persona ficticia nacida en 1967, 36 años cotizados y 2 hijos', fNac:'1967-10-15',fDias:'13150',fBase:'4600.00',fBR:'3950.00',rHijos:'2',rIrpf:'21',fCont:true,fBrecha:false,brMode:'est',early:'vol',sc:1,barMode:'mes',netMode:'bruto'},
@@ -1498,7 +1516,7 @@ function read(){
   S.birth = parse($('#fNac').value);
   S.days = Math.max(0, Math.round(+$('#fDias').value || 0));
   S.cont = $('#fCont').checked;
-  S.base = +$('#fBase').value || 0;
+  S.baseDef = !(+$('#fBase').value > 0); S.base = S.baseDef ? BASE_MAX : +$('#fBase').value;
   S.brMan = +$('#fBR').value || 0;
   S.hijos = +$('#rHijos').value;
   S.irpf = +$('#rIrpf').value/100;
@@ -1565,6 +1583,9 @@ function compute(){
   const ok = !!S.birth && S.days>0 && S.birth < TODAY;
   document.body.classList.toggle('is-empty', !ok);
   $('#chk1').classList.toggle('done', !!S.birth); $('#chk2').classList.toggle('done', S.days>0); $('#chk3').classList.toggle('done', S.hijos>0);
+  const baseWarn = S.reg!=='cp' && S.brMode!=='man' && S.baseDef;
+  $('#chkB').classList.toggle('done', !baseWarn); $('#baseWarnF').hidden = !baseWarn; $('#oBaseWarn').hidden = !baseWarn;
+  document.body.classList.toggle('base-def', ok && baseWarn);
   if(!ok){ lastMoney=null; if(typeof updMini==='function') updMini(); return; }
   ORD = findOrdinary(); EARLY = findEarly();
   if(S.reg==='cp'){ Object.assign(STOPS[0], {lab:'Voluntaria', short:'Volunt.', sm:'desde 60'}); Object.assign(STOPS[1], {lab:'Forzosa', short:'Forzosa', sm:'65 años'}); }
@@ -1980,7 +2001,10 @@ function syncInputs(){
 
 /* ---------- Persistencia (solo en este navegador) ---------- */
 const IDS = ['fNac','fDias','fBase','fBR','rHijos','rIrpf'];
-function snapshot(){ const o={reg:IND_REG,tipo:IND_TIPO,cp:JSON.parse(JSON.stringify(IND_CP)),brMode:S.brMode,early:S.early,antK:S.antK,sc:S.sc,barMode:S.barMode,netMode:S.netMode,fCont:$('#fCont').checked,fBrecha:$('#fBrecha').checked,fSubs:$('#fSubs').checked,fDT34:$('#fDT34').checked}; IDS.forEach(i=>o[i]=$('#'+i).value); return o; }
+// IND_FUENTE = 'sim' si los datos vienen de una simulación oficial: una vida laboral posterior de la misma
+// persona no los sustituye (la simulación ya lo trae todo y sus días incluyen la bonificación por hijos).
+let IND_FUENTE = '';
+function snapshot(){ const o={fuente:IND_FUENTE,reg:IND_REG,tipo:IND_TIPO,cp:JSON.parse(JSON.stringify(IND_CP)),brMode:S.brMode,early:S.early,antK:S.antK,sc:S.sc,barMode:S.barMode,netMode:S.netMode,fCont:$('#fCont').checked,fBrecha:$('#fBrecha').checked,fSubs:$('#fSubs').checked,fDT34:$('#fDT34').checked}; IDS.forEach(i=>o[i]=$('#'+i).value); return o; }
 const dataKey = o => JSON.stringify([o.fNac,o.fDias,o.fBase,o.fBR,o.rHijos,o.rIrpf,o.fCont,o.fBrecha,!!o.fSubs,!!o.fDT34,o.brMode,o.early||'vol',o.reg||'ss',o.reg==='cp' ? JSON.stringify(o.cp) : '',o.tipo||'lab']);
 function getSaved(){ try{ return JSON.parse(localStorage.getItem(KEY)||'null'); }catch(e){ return null; } }
 // Borrador de la pestaña (sessionStorage, se borra al cerrarla): Safari en iPhone a veces recarga la página
@@ -1989,7 +2013,7 @@ function getSaved(){ try{ return JSON.parse(localStorage.getItem(KEY)||'null'); 
 const WKEY = 'simJubBorrador', WPKEY = 'simJubBorradorPareja';
 const ssSet = (k,v) => { try{ sessionStorage.setItem(k,v); }catch(e){} };
 const ssJSON = k => { try{ return JSON.parse(sessionStorage.getItem(k)||'null'); }catch(e){ return null; } };
-function apply(o){ IDS.forEach(i=>{ $('#'+i).value = o[i]!=null ? o[i] : ''; }); IND_CP = cleanCP(o.cp); setReg(o.reg); setTipo(o.tipo); drawCPInd(); $('#fCont').checked=!!o.fCont; $('#fBrecha').checked=!!o.fBrecha; $('#fSubs').checked=!!o.fSubs; $('#fDT34').checked=!!o.fDT34; S.brMode=o.brMode||'est'; setEarly(o.early||'vol'); S.antK = Number.isInteger(o.antK) && o.antK>0 ? o.antK : null; S.sc=o.sc!=null&&o.sc!==''?+o.sc:1; S.barMode=o.barMode||'mes'; S.netMode=o.netMode||'bruto'; setMode(S.brMode); setBarMode(S.barMode); setNetMode(S.netMode); }
+function apply(o){ IND_FUENTE = o.fuente==='sim' ? 'sim' : ''; IDS.forEach(i=>{ $('#'+i).value = o[i]!=null ? o[i] : ''; }); IND_CP = cleanCP(o.cp); setReg(o.reg); setTipo(o.tipo); drawCPInd(); $('#fCont').checked=!!o.fCont; $('#fBrecha').checked=!!o.fBrecha; $('#fSubs').checked=!!o.fSubs; $('#fDT34').checked=!!o.fDT34; S.brMode=o.brMode||'est'; setEarly(o.early||'vol'); S.antK = Number.isInteger(o.antK) && o.antK>0 ? o.antK : null; S.sc=o.sc!=null&&o.sc!==''?+o.sc:1; S.barMode=o.barMode||'mes'; S.netMode=o.netMode||'bruto'; setMode(S.brMode); setBarMode(S.barMode); setNetMode(S.netMode); }
 function updateSaveState(){
   const saved = getSaved(), same = saved && dataKey(saved)===dataKey(snapshot());
   const b = $('#btnSave'); b.classList.toggle('saved', !!same); b.classList.toggle('primary', !same);
@@ -2072,6 +2096,7 @@ function showTab(t){
 document.querySelectorAll('#ayuda .tabs button').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
 const goHistory = () => { closeNews(); showTab('versiones'); go('ayuda'); };
 $('#lnkNews').onclick = goHistory; $('#btnNewsAll').onclick = goHistory;
+$('#btnBaseGo').onclick = () => { go('sim'); const f = $('#fBase'); f.scrollIntoView({behavior:'smooth', block:'center'}); setTimeout(()=>f.focus({preventScroll:true}), 350); };
 document.querySelectorAll('.js-help-dt34').forEach(a=>a.onclick = e => { e.preventDefault(); go('requisitos'); const t = $('#ayudaDT34'), d = t && t.closest('details'); if(d) d.open = true; if(t) setTimeout(()=>t.scrollIntoView({behavior:'smooth', block:'center'}), 60); });
 document.querySelectorAll('.js-help-datos').forEach(a=>a.onclick = e => { e.preventDefault(); showTab('datos'); go('ayuda'); });
 
@@ -2142,7 +2167,7 @@ function updMini(){
   } else {
     const s = scen[S.sc];
     if(s && !document.body.classList.contains('is-empty')) h = `<span class="mb-pill">${s.type}</span><b>${fShort(s.D)}</b><span class="mb-s mb-age">${s.age ? fAgeShort(s.age) : ''}</span>`
-      + (s.ok ? `<span class="mb-m">${eur(s.total)}/mes</span><span class="mb-r">neto aprox. ${eur(s.neto)}</span>` : '<span class="mb-m">—</span>');
+      + (s.ok ? `<span class="mb-m">${eur(s.total)}/mes</span>${document.body.classList.contains('base-def') ? '<span class="mb-warn" title="Calculado con la base de cotización máxima">⚠️ base máx.</span>' : ''}<span class="mb-r">neto aprox. ${eur(s.neto)}</span>` : '<span class="mb-m">—</span>');
   }
   $('#minibar').innerHTML = h;
 }
@@ -2210,7 +2235,7 @@ function buildReport(){
         ${tr('Sigue cotizando hasta jubilarse', S.cont?'Sí':'No')}
         ${tr('Número de hijos', S.hijos)}
         ${tr('Complemento por hijos', S.brecha?'Sí':'No')}
-        ${cpR ? '' : tr('Base reguladora', S.brMode==='man' ? 'Conocida: '+eur(S.brMan) : 'Estimada (base de cotización '+eur(S.base)+')')}
+        ${cpR ? '' : tr('Base reguladora', S.brMode==='man' ? 'Conocida: '+eur(S.brMan) : (S.baseDef ? 'Estimada con la base máxima ('+eur(S.base)+'), no indicada por el usuario' : 'Estimada (base de cotización '+eur(S.base)+')'))}
         ${tr('Retención IRPF', pct(S.irpf*100))}
         ${cpR ? '' : tr('Anticipada considerada', S.early==='inv'?'Involuntaria':'Voluntaria')}
         ${cpR ? '' : tr('DT 34.ª (tope de la anticipada)', S.dt34 ? 'Aplicada hasta 2033' : 'Solo en '+DT34_CONF+' (criterio prudente)')}
@@ -2347,6 +2372,20 @@ function leerCS(fo){
           cp: {t: t.map(x=>({g: x.g, ...am(x.y)})), ssA: ss ? ssAM.a : '', ssM: ss ? ssAM.m : ''}};
 }
 // Lee un PDF oficial: Informe de Vida Laboral, Informe de Simulación de Jubilación o Modelo C.S.
+// Base de cotización actual en la simulación oficial: tabla «BASES DE COTIZACIÓN», fila «BI» (base introducida)
+// del año de la fecha del cálculo, en el mes de esa fecha. Los meses siguientes son estimaciones de la SS.
+// Si ese año no aparece (p. ej. sin cotizar ahora), se toma el último año anterior que sí esté.
+function baseSim(txt, fCalc){
+  const Y0 = fCalc.getUTCFullYear(), M0 = fCalc.getUTCMonth();
+  for(let Y = Y0; Y >= Y0 - 3; Y--){
+    const m = txt.match(new RegExp(Y + ' ENE FEB MAR ABR MAY JUN JUL AGO SEP OCT NOV DIC BI ((?:[\\d.]+,\\d{2} ?){1,12})'));
+    if(!m) continue;
+    const v = m[1].trim().split(' ').map(eurNum).filter(x => x > 0);
+    if(!v.length) continue;
+    return {base: v[Math.min(Y===Y0 ? M0 : 11, v.length-1)], anio: Y};
+  }
+  return null;
+}
 async function leerVidaLaboral(file){
   await loadPdfjs();
   const doc = await pdfjsLib.getDocument({data: new Uint8Array(await file.arrayBuffer())}).promise;
@@ -2369,7 +2408,8 @@ async function leerVidaLaboral(file){
     if(!nac || !fJub || !fCalc || !tot) throw new Error('datos');
     const diasJub = +tot[1].replace(/\./g,'');
     return {tipo:'sim', nac, fecha: fCalc, dias: diasJub - Math.max(0, diffDays(fCalc, fJub)), diasJub, vigente: true,
-            nombre: tit ? nombrePila(tit[1]) : '', br: br ? eurNum(br[1]) : null, fJub, modalidad: mod ? mod[1].trim() : ''};
+            nombre: tit ? nombrePila(tit[1]) : '', br: br ? eurNum(br[1]) : null, fJub, modalidad: mod ? mod[1].trim() : '',
+            base: baseSim(txt, fCalc)};
   }
   if(!/INFORME DE VIDA LABORAL/i.test(txt)) throw new Error('no-vl');
   const tit = txt.match(/D\/D\S*\s+(.+?)\s*,\s*nacido\/a/i);
@@ -2384,7 +2424,7 @@ async function leerVidaLaboral(file){
   return {tipo:'vl', nac, fecha, dias, vigente, nombre: tit ? nombrePila(tit[1]) : ''};
 }
 // Convierte lo leído en datos para el simulador: días a hoy y, si es una simulación oficial,
-// la base reguladora referida a la fecha ordinaria (como espera el modo «La conozco»).
+// la base reguladora referida a la fecha ordinaria (como espera el modo «Base reguladora oficial»).
 function prepararInforme(r, cont){
   let dias = r.dias, extra = 0;
   if(r.fecha && r.fecha < TODAY && r.vigente){ extra = diffDays(r.fecha, TODAY); dias += extra; }
@@ -2402,7 +2442,7 @@ function notaCS(r, quien){
   return `✓ Datos cargados de ${quien} certificado de servicios (Modelo C.S.)${r.fecha ? ' del '+fShort(r.fecha) : ''}: <b>${tr}</b>${ss}${r.vigente ? ' (el destino actual, contado hasta hoy)' : ''}.${r.oldB ? ' <span style="color:var(--muted);font-weight:400">El grupo «B» se ha tomado como el antiguo grupo B de la Ley 30/1984 (hoy <b>A2</b>); si es el nuevo grupo B, cámbialo.</span>' : ''}`;
 }
 function notaInforme(r, x, quien){
-  if(r.tipo==='sim') return `✓ Datos cargados de ${quien} simulación oficial del ${fShort(r.fecha)}: ${num(r.diasJub)} días cotizados al jubilarse el ${fShort(r.fJub)} → <b>${num(x.dias)} días hoy</b>${r.br ? `; base reguladora <b>${eur(r.br)}</b>` : ''}. Incluye la bonificación por cuidado de hijos.`;
+  if(r.tipo==='sim') return `✓ Datos cargados de ${quien} simulación oficial del ${fShort(r.fecha)}: ${num(r.diasJub)} días cotizados al jubilarse el ${fShort(r.fJub)} → <b>${num(x.dias)} días hoy</b>${r.br ? `; base reguladora <b>${eur(r.br)}</b>` : ''}${r.base ? `; base de cotización actual <b>${eur(r.base.base)}</b>${r.base.anio < r.fecha.getUTCFullYear() ? ` (de ${r.base.anio})` : ''}` : ''}. Incluye la bonificación por cuidado de hijos.`;
   return `✓ Datos cargados de ${quien} Informe de Vida Laboral${r.fecha ? ' del '+fShort(r.fecha) : ''}: ${num(r.dias)} días computables${x.extra ? ` + ${num(x.extra)} días en alta hasta hoy` : ''}. <span style="color:var(--muted);font-weight:400">No incluye la <b>bonificación por cuidado de hijos</b> (art. 236 LGSS): para la cifra exacta, carga la simulación oficial de «Tu Seguridad Social».</span>`;
 }
 $('#btnVL').onclick = () => $('#fileVL').click();
@@ -2434,7 +2474,12 @@ async function cargarVL(file){
   btn.classList.add('busy'); lbl.textContent = 'Leyendo el informe…';
   try{
     const r = await leerVidaLaboral(file);
+    if(r.tipo==='vl' && IND_FUENTE==='sim' && r.nac && $('#fNac').value===isoD(r.nac)){
+      $('#vlNote').innerHTML = 'ℹ️ Ya tienes cargada tu <b>simulación oficial</b>, que es más completa (sus días incluyen la bonificación por hijos y trae tus bases): la vida laboral no añade nada y <b>no se ha cambiado ningún dato</b>. Si quieres usar solo la vida laboral, pulsa antes «Nuevo».';
+      $('#vlNote').hidden = false; toast('Ya tienes la simulación oficial, que es más completa: no se ha cambiado nada'); return;
+    }
     if(r.tipo==='cs'){
+      IND_FUENTE = '';
       if(r.nac) $('#fNac').value = r.nac.toISOString().slice(0,10);
       IND_CP = cleanCP(r.cp); setReg('cp'); drawCPInd();
       lastMoney = null; compute();
@@ -2446,6 +2491,8 @@ async function cargarVL(file){
     const x = prepararInforme(r, $('#fCont').checked);
     $('#fNac').value = r.nac.toISOString().slice(0,10); $('#fDias').value = x.dias;
     if(x.brMan){ $('#fBR').value = x.brMan.toFixed(2); setMode('man'); }
+    if(r.base) $('#fBase').value = r.base.base.toFixed(2);
+    IND_FUENTE = r.tipo==='sim' ? 'sim' : '';
     lastMoney = null; compute();
     $('#vlNote').innerHTML = notaInforme(r, x, 'tu');
     $('#vlNote').hidden = false;
@@ -2464,7 +2511,7 @@ async function cargarVL(file){
    temporalmente los datos de cada persona en S (withPerson): no hay fórmulas duplicadas.
    ===================================================================== */
 const PKEY = 'simJubPareja', MKEY = 'simJubModo';
-const PERSONA0 = {name:'',fNac:'',dias:'',cont:true,early:'vol',brMode:'est',base:'5101.20',brMan:'',irpf:'23',sueldo:'',sueldoB:'',derecho:true,reg:'ss',tipo:'lab',cp:CP0()};
+const PERSONA0 = {fuente:'',name:'',fNac:'',dias:'',cont:true,early:'vol',brMode:'est',base:'',brMan:'',irpf:'23',sueldo:'',sueldoB:'',derecho:true,reg:'ss',tipo:'lab',cp:CP0()};
 const PEMPTY = {A:JSON.parse(JSON.stringify(PERSONA0)), B:JSON.parse(JSON.stringify(PERSONA0)), hc:0, ha:0, hb:0, asig:'auto', selA:null, selB:null, link:false, net:'bruto'};
 // Pareja de ejemplo 100 % ficticia
 const PDEMO = {A:{name:'Antonio',fNac:'1964-11-10',dias:'14200',cont:true,early:'vol',brMode:'est',base:'4400.00',brMan:'',irpf:'21',sueldo:'3100',sueldoB:'4350',derecho:false,reg:'ss',tipo:'lab',cp:CP0()},
@@ -2486,7 +2533,7 @@ function personIn(p){
   }
   const birth = parse(p.fNac), days = Math.max(0, Math.round(+p.dias || 0));
   if(!birth || !(days > 0) || birth >= TODAY) return null;
-  return {birth, days, cont: p.cont!==false, base: +p.base || 0, brMan: +p.brMan || 0, brMode: p.brMode==='man' ? 'man' : 'est',
+  return {birth, days, cont: p.cont!==false, base: +p.base > 0 ? +p.base : BASE_MAX, baseDef: !(+p.base > 0), brMan: +p.brMan || 0, brMode: p.brMode==='man' ? 'man' : 'est',
           irpf: Math.min(60, Math.max(0, +p.irpf || 0))/100, early: p.early==='inv' ? 'inv' : 'vol', subsidio: !!p.subsidio, dt34: !!p.dt34, reg:'ss', tipo: ['est','fun'].includes(p.tipo) ? p.tipo : 'lab', cp:null};
 }
 function withPerson(P, fn){
@@ -2576,6 +2623,7 @@ const pcardHTML = k => `
   <div class="pf ss-only" style="margin-bottom:10px"><span class="plbl">Tipo de personal</span><div class="seg seg3" data-seg="tipo"><button type="button" data-v="lab">Laboral / privado</button><button type="button" data-v="est">Estatutario</button><button type="button" data-v="fun">Funcionario</button></div></div>
   <button type="button" class="btn vlp" data-vl title="Vida laboral o simulación de la Seguridad Social, o certificado de servicios (Modelo C.S.) de Clases Pasivas">${svgPdf}<span>Cargar un PDF oficial</span></button>
   <input type="file" accept="application/pdf,.pdf" hidden data-file>
+  <div class="hint" style="margin:-2px 0 8px">Mejor su <b>simulación de jubilación</b>; si no puede obtenerla, su <b>vida laboral</b> (o el Modelo C.S. en Clases Pasivas).</div>
   <div class="hint vl-ok" data-vlnote hidden></div>
   <div class="pfields">
     <div class="pf"><label>Fecha de nacimiento</label><input type="date" data-f="fNac"></div>
@@ -2585,6 +2633,12 @@ const pcardHTML = k => `
     <div class="pf"><label>IRPF de la pensión</label><div class="input-suffix"><input type="number" data-f="irpf" min="0" max="45" step="0.5" inputmode="decimal"><span>%</span></div></div>
     <div class="pf"><span class="plbl">&nbsp;</span><div class="hint" style="margin:0">Sueldo con las pagas extra repartidas en 12 meses (nómina: «Total devengado» y «Líquido a percibir»).</div></div>
   </div>
+  <div class="pf ss-only pbase"><span class="plbl">Base de cotización <span class="req rc">Recomendado</span></span><div class="seg" data-seg="brMode"><button type="button" data-v="est">Base de cotización</button><button type="button" data-v="man">Base reguladora oficial</button></div>
+    <div data-box="est"><div class="input-suffix"><input type="number" data-f="base" step="0.01" min="0" inputmode="decimal" placeholder="Base mensual (máx. 5.101,20)" aria-label="Base de cotización mensual"><span>€</span></div>
+      <div class="basewarn" data-basewarn hidden>⚠️ Sin su base se calcula con la <b>máxima</b> (5.101,20 €): si cotiza por menos, su pensión real será <b>menor</b>.</div>
+      <div class="hint">Se rellena sola al cargar su simulación oficial en PDF. Si no: nómina, «Base contingencias comunes»; o el Informe de bases de cotización de Import@ss; autónomos, su recibo mensual.</div></div>
+    <div data-box="man" hidden><div class="input-suffix"><input type="number" data-f="brMan" step="0.01" inputmode="decimal" aria-label="Base reguladora"><span>€</span></div><div class="hint">La de su simulación oficial de «Tu Seguridad Social» (se rellena sola al cargar ese PDF).</div></div>
+  </div>
   <div class="cp-only" data-cpbox></div>
   <label class="switch"><input type="checkbox" data-f="derecho"><span class="tg"></span><span class="tx">Tiene derecho al complemento por hijos<small>Mujeres con hijos; hombres solo si su carrera se vio perjudicada por el nacimiento (ver Ayuda).</small></span></label>
   <details class="adv"><summary>Ajustes avanzados</summary><div class="inner">
@@ -2592,10 +2646,6 @@ const pcardHTML = k => `
     <label class="switch ss-only"><input type="checkbox" data-f="dt34"><span class="tg"></span><span class="tx">Aplicar la DT 34.ª hasta 2033<small>Anticipada voluntaria con pensión por encima de la máxima. Desactivado, el periodo transitorio solo se aplica en 2026 (último año confirmado).</small></span></label>
     <label class="switch"><input type="checkbox" data-f="cont"><span class="tg"></span><span class="tx">Seguirá cotizando hasta jubilarse<small>Desactívalo si ya no trabaja.</small></span></label>
     <div class="pf ss-only" style="margin-bottom:12px"><span class="plbl">Jubilación anticipada</span><div class="seg" data-seg="early"><button type="button" data-v="vol">Voluntaria</button><button type="button" data-v="inv">Involuntaria</button></div></div>
-    <div class="pf ss-only" style="margin-bottom:12px"><span class="plbl">Base reguladora</span><div class="seg" data-seg="brMode"><button type="button" data-v="est">Estimar</button><button type="button" data-v="man">La conozco</button></div>
-      <div data-box="est"><div class="input-suffix"><input type="number" data-f="base" step="0.01" inputmode="decimal" aria-label="Base de cotización mensual"><span>€</span></div><div class="hint">Base de cotización mensual actual (nómina: «Base contingencias comunes»).</div></div>
-      <div data-box="man" hidden><div class="input-suffix"><input type="number" data-f="brMan" step="0.01" inputmode="decimal" aria-label="Base reguladora"><span>€</span></div><div class="hint">La de su simulación oficial de «Tu Seguridad Social».</div></div>
-    </div>
   </div></details>
 </div>`;
 const trackHTML = k => `<div class="ptrack" id="pTrack${k}" data-p="${k}"><div class="head"><span class="nm"><i></i><span></span></span><span class="ptype"></span></div><div class="val"></div><input type="range" min="0" max="1" step="1" value="0" aria-label="Fecha de jubilación de la persona ${k==='A'?1:2}"><div class="ptscale"></div></div>`;
@@ -2626,6 +2676,7 @@ function buildPairUI(){
     <div class="presets" id="pPresets"></div>
     ${trackHTML('A')}${trackHTML('B')}
     <label class="switch plink"><input type="checkbox" id="pLink"><span class="tg"></span><span class="tx">Mover las dos fechas a la vez<small>Al mover una, la otra se desplaza lo mismo y mantenéis la distancia entre ambas.</small></span></label>
+    <div class="alert gold basewarn-card" id="pBaseWarn" hidden></div>
     <div id="pSum"></div>
     <div class="advice" id="pAdvice"></div>
     <div class="share-row">
@@ -2718,13 +2769,21 @@ function refreshNames(){
 function computePair(){
   const PA = personIn(PS.A), PB = personIn(PS.B), ok = !!(PA && PB);
   document.body.classList.toggle('par-empty', !ok);
-  refreshNames(); updatePairSaveState(); ssSet(WPKEY, JSON.stringify(PS));
+  refreshNames(); updatePairSaveState(); ssSet(WPKEY, JSON.stringify(PS)); pairBaseWarn();
   if(!ok){ PR = null; updMini(); return; }
   const R = {A: personPlan(PA), B: personPlan(PB)};
   R.ia = idxOf(R.A, PS.selA); R.ib = idxOf(R.B, PS.selB);
   R.pre = computePresets(R);
   PR = R;
   renderTracks(); renderPresets(); refreshSelection();
+}
+// Aviso si alguien de la pareja calcula con la base máxima porque no ha indicado la suya
+function pairBaseWarn(){
+  const def = k => PS[k].reg!=='cp' && PS[k].brMode!=='man' && !(+PS[k].base > 0);
+  ['A','B'].forEach(k=>{ const w = document.querySelector(`#pairApp .pcard[data-p="${k}"] [data-basewarn]`); if(w) w.hidden = !def(k); });
+  const who = ['A','B'].filter(def).map(k=>escH(pName(k))), box = $('#pBaseWarn'); if(!box) return;
+  box.hidden = !who.length;
+  if(who.length) box.innerHTML = `<div>⚠️ <b>${who.join(' y ')}: calculado con la base de cotización máxima</b> (5.101,20 €), porque no se ha indicado la ${who.length > 1 ? 'suya' : 'suya'}. Si cotiza${who.length > 1 ? 'n' : ''} por menos, la pensión será <b>menor</b>. Indicadla en «Base de cotización», en la ficha de cada uno.</div>`;
 }
 function refreshSelection(){
   if(!PR) return;
@@ -2967,15 +3026,22 @@ async function cargarVLPar(file, k){
       if(r.nac) PS[k].fNac = isoD(r.nac);
       PS[k].reg = 'cp'; PS[k].cp = cleanCP(r.cp);
       if(r.nombre && !(PS[k].name || '').trim()) PS[k].name = r.nombre;
+      PS[k].fuente = '';
       fillPairForm(); computePair();
       const n = card.querySelector('[data-vlnote]'); n.innerHTML = notaCS(r, 'su'); n.hidden = false;
       toast(`Certificado de servicios de ${pName(k)} leído ✓ Régimen: Clases Pasivas`); return;
     }
     if(!r.nac || !r.dias) throw new Error('datos');
-    PS[k].reg = 'ss';
+    if(r.tipo==='vl' && PS[k].fuente==='sim' && PS[k].fNac===isoD(r.nac)){
+      const nn = card.querySelector('[data-vlnote]');
+      nn.innerHTML = `ℹ️ ${escH(pName(k))} ya tiene cargada su <b>simulación oficial</b>, que es más completa: la vida laboral no añade nada y <b>no se ha cambiado ningún dato</b>.`; nn.hidden = false;
+      toast('Ya tiene la simulación oficial, que es más completa: no se ha cambiado nada'); return;
+    }
+    PS[k].reg = 'ss'; PS[k].fuente = r.tipo==='sim' ? 'sim' : '';
     const x = prepararInforme(r, PS[k].cont);
     PS[k].fNac = isoD(r.nac); PS[k].dias = String(x.dias);
     if(x.brMan){ PS[k].brMode = 'man'; PS[k].brMan = x.brMan.toFixed(2); }
+    if(r.base) PS[k].base = r.base.base.toFixed(2);
     if(r.nombre && !(PS[k].name || '').trim()) PS[k].name = r.nombre;
     fillPairForm(); computePair();
     const note = card.querySelector('[data-vlnote]');
@@ -2999,8 +3065,8 @@ function updatePairSaveState(){
 function cleanPair(o){
   if(!o || typeof o!=='object' || !o.A || !o.B) return null;
   const txt = v => typeof v==='string' ? v.slice(0,24) : '';
-  const per = p => ({name: txt(p.name), fNac: txt(p.fNac), dias: txt(String(p.dias ?? '')), cont: p.cont!==false, early: p.early==='inv' ? 'inv' : 'vol',
-                     brMode: p.brMode==='man' ? 'man' : 'est', base: txt(String(p.base ?? '5101.20')), brMan: txt(String(p.brMan ?? '')),
+  const per = p => ({fuente: p.fuente==='sim' ? 'sim' : '', name: txt(p.name), fNac: txt(p.fNac), dias: txt(String(p.dias ?? '')), cont: p.cont!==false, early: p.early==='inv' ? 'inv' : 'vol',
+                     brMode: p.brMode==='man' ? 'man' : 'est', base: txt(String(p.base ?? '')), brMan: txt(String(p.brMan ?? '')),
                      irpf: txt(String(p.irpf ?? '23')), sueldo: txt(String(p.sueldo ?? '')), sueldoB: txt(String(p.sueldoB ?? '')), derecho: p.derecho!==false, subsidio: !!p.subsidio, dt34: !!p.dt34, reg: p.reg==='cp' ? 'cp' : 'ss', tipo: ['est','fun'].includes(p.tipo) ? p.tipo : 'lab', cp: cleanCP(p.cp)});
   const n = v => Math.min(6, Math.max(0, parseInt(v,10) || 0)), d = v => typeof v==='string' && /^\d{4}-\d{2}-\d{2}$/.test(v) ? v : null;
   return {A: per(o.A), B: per(o.B), hc: n(o.hc), ha: n(o.ha), hb: n(o.hb), asig: ['auto','A','B'].includes(o.asig) ? o.asig : 'auto', selA: d(o.selA), selB: d(o.selB), link: !!o.link, net: o.net==='neto' ? 'neto' : 'bruto'};
@@ -3030,7 +3096,7 @@ function buildPairReport(){
       ${r3('Régimen', P('A').reg==='cp' ? 'Clases Pasivas' : 'Seguridad Social · '+TIPOS[P('A').tipo], P('B').reg==='cp' ? 'Clases Pasivas' : 'Seguridad Social · '+TIPOS[P('B').tipo])}
       ${r3('Días cotizados / servicios hoy', P('A').reg==='cp' ? fCot(P('A').days) : num(P('A').days), P('B').reg==='cp' ? fCot(P('B').days) : num(P('B').days))}
       ${r3('Sigue cotizando', P('A').cont ? 'Sí' : 'No', P('B').cont ? 'Sí' : 'No')}
-      ${r3('Base reguladora', P('A').reg==='cp' ? 'Haber regulador de su grupo' : P('A').brMode==='man' ? 'Conocida: '+eur(P('A').brMan) : 'Estimada ('+eur(P('A').base)+')', P('B').reg==='cp' ? 'Haber regulador de su grupo' : P('B').brMode==='man' ? 'Conocida: '+eur(P('B').brMan) : 'Estimada ('+eur(P('B').base)+')')}
+      ${r3('Base reguladora', P('A').reg==='cp' ? 'Haber regulador de su grupo' : P('A').brMode==='man' ? 'Conocida: '+eur(P('A').brMan) : (P('A').baseDef ? 'Base máxima (no indicada)' : 'Estimada ('+eur(P('A').base)+')'), P('B').reg==='cp' ? 'Haber regulador de su grupo' : P('B').brMode==='man' ? 'Conocida: '+eur(P('B').brMan) : (P('B').baseDef ? 'Base máxima (no indicada)' : 'Estimada ('+eur(P('B').base)+')'))}
       ${r3('Retención IRPF', pct(P('A').irpf*100), pct(P('B').irpf*100))}
       ${r3('Sueldo bruto al mes', +S2('A').sueldoB ? eur0(+S2('A').sueldoB) : '—', +S2('B').sueldoB ? eur0(+S2('B').sueldoB) : '—')}
       ${r3('Sueldo neto al mes', +S2('A').sueldo ? eur0(+S2('A').sueldo) : '—', +S2('B').sueldo ? eur0(+S2('B').sueldo) : '—')}
