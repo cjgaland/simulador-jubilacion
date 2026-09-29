@@ -6,6 +6,11 @@ Formato de versión `XX.YY` (cambios menores `01.01`, cambios grandes `02.00`).
 > Al publicar una versión nueva, actualiza también `APP_VERSION` y `CHANGES` en `index.html`
 > y `version.json`. Los usuarios verán el aviso «Ha habido cambios» y, al actualizar, las novedades.
 
+## [04.06] - 2026-09-29
+
+- **Guardar y abrir informes**: `#fNombre` (nombre y apellidos, desde el titular del PDF oficial con `nombreBonito()`); el PDF incrusta los datos en «Keywords» (`REP_TAG` 'SIMJUB1:' + base64url); `nombreInforme()` → NOMBRE_APELLIDOS_DDMMAAAA_HHMM.pdf; «Guardar informe» con `showSaveFilePicker` (Chrome/Edge) o descarga; «Abrir un informe guardado» (`abrirInforme` / `aplicarInforme`), también arrastrando el PDF.
+- Ayuda: paso 7, botones del menú, ficha de pareja y privacidad de los informes.
+
 ## [04.05] - 2026-09-29
 
 - **Ajuste mes a mes en toda la barra** (individual): `S.demK` (0-11 meses) en la ordinaria y +1…+4 con el mismo `#antTune` (`demDate`, `demMax` con tope de 70). `REF` = ordinaria exacta para las comparaciones. Se guarda y comparte.

@@ -89,7 +89,7 @@ aside.form{padding:24px;position:sticky;top:64px}
 .field{margin-bottom:22px}
 .field > label,.lbl{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;font-weight:600;letter-spacing:.02em;margin-bottom:8px}
 .hint{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.45}
-input[type=date],input[type=number]{width:100%;height:46px;border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:0 12px;font-size:15px;transition:.2s;-webkit-appearance:none;appearance:none}
+input.tx-in,input[type=date],input[type=number]{width:100%;height:46px;border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:0 12px;font-size:15px;transition:.2s;-webkit-appearance:none;appearance:none}
 input[type=number]::-webkit-inner-spin-button{opacity:.4}
 input:focus-visible{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 22%,transparent)}
 .bignum{display:flex;align-items:center;gap:10px;margin-bottom:10px}
@@ -797,6 +797,11 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
     <aside class="card form" id="datos" data-pg="sim">
       <div class="step"><b>1</b><h2>Tus datos</h2></div>
 
+      <div class="field">
+        <label for="fNombre" class="lbl">Nombre y apellidos <span style="font-weight:400;color:var(--muted)">(opcional)</span></label>
+        <input type="text" id="fNombre" class="tx-in" maxlength="60" autocomplete="off" placeholder="Para el informe y el nombre del archivo">
+      </div>
+
       <div class="field reg-field">
         <div class="lbl">Régimen de tu pensión</div>
         <div class="seg" id="segReg"><button type="button" data-v="ss" class="on">Seguridad Social</button><button type="button" data-v="cp">Clases Pasivas</button></div>
@@ -812,6 +817,8 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
       <div class="vl-box">
         <button type="button" class="btn" id="btnVL"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M12 17v-6M9.5 13.5L12 11l2.5 2.5"/></svg><span>Cargar un PDF oficial</span></button>
         <input type="file" id="fileVL" accept="application/pdf,.pdf" hidden>
+        <button type="button" class="btn js-open-rep" style="margin-top:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v1H3z"/><path d="M3 10h18l-2 9H5z"/></svg><span>Abrir un informe guardado</span></button>
+        <input type="file" id="fileRep" accept="application/pdf,.pdf" hidden>
         <div class="hint">Pulsa el botón o <b>arrastra el PDF</b> a esta ventana. <b>Seguridad Social:</b> sube tu <a href="https://prestaciones.seg-social.es/simulador-servicio/simulador-pension-jubilacion.html" target="_blank" rel="noopener">Informe de Simulación de Jubilación</a> (<b>lo mejor</b>: con certificado digital o Cl@ve; trae tus días con la bonificación por hijos, tu base reguladora y tu base de cotización). Si no puedes obtenerlo, tu <a href="https://portal.seg-social.gob.es/wps/portal/importass/importass/Categorias/Vida+laboral+e+informes/Informes+sobre+tu+situacion+laboral/Informe+de+tu+vida+laboral" target="_blank" rel="noopener">Informe de Vida Laboral</a> (en Import@ss, incluso con un selfi y tu DNI). No hace falta subir los dos. <b>Clases Pasivas:</b> la <b>certificación de servicios (Modelo C.S.)</b> en PDF rellenable. El PDF se lee en tu dispositivo y <b>no se envía a ningún sitio</b>.</div>
         <div class="hint vl-ok" id="vlNote" hidden></div>
       </div>
@@ -886,7 +893,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
           <li id="chkB" class="ss-only"><b>3</b>Tu base de cotización <span class="meta">&nbsp;(recomendado)</span></li>
           <li id="chk3"><b>4</b>Tu número de hijos <span class="meta">&nbsp;(opcional)</span></li>
         </ol>
-        <div class="actions"><button class="btn" id="btnDemo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3l14 9-14 9z"/></svg>Ver un ejemplo</button></div>
+        <div class="actions"><button type="button" class="btn js-open-rep"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v1H3z"/><path d="M3 10h18l-2 9H5z"/></svg><span>Abrir un informe guardado</span></button><button class="btn" id="btnDemo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3l14 9-14 9z"/></svg>Ver un ejemplo</button></div>
       </section>
       <section class="card main-card needs-data" id="mainCard" data-pg="sim">
         <div class="q"><div class="step" style="margin:0"><b>2</b><h2>¿Cuándo te quieres jubilar?</h2></div><div class="early-sel ss-only"><span>Anticipada</span><div class="seg sm" id="segEarly"><button data-v="vol" class="on" title="Por voluntad propia: hasta 2 años antes, con 35 años cotizados">Voluntaria</button><button data-v="inv" title="Por despido u otra causa no voluntaria: hasta 4 años antes, con 33 años cotizados">Involuntaria</button></div></div></div>
@@ -926,6 +933,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 
         <div class="stats" id="oStats"></div>
         <div class="share-row">
+          <button class="btn" id="btnSaveRep" title="Guarda el informe en PDF en la carpeta que elijas; después podrás abrirlo aquí para seguir con los mismos datos"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v6h8V3M8 21v-7h8v7"/></svg>Guardar informe</button>
           <button class="btn" id="btnShare" title="Crea un enlace con estos datos para que otra persona vea la misma simulación"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>Compartir escenario</button>
           <button class="btn" id="btnReport" title="Informe completo listo para guardar como PDF o imprimir"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M9 13h6M9 17h6"/></svg>Informe PDF</button>
         </div>
@@ -1026,11 +1034,12 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
             <li><b>4</b><div><strong>Revisa el desglose.</strong> Base reguladora, porcentaje por años cotizados, coeficientes reductores o porcentaje por demora, tope de pensión máxima y complementos.</div></li>
             <li><b>5</b><div><strong>Consulta los requisitos.</strong> Tabla de edad ordinaria por año y explicación de cómo se calcula la pensión.</div></li>
             <li><b>6</b><div><strong>Guarda o comparte el resultado.</strong> <b>«Informe PDF»</b> crea un PDF completo (tus datos, el escenario elegido con su desglose y la comparativa de todas las opciones). En el ordenador se descarga; en el móvil pulsa <b>«Guardar o compartir»</b> para guardarlo en Archivos o enviarlo. <b>«Compartir escenario»</b> crea un enlace que abre la misma simulación en otro dispositivo.</div></li>
+            <li><b>7</b><div><strong>Guarda el informe y ábrelo otro día.</strong> <b>«Guardar informe»</b> crea el PDF con el nombre <b>NOMBRE_APELLIDOS_DDMMAAAA_HHMM.pdf</b> (escribe el nombre en «Tus datos»; se rellena solo si cargas la simulación oficial o la vida laboral). En <b>Chrome</b> y <b>Edge</b> se abre la ventana para <b>elegir la carpeta</b>; en Safari y Firefox se descarga (actívales «Preguntar dónde guardar» si quieres elegirla). Ese PDF lleva dentro todos los datos: con <b>«Abrir un informe guardado»</b> (o arrastrándolo a la ventana) la simulación vuelve tal cual, para cambiar solo lo necesario y guardarla de nuevo. Muy útil si atiendes a varias personas.</div></li>
           </ol>
           <h3>👥 Modo pareja</h3>
           <p>Pulsa <b>«En pareja»</b> en la portada para planificar la jubilación de los dos a la vez:</p>
           <ol class="steps">
-            <li><b>1</b><div><strong>Rellenad la ficha de cada uno</strong> (o cargad su vida laboral en PDF): fecha de nacimiento, días cotizados, IRPF y, si queréis, el <b>sueldo bruto y neto</b> actual. En «Ajustes avanzados», la base de cotización o la base reguladora y el tipo de anticipada, de cada uno por separado.</div></li>
+            <li><b>1</b><div><strong>Rellenad la ficha de cada uno</strong> (o cargad su simulación oficial o su vida laboral en PDF): fecha de nacimiento, días cotizados, base de cotización, IRPF y, si queréis, el <b>sueldo bruto y neto de un mes normal</b> (sin paga extra) con sus 14 o 12 pagas. En «Ajustes avanzados», el tipo de anticipada y otras opciones de cada uno.</div></li>
             <li><b>2</b><div><strong>Indicad los hijos</strong>: en común, solo de uno y solo del otro. El complemento por los hijos en común lo cobra <b>solo uno</b>: la app se lo asigna al de pensión más baja, como dice la ley, y podéis cambiarlo.</div></li>
             <li><b>3</b><div><strong>Elegid un plan sugerido</strong> o moved la fecha de cada uno mes a mes: <b>Cada uno a su edad</b> (referencia), <b>Jubilarnos juntos</b> (el mismo mes, con el mejor resultado), <b>Equilibrio</b> (las fechas más próximas sin perder dinero a largo plazo), <b>Máximo a largo plazo</b> y <b>Lo antes posible</b>. Con «Mover las dos fechas a la vez» mantenéis la distancia entre ambas.</div></li>
             <li><b>4</b><div><strong>Mirad el resultado</strong>: la pensión del hogar y lo que aporta cada uno, los ingresos netos año a año (sueldos y pensiones), los consejos personalizados, el desglose de cada pensión y qué pasaría si falta uno (pensión de viudedad).</div></li>
@@ -1047,15 +1056,16 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
           <p>Bajo el resultado verás las <b>fechas clave</b> de los trámites para la fecha que elijas: desde cuándo pedir la pensión (hasta 3 meses antes; si en la cita del «informativo» del INSS te faltan menos de 3 meses, pide la pensión en esa misma cita), cuándo solicitar la <b>prolongación</b> si eres estatutario o funcionario (al menos 2 meses antes de cumplir 65; si no, el cese es de oficio), cuándo avisar para <b>terminarla</b> (3 meses antes) y revisar la retención de IRPF de la última nómina.</p>
           <h3>⏳ Jubilación parcial</h3>
           <p>Si eres <b>laboral</b> o <b>estatutario</b>, en la tarjeta «Jubilación parcial» puedes simularla: reduces tu jornada y cobras a la vez una parte de la pensión, <b>sin coeficientes reductores</b>. Con contrato de relevo puedes empezar hasta <b>3 años antes</b> de tu edad legal, con <b>33 años cotizados</b> (25 con discapacidad del 33 % o más) y 6 de antigüedad; la jornada se reduce entre el <b>25 % y el 75 %</b> (si adelantas más de 2 años, el primer año entre el 20 % y el 33 %). Mientras dura se cotiza como a jornada completa. Desde tu edad ordinaria, también sin contrato de relevo (art. 215 LGSS, reformado por el RDL 11/2024).</p>
-          <h3>Botones de la parte superior</h3>
+          <h3>Botones del menú</h3>
+          <p>Están al pie del menú lateral (en el móvil, en el menú ☰):</p>
           <ul>
-            <li><b>Guardar</b>: guarda tus datos en este dispositivo para la próxima vez.</li>
+            <li><b>Guardar</b>: guarda tus datos en este dispositivo para la próxima vez (en el móvil también con el icono de la barra superior).</li>
             <li><b>Restablecer</b>: vuelve a cargar los datos que guardaste.</li>
             <li><b>Nuevo</b>: vacía el formulario (lo guardado sigue disponible en «Restablecer»).</li>
-            <li><b>Informe PDF</b> (en el ordenador; en el móvil está en la tarjeta «¿Cuándo te quieres jubilar?»): crea el informe completo en PDF.</li>
-            <li><b>Luna</b>: cambia entre tema claro y oscuro.</li>
+            <li><b>PDF</b>: crea el informe completo en PDF (también en la tarjeta «¿Cuándo te quieres jubilar?», junto a «Guardar informe»).</li>
+            <li><b>Tema</b>: cambia entre tema claro y oscuro.</li>
           </ul>
-          <div class="tip">🔒 <b>Privacidad:</b> todos los cálculos se hacen en tu navegador. Tus datos no se envían a ningún sitio; si pulsas «Guardar» se quedan solo en este dispositivo. Ojo: el enlace de «Compartir escenario» lleva dentro los datos de la simulación, así que envíalo solo a quien quieras.</div>
+          <div class="tip">🔒 <b>Privacidad:</b> todos los cálculos se hacen en tu navegador. Tus datos no se envían a ningún sitio; si pulsas «Guardar» se quedan solo en este dispositivo. Ojo: el enlace de «Compartir escenario» y los informes guardados llevan dentro los datos de la simulación, así que compártelos solo con quien quieras y guárdalos en un lugar protegido.</div>
         </div>
 
         <div class="tab-panel" data-panel="datos" hidden>
@@ -1246,8 +1256,14 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 /* ---------- Versión ----------
    Al desplegar: sube APP_VERSION (formato 01.00 → 01.01 cambios menores, 02.00 cambios grandes),
    añade la entrada arriba del todo en CHANGES, y actualiza version.json y CHANGELOG.md con la misma versión. */
-const APP_VERSION = '04.05';
+const APP_VERSION = '04.06';
 const CHANGES = [
+  {v:'04.06', date:'2026-09-29', items:[
+    'Nuevo botón «Guardar informe»: guarda el PDF con el nombre NOMBRE_APELLIDOS_FECHA_HORA.pdf y, en Chrome y Edge, te deja elegir la carpeta. Ideal si atiendes a varias personas. Idea de Paco y Fonsi (RRHH).',
+    'Nuevo botón «Abrir un informe guardado» (o arrastra el PDF a la ventana): la simulación vuelve tal cual, en individual o en pareja, para cambiar solo lo necesario y guardarla de nuevo.',
+    'Nuevo campo «Nombre y apellidos» (opcional) en «Tus datos»: aparece en el informe y se rellena solo al cargar la simulación oficial o la vida laboral.',
+    'Ayuda actualizada con estas funciones y los botones del menú.'
+  ]},
   {v:'04.05', date:'2026-09-29', items:[
     'Nuevo: afina tu fecha de jubilación mes a mes en toda la barra, no solo en la anticipada. En la ordinaria y en cada año de demora aparece «Afina tu fecha mes a mes» para añadir de 0 a 11 meses, como en el modo pareja. Gracias de nuevo a Paco por la idea.',
     'La comparación «frente a la ordinaria» sigue tomando tu edad ordinaria exacta aunque la afines.',
@@ -2075,8 +2091,8 @@ const IDS = ['fNac','fDias','fBase','fBR','rHijos','rIrpf'];
 // IND_FUENTE = 'sim' si los datos vienen de una simulación oficial: una vida laboral posterior de la misma
 // persona no los sustituye (la simulación ya lo trae todo y sus días incluyen la bonificación por hijos).
 let IND_FUENTE = '';
-function snapshot(){ const o={fuente:IND_FUENTE,reg:IND_REG,tipo:IND_TIPO,cp:JSON.parse(JSON.stringify(IND_CP)),brMode:S.brMode,early:S.early,antK:S.antK,demK:S.demK||0,sc:S.sc,barMode:S.barMode,netMode:S.netMode,fCont:$('#fCont').checked,fBrecha:$('#fBrecha').checked,fSubs:$('#fSubs').checked,fDT34:$('#fDT34').checked}; IDS.forEach(i=>o[i]=$('#'+i).value); return o; }
-const dataKey = o => JSON.stringify([o.fNac,o.fDias,o.fBase,o.fBR,o.rHijos,o.rIrpf,o.fCont,o.fBrecha,!!o.fSubs,!!o.fDT34,o.brMode,o.early||'vol',o.reg||'ss',o.reg==='cp' ? JSON.stringify(o.cp) : '',o.tipo||'lab']);
+function snapshot(){ const o={fNombre:$('#fNombre').value.trim().slice(0,60),fuente:IND_FUENTE,reg:IND_REG,tipo:IND_TIPO,cp:JSON.parse(JSON.stringify(IND_CP)),brMode:S.brMode,early:S.early,antK:S.antK,demK:S.demK||0,sc:S.sc,barMode:S.barMode,netMode:S.netMode,fCont:$('#fCont').checked,fBrecha:$('#fBrecha').checked,fSubs:$('#fSubs').checked,fDT34:$('#fDT34').checked}; IDS.forEach(i=>o[i]=$('#'+i).value); return o; }
+const dataKey = o => JSON.stringify([o.fNombre||'',o.fNac,o.fDias,o.fBase,o.fBR,o.rHijos,o.rIrpf,o.fCont,o.fBrecha,!!o.fSubs,!!o.fDT34,o.brMode,o.early||'vol',o.reg||'ss',o.reg==='cp' ? JSON.stringify(o.cp) : '',o.tipo||'lab']);
 function getSaved(){ try{ return JSON.parse(localStorage.getItem(KEY)||'null'); }catch(e){ return null; } }
 // Borrador de la pestaña (sessionStorage, se borra al cerrarla): Safari en iPhone a veces recarga la página
 // (al cambiar de página, volver a la pestaña o liberar memoria); así se recupera lo que había en pantalla
@@ -2084,7 +2100,7 @@ function getSaved(){ try{ return JSON.parse(localStorage.getItem(KEY)||'null'); 
 const WKEY = 'simJubBorrador', WPKEY = 'simJubBorradorPareja';
 const ssSet = (k,v) => { try{ sessionStorage.setItem(k,v); }catch(e){} };
 const ssJSON = k => { try{ return JSON.parse(sessionStorage.getItem(k)||'null'); }catch(e){ return null; } };
-function apply(o){ IND_FUENTE = o.fuente==='sim' ? 'sim' : ''; IDS.forEach(i=>{ $('#'+i).value = o[i]!=null ? o[i] : ''; }); IND_CP = cleanCP(o.cp); setReg(o.reg); setTipo(o.tipo); drawCPInd(); $('#fCont').checked=!!o.fCont; $('#fBrecha').checked=!!o.fBrecha; $('#fSubs').checked=!!o.fSubs; $('#fDT34').checked=!!o.fDT34; S.brMode=o.brMode||'est'; setEarly(o.early||'vol'); S.antK = Number.isInteger(o.antK) && o.antK>0 ? o.antK : null; S.demK = Number.isInteger(o.demK) && o.demK>0 && o.demK<12 ? o.demK : 0; S.sc=o.sc!=null&&o.sc!==''?+o.sc:1; S.barMode=o.barMode||'mes'; S.netMode=o.netMode||'bruto'; setMode(S.brMode); setBarMode(S.barMode); setNetMode(S.netMode); }
+function apply(o){ IND_FUENTE = o.fuente==='sim' ? 'sim' : ''; $('#fNombre').value = typeof o.fNombre==='string' ? o.fNombre.slice(0,60) : ''; IDS.forEach(i=>{ $('#'+i).value = o[i]!=null ? o[i] : ''; }); IND_CP = cleanCP(o.cp); setReg(o.reg); setTipo(o.tipo); drawCPInd(); $('#fCont').checked=!!o.fCont; $('#fBrecha').checked=!!o.fBrecha; $('#fSubs').checked=!!o.fSubs; $('#fDT34').checked=!!o.fDT34; S.brMode=o.brMode||'est'; setEarly(o.early||'vol'); S.antK = Number.isInteger(o.antK) && o.antK>0 ? o.antK : null; S.demK = Number.isInteger(o.demK) && o.demK>0 && o.demK<12 ? o.demK : 0; S.sc=o.sc!=null&&o.sc!==''?+o.sc:1; S.barMode=o.barMode||'mes'; S.netMode=o.netMode||'bruto'; setMode(S.brMode); setBarMode(S.barMode); setNetMode(S.netMode); }
 function updateSaveState(){
   const saved = getSaved(), same = saved && dataKey(saved)===dataKey(snapshot());
   const b = $('#btnSave'); b.classList.toggle('saved', !!same); b.classList.toggle('primary', !same);
@@ -2111,7 +2127,7 @@ document.querySelectorAll('#segEarly button').forEach(b=>b.onclick=()=>{ setEarl
 $('#rAnt').addEventListener('input', e=>{ if(S.sc===0) S.antK = +e.target.value || null; else S.demK = +e.target.value || 0; compute(); });
 document.querySelectorAll('#segNet button').forEach(b=>b.onclick=()=>{ setNetMode(b.dataset.v); buildBars(); select(S.sc,false); });
 $('#rDias').addEventListener('input', e=>{ $('#fDias').value = e.target.value; compute(); });
-['fNac','fDias','fBase','fBR','rHijos','rIrpf'].forEach(id=>$('#'+id).addEventListener('input',compute));
+['fNac','fDias','fBase','fBR','rHijos','rIrpf','fNombre'].forEach(id=>$('#'+id).addEventListener('input',compute));
 ['fCont','fBrecha','fSubs','fDT34'].forEach(id=>$('#'+id).addEventListener('change',compute));
 $('#rSc').addEventListener('input', e=>{ let i=+e.target.value; if(scen[i]?.disabled) i=1; select(i); });
 $('#btnSave').onclick = () => {
@@ -2290,7 +2306,7 @@ function buildReport(){
     rows += `<tr class="${i===S.sc?'sel':''}"><td>${nameOf(i)}</td><td>${fShort(x.D)}</td><td>${fAgeShort(x.age)}</td><td class="n">${eur(x.total)}</td><td class="n">${eur(x.total*f)}</td><td class="n">${i===1?'—':(d>=0?'+':'−')+eur(Math.abs(d))}</td><td class="n">${eur0(x.to85)}</td></tr>`;
   });
   $('#report').innerHTML = `
-    <div class="rp-head">${icon}<div><h1>Informe de simulación de jubilación</h1><p>${S.reg==='cp' ? 'Clases Pasivas del Estado' : 'Seguridad Social'} · Generado el ${fDate(TODAY)}</p></div></div>
+    <div class="rp-head">${icon}<div><h1>Informe de simulación de jubilación</h1><p>${$('#fNombre').value.trim() ? escH($('#fNombre').value.trim())+' · ' : ''}${S.reg==='cp' ? 'Clases Pasivas del Estado' : 'Seguridad Social'} · Generado el ${fDate(TODAY)}</p></div></div>
     <div class="rp-hl">
       <div><span>Escenario elegido</span><b>${nameOf(S.sc)}</b></div>
       <div><span>Fecha de jubilación</span><b>${s.D?fDate(s.D):'—'}</b></div>
@@ -2334,8 +2350,22 @@ const loadScript = ([src,sri]) => new Promise((ok,ko)=>{ const s=document.create
 let libsReady = null;
 const loadLibs = () => libsReady || (libsReady = LIBS.reduce((p,l)=>p.then(()=>loadScript(l)), Promise.resolve()).catch(e=>{ libsReady=null; throw e; }));
 
-async function makePdf(){
+// Guardar y abrir informes (petición de RRHH): el PDF lleva dentro, en su propiedad «Keywords», todos los datos
+// de la simulación; «Abrir un informe guardado» los recupera tal cual. Nombre: NOMBRE_APELLIDOS_DDMMAAAA_HHMM.pdf
+const REP_TAG = 'SIMJUB1:';
+const slugNombre = t => (t || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z0-9]+/g,'_').replace(/^_+|_+$/g,'');
+function nombreInforme(){
+  const d = new Date(), z = n => String(n).padStart(2,'0');
+  const f = `${z(d.getDate())}${z(d.getMonth()+1)}${d.getFullYear()}_${z(d.getHours())}${z(d.getMinutes())}`;
+  let base;
+  if(isPar()){ const a = slugNombre(PS.A.name), b = slugNombre(PS.B.name); base = a && b ? `${a}_Y_${b}` : a || b || 'PLAN_JUBILACION_PAREJA'; }
+  else base = slugNombre($('#fNombre').value) || 'INFORME_JUBILACION';
+  return `${base}_${f}.pdf`;
+}
+const datosInforme = () => REP_TAG + b64e(isPar() ? {m:'par', d:PS} : {m:'ind', d:snapshot()});
+async function makePdf(name){
   if(!buildReport()) return null;
+  name = name || nombreInforme();
   await loadLibs();
   if(document.fonts && document.fonts.ready) await document.fonts.ready;
   const el = $('#report'); el.classList.add('capture');
@@ -2354,7 +2384,8 @@ async function makePdf(){
       if(i) pdf.addPage();
       pdf.addImage(part.toDataURL('image/jpeg',0.92), 'JPEG', 0, 0, 210, (b-a)*mmPx);
     });
-    const name = `${isPar() ? 'Plan jubilación pareja' : 'Informe jubilación'} ${fShort(TODAY).replaceAll('/','-')}.pdf`;
+    pdf.setProperties({title: name.replace(/\.pdf$/,''), subject: isPar() ? 'Plan de jubilación en pareja' : 'Informe de simulación de jubilación',
+      creator: 'Simulador de Jubilación · Ver. ' + APP_VERSION, author: 'Simulador de Jubilación', keywords: datosInforme()});
     return new File([pdf.output('blob')], name, {type:'application/pdf'});
   } finally { el.classList.remove('capture'); }
 }
@@ -2367,15 +2398,62 @@ async function reportPdf(e){
   try{
     pdfFile = await makePdf(); if(!pdfFile) return;
     if(!matchMedia('(pointer:coarse)').matches){ downloadPdf(); toast('Informe PDF descargado ✓'); return; }
-    // Móvil: compartir necesita un toque «fresco», por eso se ofrece en una ventana
-    $('#pdfInfo').innerHTML = `<b>${pdfFile.name}</b> · ${Math.max(1,Math.round(pdfFile.size/1024))} KB<br>${canShareFile(pdfFile) ? 'Pulsa «Guardar o compartir» para guardarlo en Archivos o enviarlo por WhatsApp o correo.' : 'Pulsa «Descargar» para guardarlo en tu dispositivo.'}`;
-    $('#btnPdfShare').hidden = !canShareFile(pdfFile);
-    $('#dlgPdf').showModal();
+    pdfDialog();
   }catch(err){
     toast('No se ha podido crear el PDF. Comprueba tu conexión e inténtalo de nuevo');
   }finally{ btn.classList.remove('busy'); btn.innerHTML = txt; }
 }
-$('#btnReport').onclick = reportPdf; $('#btnPrint').onclick = reportPdf;
+// Móvil: compartir necesita un toque «fresco», por eso se ofrece en una ventana
+function pdfDialog(){
+    $('#pdfInfo').innerHTML = `<b>${pdfFile.name}</b> · ${Math.max(1,Math.round(pdfFile.size/1024))} KB<br>${canShareFile(pdfFile) ? 'Pulsa «Guardar o compartir» para guardarlo en Archivos o enviarlo por WhatsApp o correo.' : 'Pulsa «Descargar» para guardarlo en tu dispositivo.'}`;
+    $('#btnPdfShare').hidden = !canShareFile(pdfFile);
+    $('#dlgPdf').showModal();
+}
+// «Guardar informe»: en Chrome y Edge se elige carpeta y nombre ANTES de generar el PDF (la ventana del sistema
+// necesita el clic reciente); en Safari/Firefox se descarga con el nombre propuesto; en el móvil, ventana de compartir.
+async function guardarInforme(e){
+  const btn = e.currentTarget;
+  if(isPar() ? !PR : (document.body.classList.contains('is-empty') || !scen.length)){ toast('Primero completa los datos de la simulación'); return; }
+  const name = nombreInforme(), movil = matchMedia('(pointer:coarse)').matches;
+  let handle = null;
+  if(window.showSaveFilePicker && !movil){
+    try{ handle = await showSaveFilePicker({suggestedName: name, types:[{description:'Informe PDF', accept:{'application/pdf':['.pdf']}}]}); }
+    catch(err){ if(err.name==='AbortError') return; handle = null; }
+  }
+  const txt = btn.innerHTML; btn.classList.add('busy'); btn.lastChild.textContent = 'Guardando…';
+  try{
+    pdfFile = await makePdf(handle ? handle.name : name); if(!pdfFile) return;
+    if(handle){ const w = await handle.createWritable(); await w.write(pdfFile); await w.close(); toast(`Informe guardado ✓ ${handle.name}`); return; }
+    if(movil){ pdfDialog(); return; }
+    downloadPdf(); toast('Informe descargado ✓ Para elegir la carpeta, usa Chrome o Edge (o activa «Preguntar dónde guardar» en tu navegador)');
+  }catch(err){
+    toast('No se ha podido guardar el informe. Inténtalo de nuevo');
+  }finally{ btn.classList.remove('busy'); btn.innerHTML = txt; }
+}
+// «Abrir un informe guardado»: recupera todos los datos (individual o pareja) de un PDF creado por la app
+function aplicarInforme(r){
+  if(r.m==='par'){
+    const pp = cleanPair(r.d); if(!pp) throw new Error('datos');
+    PS = pp; document.querySelectorAll('#pairApp [data-vlnote]').forEach(n=>n.hidden = true); fillPairForm();
+    if(MODE!=='par') setModeUI('par'); else computePair();
+  } else {
+    const o = cleanShared(r.d); if(!o) throw new Error('datos');
+    o.fNombre = typeof r.d.fNombre==='string' ? r.d.fNombre.slice(0,60) : ''; o.fuente = r.d.fuente==='sim' ? 'sim' : '';
+    if(MODE!=='ind') setModeUI('ind');
+    apply(o); $('#vlNote').hidden = true; lastMoney = null; compute();
+  }
+  go('sim'); toast('Informe abierto ✓ Cambia lo que necesites y vuelve a guardarlo');
+}
+async function abrirInforme(file, soloFicha){
+  try{
+    const r = await leerVidaLaboral(file);
+    if(r.tipo!=='informe'){ toast(soloFicha ? 'Suelta el PDF sobre la ficha de la persona a la que pertenece' : 'Ese PDF no es un informe guardado con esta app. Para un PDF oficial usa «Cargar un PDF oficial».'); return; }
+    aplicarInforme(r);
+  }catch(err){ toast('No se ha podido abrir el informe. Comprueba tu conexión e inténtalo de nuevo'); }
+}
+document.addEventListener('click', e=>{ const b = e.target.closest && e.target.closest('.js-open-rep'); if(b) $('#fileRep').click(); });
+$('#fileRep').addEventListener('change', e => { const f = e.target.files[0]; e.target.value = ''; if(f) abrirInforme(f); });
+$('#btnReport').onclick = reportPdf; $('#btnPrint').onclick = reportPdf; $('#btnSaveRep').onclick = guardarInforme;
 $('#btnPdfShare').onclick = async () => { try{ await navigator.share({files:[pdfFile], title:'Informe de jubilación'}); $('#dlgPdf').close(); }catch(e){ if(e.name!=='AbortError') downloadPdf(); } };
 $('#btnPdfDown').onclick = () => { downloadPdf(); $('#dlgPdf').close(); };
 $('#btnPdfClose').onclick = () => $('#dlgPdf').close();
@@ -2397,6 +2475,9 @@ const fechaNum = m => m ? U(+m[3], +m[2]-1, +m[1]) : null;
 const eurNum = s => +String(s).replace(/\./g,'').replace(',', '.');
 // Nombre de pila a partir del nombre completo en mayúsculas («ANA ISABEL PEREZ LOPEZ» → «Ana Isabel»):
 // en España los dos últimos términos suelen ser los apellidos.
+// «CARLOS DE LA FUENTE PÉREZ» → «Carlos de la Fuente Pérez»
+const nombreBonito = full => (full || '').trim().replace(/\s+/g,' ').toLowerCase()
+  .replace(/(^|[\s-])(\p{L})/gu, (m,a,b)=>a+b.toUpperCase()).replace(/(?<= )(De|Del|La|Las|Los|Y)(?= )/g, w=>w.toLowerCase()).slice(0,60);
 const nombrePila = full => {
   const w = (full || '').trim().split(/\s+/).filter(Boolean); if(!w.length) return '';
   return (w.length > 2 ? w.slice(0, w.length-2) : w.slice(0,1)).map(x=>x.charAt(0).toUpperCase() + x.slice(1).toLowerCase()).join(' ');
@@ -2461,6 +2542,8 @@ function baseSim(txt, fCalc){
 async function leerVidaLaboral(file){
   await loadPdfjs();
   const doc = await pdfjsLib.getDocument({data: new Uint8Array(await file.arrayBuffer())}).promise;
+  const meta = await doc.getMetadata().catch(()=>null), kw = (meta && meta.info && meta.info.Keywords) || '';
+  if(kw.startsWith(REP_TAG)){ let d = null; try{ d = b64d(kw.slice(REP_TAG.length)); }catch(e){} if(d && d.d) return {tipo:'informe', m: d.m, d: d.d}; throw new Error('datos'); }
   const fo = await doc.getFieldObjects().catch(()=>null);
   if(fo && fo.cboGrupo1 && fo.aa1) return leerCS(fo);
   let txt = '';
@@ -2480,7 +2563,7 @@ async function leerVidaLaboral(file){
     if(!nac || !fJub || !fCalc || !tot) throw new Error('datos');
     const diasJub = +tot[1].replace(/\./g,'');
     return {tipo:'sim', nac, fecha: fCalc, dias: diasJub - Math.max(0, diffDays(fCalc, fJub)), diasJub, vigente: true,
-            nombre: tit ? nombrePila(tit[1]) : '', br: br ? eurNum(br[1]) : null, fJub, modalidad: mod ? mod[1].trim() : '',
+            nombre: tit ? nombrePila(tit[1]) : '', completo: tit ? nombreBonito(tit[1]) : '', br: br ? eurNum(br[1]) : null, fJub, modalidad: mod ? mod[1].trim() : '',
             base: baseSim(txt, fCalc)};
   }
   if(!/INFORME DE VIDA LABORAL/i.test(txt)) throw new Error('no-vl');
@@ -2493,7 +2576,7 @@ async function leerVidaLaboral(file){
   // ¿Sigue de alta? Una fila «fecha alta · fecha efecto · ---» (sin fecha de baja). Si delante hay otra
   // fecha, esos «---» son de la columna C.T. de una fila con baja, no cuentan.
   const vigente = [...txt.matchAll(/(\d{2}\.\d{2}\.\d{4} )?\d{2}\.\d{2}\.\d{4} \d{2}\.\d{2}\.\d{4} -{3}/g)].some(m=>!m[1]);
-  return {tipo:'vl', nac, fecha, dias, vigente, nombre: tit ? nombrePila(tit[1]) : ''};
+  return {tipo:'vl', nac, fecha, dias, vigente, nombre: tit ? nombrePila(tit[1]) : '', completo: tit ? nombreBonito(tit[1]) : ''};
 }
 // Convierte lo leído en datos para el simulador: días a hoy y, si es una simulación oficial,
 // la base reguladora referida a la fecha ordinaria (como espera el modo «Base reguladora oficial»).
@@ -2538,7 +2621,7 @@ addEventListener('drop', e => {
   if(!file){ toast('Suelta un PDF: el Informe de Vida Laboral'); return; }
   if(!isPar()) cargarVL(file);
   else if(card) cargarVLPar(file, card.dataset.p);
-  else toast('Suelta el PDF sobre la ficha de la persona a la que pertenece');
+  else abrirInforme(file, true);   // fuera de las fichas: solo sirve un informe guardado de la pareja
 });
 async function cargarVL(file){
   go('sim'); $('#datos').scrollIntoView({behavior:'smooth', block:'start'});
@@ -2546,6 +2629,7 @@ async function cargarVL(file){
   btn.classList.add('busy'); lbl.textContent = 'Leyendo el informe…';
   try{
     const r = await leerVidaLaboral(file);
+    if(r.tipo==='informe'){ aplicarInforme(r); return; }
     if(r.tipo==='vl' && IND_FUENTE==='sim' && r.nac && $('#fNac').value===isoD(r.nac)){
       $('#vlNote').innerHTML = 'ℹ️ Ya tienes cargada tu <b>simulación oficial</b>, que es más completa (sus días incluyen la bonificación por hijos y trae tus bases): la vida laboral no añade nada y <b>no se ha cambiado ningún dato</b>. Si quieres usar solo la vida laboral, pulsa antes «Nuevo».';
       $('#vlNote').hidden = false; toast('Ya tienes la simulación oficial, que es más completa: no se ha cambiado nada'); return;
@@ -2561,7 +2645,7 @@ async function cargarVL(file){
     if(!r.nac || !r.dias) throw new Error('datos');
     if(IND_REG==='cp') setReg('ss');
     const x = prepararInforme(r, $('#fCont').checked);
-    $('#fNac').value = r.nac.toISOString().slice(0,10); $('#fDias').value = x.dias;
+    $('#fNac').value = r.nac.toISOString().slice(0,10); $('#fDias').value = x.dias; if(r.completo) $('#fNombre').value = r.completo;
     if(x.brMan){ $('#fBR').value = x.brMan.toFixed(2); setMode('man'); }
     if(r.base) $('#fBase').value = r.base.base.toFixed(2);
     IND_FUENTE = r.tipo==='sim' ? 'sim' : '';
@@ -2737,7 +2821,7 @@ function buildPairUI(){
       <div class="pf"><span class="plbl">Solo de <span class="js-nB"></span></span>${stepper('hb')}</div>
       <div class="pf full" id="pAsigBox"><span class="plbl">¿Quién cobra el complemento por los hijos en común?</span><div class="seg seg3" id="pAsig"><button type="button" data-v="auto">Automático (ley)</button><button type="button" data-v="A" class="js-nA"></button><button type="button" data-v="B" class="js-nB"></button></div><div class="hint">Por ley lo cobra solo uno de los dos: el de pensión más baja. Cámbialo si esa persona no cumple los requisitos.</div></div>
     </div>
-    <div class="pactions"><button type="button" class="btn" id="pDemo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3l14 9-14 9z"/></svg>Ver un ejemplo de pareja</button></div>
+    <div class="pactions"><button type="button" class="btn js-open-rep"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v1H3z"/><path d="M3 10h18l-2 9H5z"/></svg><span>Abrir un informe guardado</span></button><button type="button" class="btn" id="pDemo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3l14 9-14 9z"/></svg>Ver un ejemplo de pareja</button></div>
   </section>
   <section class="card pempty" data-pg="sim">
     <h2>Rellenad los datos de los dos</h2>
@@ -2754,6 +2838,7 @@ function buildPairUI(){
     <div id="pSum"></div>
     <div class="advice" id="pAdvice"></div>
     <div class="share-row">
+      <button class="btn" id="pSaveRep" title="Guarda el plan en PDF en la carpeta que elijas; después podréis abrirlo aquí para seguir con los mismos datos"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v6h8V3M8 21v-7h8v7"/></svg>Guardar informe</button>
       <button class="btn" id="pShare"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>Compartir plan</button>
       <button class="btn" id="pReport"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M9 13h6M9 17h6"/></svg>Informe PDF</button>
     </div>
@@ -2815,7 +2900,7 @@ function buildPairUI(){
     });
   });
   $('#pShare').onclick = sharePair;
-  $('#pReport').onclick = reportPdf;
+  $('#pReport').onclick = reportPdf; $('#pSaveRep').onclick = guardarInforme;
 }
 function fillPairForm(){
   ['A','B'].forEach(k=>{
@@ -3133,6 +3218,7 @@ async function cargarVLPar(file, k){
       const n = card.querySelector('[data-vlnote]'); n.innerHTML = notaCS(r, 'su'); n.hidden = false;
       toast(`Certificado de servicios de ${pName(k)} leído ✓ Régimen: Clases Pasivas`); return;
     }
+    if(r.tipo==='informe'){ aplicarInforme(r); return; }
     if(!r.nac || !r.dias) throw new Error('datos');
     if(r.tipo==='vl' && PS[k].fuente==='sim' && PS[k].fNac===isoD(r.nac)){
       const nn = card.querySelector('[data-vlnote]');

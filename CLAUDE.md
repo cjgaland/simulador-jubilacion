@@ -58,6 +58,15 @@ Pensada para compartir con compañeros (médicos del SAS). Autor: **Carlos J. Ga
   en iPhone con la app instalada en pantalla de inicio no hace nada. Ctrl/Cmd+P sigue imprimiendo
   solo el informe (clase `report-mode` + `@media print`). El botón «PDF» (`#btnPrint`) está al pie del menú
   lateral; también hay uno en la tarjeta principal.
+- **Guardar y abrir informes** (29/09/2026, petición de Paco y Fonsi, RRHH): campo `#fNombre` (nombre y apellidos,
+  opcional; se rellena con el titular de la simulación o la vida laboral vía `nombreBonito()`; va en el snapshot pero
+  **no** en los enlaces `#d=`). `makePdf(name)` incrusta todos los datos en la propiedad **Keywords** del PDF
+  (`REP_TAG` 'SIMJUB1:' + base64url de `{m:'ind'|'par', d: snapshot()|PS}`). Nombre: `nombreInforme()` →
+  `NOMBRE_APELLIDOS_DDMMAAAA_HHMM.pdf` (pareja `NOMBRE_Y_NOMBRE_…`; sin acentos; la hora sin «:»). Botón «Guardar informe»
+  (`#btnSaveRep`, `#pSaveRep`, `guardarInforme()`): `showSaveFilePicker` (Chrome/Edge; se pide ANTES de generar el PDF
+  por la activación de usuario) o descarga (Safari/Firefox) o ventana de compartir (móvil). «Abrir un informe guardado»
+  (`.js-open-rep` → `#fileRep` → `abrirInforme()`); `leerVidaLaboral()` detecta los informes propios por sus Keywords
+  (también al arrastrarlos o con «Cargar un PDF oficial») y `aplicarInforme()` restaura el modo y los datos.
 - **Compartir escenario**: enlace `…/#d=<base64url(JSON)>`; al abrirlo se aplican los datos
   (saneados en `cleanShared`), no se guardan y se limpia la URL.
 - **Ejemplos**: `DEMOS` (3 perfiles ficticios que se alternan).
