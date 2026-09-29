@@ -64,6 +64,13 @@ Pensada para compartir con compañeros (médicos del SAS). Autor: **Carlos J. Ga
 - **Ajuste fino de la anticipada** (`#antTune`, `S.antK` = meses que se retrasa desde `EARLY`,
   `antDate()`): mes a mes hasta justo antes de la ordinaria; los meses de adelanto y el coeficiente
   salen de `scenario()`.
+- **Ajuste mes a mes del resto de la barra** (29/09/2026, petición de Paco): el mismo `#antTune`/`#rAnt` sirve en la
+  ordinaria y en +1…+4: `S.demK` (0-11 meses) se suma a la parada elegida (`demDate(i)`, `demMax(i)` respeta el tope
+  de 70). Al cambiar de parada, `S.demK` vuelve a 0. `REF` = ordinaria exacta, referencia de las comparaciones
+  («frente a la ordinaria», parcial, informe) aunque se afine la parada «Ordinaria». Se guarda y comparte (`demK`).
+- **Revisión de regresiones (29/09/2026)**: probadas las funciones de 01.00 a 04.04 tras el rediseño; todo operativo.
+  Corregido un fallo antiguo (02.00): «Os separan» contaba días/30,44 redondeados y decía «1 mes» con las dos fechas en
+  el mismo mes; ahora `gap` = meses de calendario.
 - **Cargar Informe de Vida Laboral (PDF)** (`cargarVL(file)` desde el botón o arrastrando el PDF a
   la ventana —eventos `drag*`/`drop` en `window`, clase `body.dragging` para el aviso—; `leerVidaLaboral()`): pdf.js 3.11.174 (cdnjs, SRI; el
   worker se descarga con `fetch` + integrity y se lanza desde un blob). Lee del texto de la 1.ª página:

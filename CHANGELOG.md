@@ -6,6 +6,12 @@ Formato de versión `XX.YY` (cambios menores `01.01`, cambios grandes `02.00`).
 > Al publicar una versión nueva, actualiza también `APP_VERSION` y `CHANGES` en `index.html`
 > y `version.json`. Los usuarios verán el aviso «Ha habido cambios» y, al actualizar, las novedades.
 
+## [04.05] - 2026-09-29
+
+- **Ajuste mes a mes en toda la barra** (individual): `S.demK` (0-11 meses) en la ordinaria y +1…+4 con el mismo `#antTune` (`demDate`, `demMax` con tope de 70). `REF` = ordinaria exacta para las comparaciones. Se guarda y comparte.
+- Pareja: `gap` en meses de calendario (antes días/30,44 redondeados: «1 mes» con las dos fechas en el mismo mes).
+- Revisión de regresiones de 01.00 a 04.04 tras el rediseño: todo operativo.
+
 ## [04.04] - 2026-09-28
 
 - **Jubilación parcial**: sueldo de un mes normal con `PAR.pagas` (14 | 12, selector `#segPP`). Resultado con «Un mes normal», meses con paga extra (pensión: junio y noviembre; sueldo: junio y diciembre) y total anual con las pagas reales (antes se multiplicaba por 12).
