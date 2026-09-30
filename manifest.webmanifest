@@ -1,7 +1,7 @@
 {
   "name": "Simulador de Jubilación",
   "short_name": "Jubilación",
-  "description": "Calcula cuándo y con qué pensión te podrás jubilar, en la Seguridad Social o en Clases Pasivas, y compara todas tus opciones, también en pareja.",
+  "description": "Calcula cuándo y con qué pensión te podrás jubilar, en la Seguridad Social o en Clases Pasivas, y compara todas tus opciones, también en pareja y con tu plan de pensiones.",
   "lang": "es",
   "start_url": "./",
   "scope": "./",

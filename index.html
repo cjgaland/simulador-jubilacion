@@ -834,7 +834,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
   <section class="cover" id="inicio" data-pg="inicio">
     <div class="cover-icon" aria-hidden="true"><svg viewBox="0 0 512 512"><defs><linearGradient id="cvBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1f3a5f"/><stop offset="1" stop-color="#12243d"/></linearGradient><linearGradient id="cvGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c9a56a"/><stop offset="1" stop-color="#a8844d"/></linearGradient></defs><rect width="512" height="512" fill="url(#cvBg)"/><circle cx="256" cy="256" r="150" fill="none" stroke="#f3ead9" stroke-opacity=".22" stroke-width="16"/><path d="M256 128v14M384 256h-14M256 384v-14M128 256h14" stroke="#f3ead9" stroke-opacity=".55" stroke-width="8" stroke-linecap="round"/><path d="M256 106 A150 150 0 1 1 126.1 331" fill="none" stroke="url(#cvGold)" stroke-width="16" stroke-linecap="round"/><circle cx="126.1" cy="331" r="17" fill="#a8844d" stroke="#f3ead9" stroke-width="6"/><path d="M256 176v80l52 34" fill="none" stroke="#f3ead9" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><circle cx="256" cy="256" r="13" fill="#a8844d"/></svg></div>
     <h1 class="serif">¿Cuándo y con cuánto<br>te podrás <em>jubilar</em>?</h1>
-    <p class="cover-desc">Descubre cuándo podrás jubilarte y con qué pensión, en la <b>Seguridad Social</b> o en <b>Clases Pasivas</b>, y compara al instante todas tus opciones: jubilarte antes, a tu edad, más tarde o de forma parcial, con la normativa vigente en 2026. Carga tu informe oficial en PDF para rellenar tus datos en segundos y, si lo planificáis en pareja, encontrad juntos vuestra mejor fecha.</p>
+    <p class="cover-desc">Descubre cuándo podrás jubilarte y con qué pensión, en la <b>Seguridad Social</b> o en <b>Clases Pasivas</b>, y compara al instante todas tus opciones: jubilarte antes, a tu edad, más tarde o de forma parcial, con la normativa vigente en 2026. Si tienes un <b>plan de pensiones</b>, descubre cuánto sumará cada mes a tu pensión y cómo rescatarlo pagando el menor IRPF posible. Carga tu informe oficial en PDF para rellenar tus datos en segundos y, si lo planificáis en pareja, encontrad juntos vuestra mejor fecha.</p>
     <span class="privacy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Tus datos no salen de tu dispositivo</span>
     <div class="mode-sel" role="group" aria-label="Tipo de simulación">
       <button type="button" data-m="ind" class="on"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span><b>Solo yo</b><small>Simulación individual</small></span></button>
@@ -1333,7 +1333,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
       </section>
   </div>
 
-  <footer>Simulación orientativa sin validez oficial. Para una cifra definitiva, solicita tu simulación oficial al organismo que gestiona tu pensión (Seguridad Social o Clases Pasivas) o consulta con un profesional de tu confianza.
+  <footer>Simulación orientativa sin validez oficial. Para una cifra definitiva, solicita tu simulación oficial al organismo que gestiona tu pensión (Seguridad Social o Clases Pasivas) o consulta con un profesional de tu confianza. El cálculo del plan de pensiones no es asesoramiento fiscal: confírmalo con tu gestora y con un asesor fiscal.
     <div class="ver">Ver. <span class="js-ver"></span> · <button type="button" id="lnkNews">Historial de versiones</button></div>
   </footer>
 </div>
@@ -1371,8 +1371,11 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 /* ---------- Versión ----------
    Al desplegar: sube APP_VERSION (formato 01.00 → 01.01 cambios menores, 02.00 cambios grandes),
    añade la entrada arriba del todo en CHANGES, y actualiza version.json y CHANGELOG.md con la misma versión. */
-const APP_VERSION = '04.07';
+const APP_VERSION = '04.08';
 const CHANGES = [
+  {v:'04.08', date:'2026-09-30', items:[
+    'La portada y el aviso del pie de página mencionan ya el plan de pensiones: cuánto suma a tu pensión, cómo rescatarlo con el menor IRPF y que no sustituye al asesoramiento fiscal.'
+  ]},
   {v:'04.07', date:'2026-09-30', items:[
     'Nuevo: página «Plan de pensiones» (también en pareja). Indica el valor de tu plan y la parte aportada hasta 2006, y verás cuánto te aportaría cada mes y cómo rescatarlo pagando el menor IRPF posible, con las escalas de Andalucía de 2026.',
     'Cuatro estrategias: óptima (con los años que tú elijas), todo de golpe, en rentas o a tu medida, con avisos cuando cambias de tramo del IRPF y del plazo para la reducción del 40 %. El plan aparece en verde petróleo junto a tu pensión, en los gráficos y en el informe.',

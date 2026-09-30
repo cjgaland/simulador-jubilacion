@@ -6,6 +6,10 @@ Formato de versión `XX.YY` (cambios menores `01.01`, cambios grandes `02.00`).
 > Al publicar una versión nueva, actualiza también `APP_VERSION` y `CHANGES` en `index.html`
 > y `version.json`. Los usuarios verán el aviso «Ha habido cambios» y, al actualizar, las novedades.
 
+## [04.08] - 2026-09-30
+
+- Portada, pie de página, manifiesto y README: mención del plan de pensiones y aviso de que no es asesoramiento fiscal.
+
 ## [04.07] - 2026-09-30
 
 - **Plan de pensiones** (página `#plan`, individual y pareja, verde petróleo): motor IRPF 2026 Estado + Andalucía (`cuotaIRPF`), estrategias óptima (con `anosOpt`: nivelado en N años), todo de golpe, rentas y a tu medida; reducción del 40 % (DT 12.ª LIRPF, una vez por plan, varios planes en años distintos: DGT V1546-25, V1823-23, V0710-26); avisos de tramo y plazo; chip en la tarjeta principal, barras, minibarra, «Ingresos del hogar», informes PDF y guardar/abrir informes. Ayuda › «Plan de pensiones» con fuentes.
