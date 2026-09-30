@@ -67,6 +67,27 @@ Pensada para compartir con compañeros (médicos del SAS). Autor: **Carlos J. Ga
   por la activación de usuario) o descarga (Safari/Firefox) o ventana de compartir (móvil). «Abrir un informe guardado»
   (`.js-open-rep` → `#fileRep` → `abrirInforme()`); `leerVidaLaboral()` detecta los informes propios por sus Keywords
   (también al arrastrarlos o con «Cargar un PDF oficial») y `aplicarInforme()` restaura el modo y los datos.
+- **Plan de pensiones** (30/09/2026, idea de Carlos; página `#plan`, color **verde petróleo** `--teal`/`--teal-soft`/
+  `--teal-2`): motor fiscal `cuotaIRPF()` con escalas **2026 estatal + Andalucía** (`IRPF_EST`, `IRPF_AND`), 2.000 € de
+  otros gastos, mínimo personal por edad (**actualizar cada año**; solo Andalucía). `rescatePlan(pl, ctx, modo)`:
+  'opt' (capital pre-2007 con 40 % en el mejor año de Y0..Y0+2 probando todas las combinaciones de planes —varios planes
+  en años distintos, DGT V1823-23/V0710-26—; resto «rellenando» hasta `finTramo()` de la pensión, máx. 15 años; si
+  repartir no cambia el IRPF, reparte en `pl.anos`; con `pl.anosOpt` = N años fijados por el usuario, «nivela» lo posterior
+  a 2007 en N años (water-filling: iguala la base de cada año, que es el reparto de menor IRPF), avisos si N sobra o falta), 'golpe', 'renta' (`pl.anos`, sin 40 %), 'pers' (`pl.anual`,
+  `pl.anioPre`). Plan = `{planes:[{v,p}] (máx. 3), modo, anos, anual, anioPre}` (`PLAN0`, `cleanPlan`); individual
+  `PLAN_IND` (snapshot, enlaces, informes), pareja `PS[k].plan`. UI `montaPlan()` (formulario + resultados + avisos de
+  tramo/plazo/40 % + tabla año a año + comparativa); chip `#oPlan` / `#pPlanChip`, tramo en las barras (`i.pl`),
+  minibarra, «Ingresos del hogar» (segmentos `la`/`lb`, repartidos en 12 meses, € de hoy) e Informe PDF
+  (`planInformeHTML`). Ayuda › pestaña «Plan de pensiones» con legislación, cálculo, supuestos y fuentes. Supuestos:
+  pensión del año de jubilación todos los años, sin otros ingresos ni deducciones; base = pensión + complemento de
+  demora (sin el de brecha). Orientativo, con aviso de que no es asesoramiento fiscal.
+- **«Comparar opciones» enriquecido** (30/09/2026, para igualarlo a «Ingresos del hogar»): eje con la fecha de cada
+  opción y marca «afinada» (`afinada(i)`: `S.antK` o `S.demK` de la parada elegida); `renderCompare(i)` (al seleccionar
+  o al pasar el ratón por una barra) muestra en `#bSel` tipo, fecha, edad, pensión al mes/año/neta, adelanto o demora,
+  diferencia con la ordinaria, plan de pensiones, mes normal / meses con paga extra y tira de 12 meses del primer año
+  completo; `#bPhases` = empiezas a cobrar, cobrado hasta los 85 (€ de hoy, con el plan en las dos) y **punto de
+  equilibrio** con la ordinaria (`equilibrio()`: edad en que se iguala lo cobrado); `#bTabla` = todas las opciones
+  (clic para seleccionar). La referencia (`refPura`) es la ordinaria exacta salvo que se afine la propia ordinaria.
 - **Compartir escenario**: enlace `…/#d=<base64url(JSON)>`; al abrirlo se aplican los datos
   (saneados en `cleanShared`), no se guardan y se limpia la URL.
 - **Ejemplos**: `DEMOS` (3 perfiles ficticios que se alternan).

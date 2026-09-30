@@ -20,7 +20,7 @@
 :root{
   --bg:#f5f2ec; --surface:#fffdf9; --surface-2:#f8f4ec; --ink:#1b2130; --muted:#6a7080; --line:#e6dfd2;
   --navy:#1f3a5f; --navy-soft:#e8eef6; --gold:#a8844d; --gold-soft:#f3ead9;
-  --green:#3d7a58; --green-soft:#e5f1ea; --red:#a9503a; --red-soft:#f7e6e0;
+  --green:#3d7a58; --green-soft:#e5f1ea; --red:#a9503a; --red-soft:#f7e6e0; --teal:#2f6f73; --teal-soft:#e2eff0; --teal-2:#7fb3b5;
   --shadow:0 1px 2px rgba(27,33,48,.04),0 10px 30px rgba(27,33,48,.07);
   --radius:20px; --c:var(--navy);
 }
@@ -28,14 +28,14 @@
   :root:not([data-theme="light"]){
     --bg:#0e131b; --surface:#151c27; --surface-2:#1a2230; --ink:#ece7de; --muted:#98a1b1; --line:#283346;
     --navy:#9bbce6; --navy-soft:#1c2a3d; --gold:#d5b37b; --gold-soft:#2a2418;
-    --green:#7cc39a; --green-soft:#16281f; --red:#e39a84; --red-soft:#2d1a16;
+    --green:#7cc39a; --green-soft:#16281f; --red:#e39a84; --red-soft:#2d1a16; --teal:#7fc4c4; --teal-soft:#14292b; --teal-2:#4d8f91;
     --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.35);
   }
 }
 :root[data-theme="dark"]{
   --bg:#0e131b; --surface:#151c27; --surface-2:#1a2230; --ink:#ece7de; --muted:#98a1b1; --line:#283346;
   --navy:#9bbce6; --navy-soft:#1c2a3d; --gold:#d5b37b; --gold-soft:#2a2418;
-  --green:#7cc39a; --green-soft:#16281f; --red:#e39a84; --red-soft:#2d1a16;
+  --green:#7cc39a; --green-soft:#16281f; --red:#e39a84; --red-soft:#2d1a16; --teal:#7fc4c4; --teal-soft:#14292b; --teal-2:#4d8f91;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.35);
 }
 *{box-sizing:border-box}
@@ -282,11 +282,25 @@ body.dragging::after{content:"📄  Suelta aquí tu Informe de Vida Laboral (PDF
 .bar:disabled i{background:repeating-linear-gradient(135deg,var(--line) 0 4px,transparent 4px 8px);opacity:1;height:30%!important}
 .bars-x{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:8px;text-align:center;font-size:11.5px;color:var(--muted)}
 .bars-x .on{color:var(--ink);font-weight:600}
+.bars-x span small{display:block;font-size:10px;color:var(--muted);font-weight:400}
+.bars-x .on small{color:var(--ink)}
+em.afin{display:inline-block;font-style:normal;font-size:9.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--gold);background:var(--gold-soft);padding:1px 6px;border-radius:99px;margin-top:2px}
+.hs-t .pos{color:var(--green)}.hs-t .neg{color:var(--red)}
+#bPhases{margin-top:12px}
+#bSel .hs-p{grid-template-columns:auto minmax(0,1fr) auto}
+#bSel .hs-v{grid-column:2/-1;grid-row:2;flex-wrap:wrap;row-gap:2px}
+#bSel .hs-t{grid-column:3;grid-row:1}
+.b-tabla td,.b-tabla th{white-space:nowrap}
+.b-tabla tr[data-i]{cursor:pointer}
+.b-tabla tr[data-i]:hover td{background:var(--surface-2)}
+.b-tabla tr.sel td{background:var(--navy-soft);font-weight:600}
+.b-tabla tr.off td{color:var(--muted);font-size:12px}
+.b-tabla td.pos{color:var(--green)}.b-tabla td.neg{color:var(--red)}
 .capline{position:absolute;left:0;right:0;border-top:1.5px dashed var(--gold);pointer-events:none;transition:bottom .5s}
 .cap-legend{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--muted);margin-top:12px}
 .cap-legend i{width:22px;border-top:1.5px dashed var(--gold)}
 .capline span{position:absolute;left:0;top:-19px;font-size:10.5px;color:var(--gold);background:var(--surface);padding:0 4px}
-@media (max-width:560px){.bars{gap:4px;height:160px}.bars-x{gap:4px;font-size:10.5px}.bar .v{font-size:9.5px}}
+@media (max-width:560px){.bars{gap:4px;height:160px}.bars-x{gap:4px;font-size:10.5px}.bar .v{font-size:9.5px}.bars-x span small{font-size:8.5px}em.afin{font-size:8px;padding:1px 3px}}
 
 /* detail */
 .detail{padding:24px 26px}
@@ -471,6 +485,50 @@ body.par-empty .pempty{display:block}
 .pr-mes > div:first-child b{display:block;font-size:20px;font-family:Fraunces,Georgia,serif;font-weight:500;color:var(--navy)}
 .pr-mes small{display:block;font-size:11px;color:var(--muted);margin-top:2px}
 @media (max-width:420px){.pr-mes{grid-template-columns:1fr}.pr-sal{grid-template-columns:1fr}}
+/* Plan de pensiones (verde petróleo) */
+.plan-card{padding:24px 26px}
+.plan-card h2{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:20px;margin:0}
+.plan-card .bars-head p{margin:2px 0 0;color:var(--muted);font-size:13px}
+.pl-grid{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:24px;align-items:start;margin-top:14px}
+@media (max-width:1000px){.pl-grid{grid-template-columns:minmax(0,1fr)}}
+.pl-form{border:1px solid var(--line);border-top:4px solid var(--teal);border-radius:16px;padding:14px 16px;background:var(--surface-2)}
+.pl-row{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end;margin-bottom:10px}
+.pl-row .pf label{font-size:12px;font-weight:600;display:block;margin-bottom:5px}
+.pl-row .opt{font-weight:400;color:var(--muted)}
+.pl-del{width:32px;height:32px;border:1px solid var(--line);border-radius:9px;background:var(--surface);cursor:pointer;color:var(--muted);font-size:18px;margin-bottom:6px}
+.pl-acts{margin:0 0 8px}.pl-add{height:36px;font-size:13px;color:var(--teal)}
+.seg.seg4{grid-template-columns:repeat(4,1fr)}
+.seg.seg4 button{padding:8px 4px;font-size:12px}
+@media (max-width:420px){.seg.seg4{grid-template-columns:1fr 1fr}.pl-row{grid-template-columns:1fr}}
+.pl-vacio{padding:18px;border:1px dashed var(--line);border-radius:14px;color:var(--muted);font-size:13.5px}
+.pl-big{border-radius:16px;padding:14px 16px;background:var(--teal-soft);border-left:4px solid var(--teal)}
+.pl-mes{font-family:Fraunces,Georgia,serif;font-size:clamp(28px,4vw,38px);font-weight:500;color:var(--teal);line-height:1.1;margin:4px 0;font-variant-numeric:tabular-nums}
+.pl-mes small{font-size:.42em;color:var(--muted);margin-left:4px}
+.pl-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-top:10px}
+.pl-kpis > div{background:var(--surface);border-radius:10px;padding:8px 10px;border:1px solid var(--line)}
+.pl-kpis span{display:block;font-size:11px;color:var(--muted)}
+.pl-kpis b{font-size:15px;font-variant-numeric:tabular-nums}.pl-kpis b.pos{color:var(--green)}.pl-kpis b.neg{color:var(--red)}
+.pl-kpis small{display:block;font-size:11px;color:var(--muted)}
+.pl-avisos{margin-top:12px;border-radius:12px;padding:8px 12px;background:var(--gold-soft);font-size:13px}
+.pl-avisos p{margin:5px 0}
+.pl-tbl td,.pl-tbl th,.pl-cmp td,.pl-cmp th{text-align:right;white-space:nowrap}
+.pl-tbl td:first-child,.pl-tbl th:first-child,.pl-cmp td:first-child,.pl-cmp th:first-child{text-align:left}
+.pl-tbl tr.up td{background:var(--gold-soft)}
+.pl-cmp tr.sel td{background:var(--teal-soft);font-weight:600}
+.pl-cmp tr.best td:first-child::after{content:" ★";color:var(--teal)}
+.pl-legal{margin-top:16px;background:var(--surface-2)!important}
+.pl-person{margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+.pl-person:first-of-type{border-top:0;padding-top:0}
+.pl-who{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:17px;margin:0;display:flex;align-items:center;gap:8px}
+.pl-who i{width:10px;height:10px;border-radius:50%;background:var(--pc)}
+.plan-chip{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:10px;padding:8px 12px;border-radius:12px;background:var(--teal-soft);border-left:3px solid var(--teal);font-size:13px}
+.plan-chip b{color:var(--teal);font-size:15px;font-variant-numeric:tabular-nums}
+.plan-chip small{color:var(--muted)}
+.plan-chip .linkbtn{color:var(--teal)}
+.bar i.pl{background:var(--teal);opacity:.9;border-radius:6px 6px 0 0;margin-bottom:1px}
+.bar.on i.pl{opacity:1}
+.s-la{background:var(--teal)}.s-lb{background:var(--teal-2)}
+.minibar .mb-plan{color:var(--teal);font-weight:700}
 .extra-note{display:inline-block;margin-top:4px;font-size:12.5px;padding:3px 10px;border-radius:99px;background:var(--gold-soft);color:var(--ink)}
 .hs-mes{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0 10px}
 .hs-mes > div{border-radius:12px;padding:10px 12px;background:var(--surface);border:1px solid var(--line)}
@@ -691,7 +749,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 }
 #report{color:#1b2130;font-family:Inter,system-ui,sans-serif;line-height:1.45;
   --bg:#f5f2ec;--surface:#fffdf9;--surface-2:#f8f4ec;--ink:#1b2130;--muted:#6a7080;--line:#e6dfd2;
-  --navy:#1f3a5f;--navy-soft:#e8eef6;--gold:#a8844d;--gold-soft:#f3ead9;--green:#3d7a58;--green-soft:#e5f1ea;--red:#a9503a;--red-soft:#f7e6e0}
+  --navy:#1f3a5f;--navy-soft:#e8eef6;--gold:#a8844d;--gold-soft:#f3ead9;--green:#3d7a58;--green-soft:#e5f1ea;--red:#a9503a;--red-soft:#f7e6e0;--teal:#2f6f73;--teal-soft:#e2eff0;--teal-2:#7fb3b5}
 #report .pmini,#report .split,#report .split-leg,#report .phases,#report .viu,#report .hchart,#report .hx,#report .hleg{font-size:9pt}
 #report .advice{font-size:9pt}
 #report .hchart{height:150px}
@@ -744,6 +802,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
       <button type="button" data-page="comparar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 17v-5M10 17V6M15 17v-8M20 17v-3"/></svg><span class="t-ind">Comparar opciones</span><span class="t-par">Ingresos del hogar</span></button>
       <button type="button" data-page="desglose"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg><span class="t-ind">Desglose y fechas clave</span><span class="t-par">Desglose de cada uno</span></button>
       <button type="button" data-page="parcial"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v9h9"/></svg><span>Jubilación parcial</span></button>
+      <button type="button" data-page="plan"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 11c0-3.3-3.1-6-7-6S5 7.7 5 11c0 1.9 1 3.6 2.6 4.7V19h2.6v-1.6h3.6V19h2.6v-3.3c.9-.6 1.6-1.4 2-2.3H20v-2.4z"/><path d="M9 9.5h3"/><circle cx="15.5" cy="10.5" r=".6" fill="currentColor"/></svg><span>Plan de pensiones</span></button>
       <div class="sep"></div>
       <button type="button" data-page="requisitos"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v15H6a2 2 0 0 0-2 2z"/><path d="M6 21h14v-3"/><path d="M9 7h7M9 11h5"/></svg><span>Requisitos y normativa</span></button>
       <button type="button" data-page="ayuda"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.2a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.5"/><path d="M12 17h.01"/></svg><span>Ayuda</span></button>
@@ -785,7 +844,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
   </section>
 
 
-  <section class="card empty need-card" data-pg="comparar desglose parcial">
+  <section class="card empty need-card" data-pg="comparar desglose parcial plan">
     <svg class="ill" width="120" height="44" viewBox="0 0 120 44" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 30h108" opacity=".35"/><circle cx="20" cy="30" r="5"/><circle cx="60" cy="30" r="7" fill="currentColor"/><circle cx="100" cy="30" r="5"/></svg>
     <h2><span class="t-ind">Primero, tus datos</span><span class="t-par">Primero, vuestros datos</span></h2>
     <p><span class="t-ind">Esta página se completa en cuanto introduces tu fecha de nacimiento y tus días cotizados (o cargas tu informe oficial en PDF).</span><span class="t-par">Esta página se completa en cuanto rellenáis la fecha de nacimiento y los días cotizados de los dos.</span></p>
@@ -917,6 +976,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
             <div class="label">Pensión bruta mensual · 14 pagas</div>
             <div class="big-money" id="oMoney"></div>
             <div class="meta" id="oMoneySub"></div>
+            <div class="plan-chip" id="oPlan" hidden></div>
             <div id="oDelta"></div>
           </div>
         </div>
@@ -950,6 +1010,11 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
         <div class="bars" id="bars"></div>
         <div class="bars-x" id="barsX"></div>
         <div class="cap-legend" id="capLegend"></div>
+        <div class="hsel" id="bSel" aria-live="polite"></div>
+        <div class="phases" id="bPhases"></div>
+        <div class="label" style="margin:16px 0 6px">Todas las opciones</div>
+        <div class="scroll-x"><table class="tbl b-tabla" id="bTabla"></table></div>
+        <p class="hint" style="margin-top:8px">«Hasta los 85» y el punto de equilibrio se calculan en euros de hoy, con la pensión de cada opción (14 pagas al año). Toca una fila o una barra para seleccionar esa opción.</p>
       </section>
 
       <section class="card detail needs-data" id="detail" data-pg="desglose"></section>
@@ -963,6 +1028,11 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
       <section class="card parcial-card needs-data ss-only" id="parcial" data-pg="parcial">
         <div class="bars-head"><div><h2>Jubilación parcial</h2><p>Reduce tu jornada y cobra a la vez una parte de tu pensión hasta jubilarte del todo (art. 215 LGSS).</p></div></div>
         <div id="parcialBody"></div>
+      </section>
+      <section class="card plan-card needs-data" id="planInd" data-pg="plan">
+        <div class="bars-head"><div><h2>Plan de pensiones</h2><p>Cuánto te aportaría tu plan cada mes y cómo rescatarlo pagando el menor IRPF posible (escalas de Andalucía, 2026). Se calcula para la fecha de jubilación que elijas en «Mi simulación».</p></div></div>
+        <div id="planIndBody"></div>
+        <div class="tip pl-legal">⚖️ <b>Simulación orientativa, no es asesoramiento fiscal.</b> Usa las escalas del IRPF de 2026 (Estado + Andalucía), los 2.000 € de gastos y el mínimo personal, y supone que no tienes otros ingresos, mínimos familiares ni deducciones. Antes de pedir el rescate, confírmalo con tu gestora (importe con derecho al 40 %) y con un asesor fiscal. Más detalles en <a href="#ayuda" class="js-help-plan" style="color:var(--navy)">Ayuda › Plan de pensiones</a>.</div>
       </section>
 
     </main>
@@ -1021,6 +1091,7 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
           <button data-tab="uso" class="on" role="tab">Cómo usarla</button>
           <button data-tab="datos" role="tab">Datos que necesitas</button>
           <button data-tab="instalar" role="tab">Instalar y actualizar</button>
+          <button data-tab="plan" role="tab">Plan de pensiones</button>
           <button data-tab="fuentes" role="tab">Fuentes oficiales</button>
           <button data-tab="versiones" role="tab">Versiones</button>
         </div>
@@ -1187,6 +1258,50 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
           <p>Cuando haya mejoras verás un aviso <b>«Ha habido cambios»</b> con el botón <b>«Actualizar»</b>. Púlsalo y tendrás la última versión al instante, sin reinstalar nada. Después te mostraremos qué ha cambiado.</p>
         </div>
 
+        <div class="tab-panel" data-panel="plan" hidden>
+          <p>En la página <b>«Plan de pensiones»</b> puedes añadir tu plan (o hasta 3) y ver <b>cuánto te aportaría cada mes</b> y <b>cómo rescatarlo pagando el menor IRPF posible</b>. El resultado aparece en <b style="color:var(--teal)">verde petróleo</b> junto a tu pensión, en el gráfico «Comparar opciones» y, en pareja, en «Ingresos del hogar».</p>
+          <h3>Qué datos necesitas</h3>
+          <ul>
+            <li><b>Valor del plan al jubilarte</b>: los «derechos consolidados» que tendrás entonces. Tu gestora te da el valor actual; si aún faltan años, pon una estimación.</li>
+            <li><b>Parte con derecho a la reducción del 40 %</b>: lo que corresponde a <b>aportaciones hechas hasta el 31/12/2006</b>. Pídelo a tu gestora: es ella quien lo certifica (a veces incluye la rentabilidad que se le atribuye).</li>
+            <li>Si tienes <b>varios planes</b>, añade cada uno con su parte anterior a 2007.</li>
+          </ul>
+          <h3>Cómo tributa el rescate</h3>
+          <ul>
+            <li>Todo lo que cobras del plan (lo aportado y lo ganado) es <b>rendimiento del trabajo</b>, como un sueldo (art. 17.2.a.3.º de la Ley del IRPF). Se suma a tu pensión de ese año y tributa por la <b>escala general</b>, por tramos.</li>
+            <li>Por eso <b>sacarlo todo de golpe</b> suele salir caro: los euros que pasan a un tramo más alto pagan más. En Andalucía, en 2026, los tipos marginales (Estado + comunidad) son: hasta 12.450 € de base, 19 %; hasta 20.200 €, 24 % aprox.; hasta 35.200 €, 30 % aprox.; hasta 60.000 €, <b>37 %</b>; hasta 300.000 €, <b>45 %</b>; y más, 47 %.</li>
+            <li><b>Reducción del 40 %</b> (disposición transitoria 12.ª): solo para la parte aportada <b>hasta 2006</b>, si la cobras <b>en forma de capital</b> (de una vez) en el <b>año de tu jubilación o en los dos siguientes</b>. Tributa solo el 60 % de esa parte.</li>
+            <li>Se aplica <b>una sola vez por plan</b> (consulta V1546-25). Si tienes <b>varios planes</b>, desde 2023 Hacienda permite cobrar cada uno <b>en un año distinto</b> dentro del plazo, y cada uno conserva su 40 % (consultas V1823-23 y V0710-26, de marzo de 2026).</li>
+            <li>Lo aportado <b>desde 2007</b> tributa entero, sin reducción, pero puedes cobrarlo cuando quieras: en rentas o en pagos sueltos repartidos en varios años. Repartirlo es lo que evita saltar de tramo.</li>
+          </ul>
+          <h3>Las cuatro estrategias</h3>
+          <ul>
+            <li><b>Óptima ★</b>: cobra en capital lo aportado hasta 2006 en el mejor año del plazo (con varios planes, prueba todas las combinaciones de años) y reparte lo demás «rellenando» cada año hasta el final del tramo de tu pensión, sin saltar al siguiente (como mucho, en 15 años). Con el deslizador <b>«Años para cobrarlo»</b> puedes fijar tú los años (de 1 a 25): la app busca el reparto que menos IRPF paga en esos años, «nivelando» lo aportado desde 2007 para que cada año tribute lo mismo. Te avisa si con más años pagarías menos o si ya estás en el mínimo y más años solo reparten el dinero.</li>
+            <li><b>Todo de golpe</b>: todo en capital el año de la jubilación (con el 40 % en lo que corresponda).</li>
+            <li><b>En rentas</b>: la misma cantidad cada año durante los años que elijas (de 2 a 25). En renta <b>se pierde el 40 %</b>.</li>
+            <li><b>A tu medida</b>: eliges cuánto sacar cada año de lo aportado desde 2007 y en qué año cobrar la parte anterior a 2007. La app te avisa si <b>cambias de tramo</b>.</li>
+          </ul>
+          <h3>Cómo se calcula</h3>
+          <p>Para cada año: <b>IRPF del rescate</b> = impuesto con pensión + rescate − impuesto con solo la pensión. El impuesto se calcula como en la declaración: base = ingresos − 2.000 € de «otros gastos» (art. 19.2.f); se aplican las escalas estatal y andaluza a esa base y se resta lo que corresponde al <b>mínimo personal</b> (5.550 €; 6.700 € desde los 65 años; 8.100 € desde los 75). «Tributa» = rescate − 40 % de la parte anterior a 2007 cobrada en capital. El <b>neto</b> es el rescate menos ese IRPF, y el importe «al mes» es la media: neto total ÷ (años × 12).</p>
+          <h3>Supuestos y límites</h3>
+          <ul>
+            <li>Tu pensión es la de la fecha elegida en «Mi simulación» y se usa la misma todos los años (como si la escala del IRPF subiera al ritmo de las pensiones). El año de la jubilación se trata como un año completo de pensión, aunque ese año también cobres parte de tu sueldo.</li>
+            <li>No se tienen en cuenta otros ingresos, mínimos por descendientes o ascendientes, discapacidad, deducciones autonómicas, la declaración conjunta ni la reducción por rentas del trabajo bajas (art. 20). Solo escalas de <b>Andalucía</b>.</li>
+            <li>La <b>retención</b> que te aplique la gestora al pagar no es el impuesto final: se ajusta en la declaración de la renta.</li>
+            <li>Las escalas, el mínimo personal y los gastos se revisan cada año; la app usa los de <b>2026</b>.</li>
+          </ul>
+          <div class="tip" style="background:var(--gold-soft)">⚠️ <b>Simulación orientativa, no es asesoramiento fiscal.</b> La app no conoce toda tu situación. Antes de pedir el rescate, confirma con tu <b>gestora</b> el importe con derecho al 40 % y los plazos, y consulta con un <b>asesor fiscal</b>.</div>
+          <h3>Fuentes</h3>
+          <ul class="src">
+            <li><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764" target="_blank" rel="noopener">Ley 35/2006 del IRPF (BOE)</a><small>Art. 17.2.a.3.º (el rescate es rendimiento del trabajo), art. 19.2.f (2.000 € de otros gastos), arts. 57-58 (mínimo personal) y disposición transitoria 12.ª (reducción del 40 %).</small></li>
+            <li><a href="https://petete.tributos.hacienda.gob.es/consultas/" target="_blank" rel="noopener">Dirección General de Tributos · consultas vinculantes</a><small>V1823-23 y V0710-26 (30/03/2026): con varios planes, cada uno puede cobrarse en capital en un año distinto dentro del plazo. V1546-25 (27/08/2025): el 40 % se aplica una sola vez por plan.</small></li>
+            <li><a href="https://www.iberley.es/noticias/la-dgt-limita-reduccion-40-planes-pensiones-36929" target="_blank" rel="noopener">Iberley · consulta V0710-26</a><small>Resumen del criterio vigente para varios planes.</small></li>
+            <li><a href="https://www.iberley.es/noticias/la-dgt-rechaza-que-pueda-aplicarse-reduccion-40-varios-rescates-parciales-un-mismo-plan-pensiones-distintos-anos-35897" target="_blank" rel="noopener">Iberley · consulta V1546-25</a><small>Una sola reducción por plan y contingencia.</small></li>
+            <li><a href="https://guiafiscal.es/irpf/tramos-irpf-2026/" target="_blank" rel="noopener">Escala estatal del IRPF 2026</a><small>Tramos y tipos estatales y mínimos personales.</small></li>
+            <li><a href="https://taxdown.es/irpf/tramos-tablas-andalucia" target="_blank" rel="noopener">Escala autonómica de Andalucía</a><small>Tramos y tipos de la parte andaluza del IRPF.</small></li>
+          </ul>
+        </div>
+
         <div class="tab-panel" data-panel="fuentes" hidden>
           <p>El cálculo sigue la normativa y los criterios publicados por la Seguridad Social:</p>
           <ul class="src">
@@ -1256,8 +1371,14 @@ dialog.news::backdrop{background:rgba(14,19,27,.45);backdrop-filter:blur(3px);-w
 /* ---------- Versión ----------
    Al desplegar: sube APP_VERSION (formato 01.00 → 01.01 cambios menores, 02.00 cambios grandes),
    añade la entrada arriba del todo en CHANGES, y actualiza version.json y CHANGELOG.md con la misma versión. */
-const APP_VERSION = '04.06';
+const APP_VERSION = '04.07';
 const CHANGES = [
+  {v:'04.07', date:'2026-09-30', items:[
+    'Nuevo: página «Plan de pensiones» (también en pareja). Indica el valor de tu plan y la parte aportada hasta 2006, y verás cuánto te aportaría cada mes y cómo rescatarlo pagando el menor IRPF posible, con las escalas de Andalucía de 2026.',
+    'Cuatro estrategias: óptima (con los años que tú elijas), todo de golpe, en rentas o a tu medida, con avisos cuando cambias de tramo del IRPF y del plazo para la reducción del 40 %. El plan aparece en verde petróleo junto a tu pensión, en los gráficos y en el informe.',
+    '«Comparar opciones» es ahora mucho más completo: fechas de cada opción (y cuál has afinado mes a mes), detalle al tocar una barra con el mes normal y los meses con paga extra, cobrado hasta los 85, punto de equilibrio frente a la ordinaria y una tabla con todas las opciones.',
+    'Nueva sección «Plan de pensiones» en la Ayuda, con la legislación, cómo se calcula y las fuentes. Es una simulación orientativa: no sustituye al asesoramiento fiscal.'
+  ]},
   {v:'04.06', date:'2026-09-29', items:[
     'Nuevo botón «Guardar informe»: guarda el PDF con el nombre NOMBRE_APELLIDOS_FECHA_HORA.pdf y, en Chrome y Edge, te deja elegir la carpeta. Ideal si atiendes a varias personas. Idea de Paco y Fonsi (RRHH).',
     'Nuevo botón «Abrir un informe guardado» (o arrastra el PDF a la ventana): la simulación vuelve tal cual, en individual o en pareja, para cambiar solo lo necesario y guardarla de nuevo.',
@@ -1712,6 +1833,8 @@ function select(i, fromUser=true){
   document.querySelectorAll('#bars .bar').forEach((b,k)=>b.classList.toggle('on',k===i));
   document.querySelectorAll('#barsX span').forEach((b,k)=>b.classList.toggle('on',k===i));
   renderDetail(s);
+  pintaPlanInd();
+  renderCompare(i);
   updMini();
 }
 
@@ -1972,22 +2095,87 @@ function movePin(s){
 function buildBars(){
   const mode = S.barMode, net = S.netMode==='neto', f = net ? 1-S.irpf : 1;
   const val = s => !s.ok ? 0 : (mode==='mes' ? s.total : s.to85)*f;
+  // Plan de pensiones (verde petróleo): al mes = media mensual del rescate; hasta los 85 = total en euros de hoy
+  const planV = s => { if(!s.ok) return 0; const R = planInd(s); if(!R) return 0; const x = net ? R.neto : R.total;
+    return mode==='mes' ? x/(R.anos*12) : x/Math.pow(1.02, Math.max(0, R.Y0 - TODAY.getUTCFullYear())); };
   $('#irpfChip').innerHTML = net ? `Neto · retención IRPF ${pct(S.irpf*100)}` : 'Importes brutos · 14 pagas';
   $('#irpfChip').style.background = net ? '' : 'var(--navy-soft)'; $('#irpfChip').style.color = net ? '' : 'var(--navy)';
-  $('#barsSub').textContent = mode==='mes' ? 'Pensión mensual · toca una barra para seleccionarla' : 'Total cobrado hasta los 85 años, en euros de hoy';
-  const mx = Math.max(...scen.map(val),1)*1.1;
+  $('#barsSub').textContent = mode==='mes' ? 'Pensión mensual · toca una barra para ver su detalle y seleccionarla' : 'Total cobrado hasta los 85 años, en euros de hoy · toca una barra para ver su detalle';
+  const mx = Math.max(...scen.map(s=>val(s)+planV(s)),1)*1.1;
   let h = '';
   scen.forEach((s,i)=>{
-    const v = val(s), c = TYPES[s.type]||TYPES.Ordinaria;
+    const v = val(s), pv2 = planV(s), c = TYPES[s.type]||TYPES.Ordinaria;
     h += `<button class="bar" data-i="${i}" style="--bc:${c}" ${s.disabled?'disabled':''} aria-label="${STOPS[i].lab}: ${s.ok?(mode==='mes'?eur(v):eur0(v)):'no disponible'}">
-      <span class="v">${s.ok?(mode==='mes'?eur0(v):(v/1000).toLocaleString('es-ES',{maximumFractionDigits:0})+' mil €'):'—'}</span>
-      <i style="height:${v/mx*100}%"></i></button>`;
+      <span class="v">${s.ok?(mode==='mes'?eur0(v+pv2):((v+pv2)/1000).toLocaleString('es-ES',{maximumFractionDigits:0})+' mil €'):'—'}</span>
+      ${pv2 ? `<i class="pl" style="height:${pv2/mx*100}%" title="Plan de pensiones: ${eur0(pv2)}"></i>` : ''}<i style="height:${v/mx*100}%"></i></button>`;
   });
   if(mode==='mes' && scen[1].ok && scen[1].mp){ h += `<div class="capline" style="bottom:${scen[1].mp*f/mx*100}%"></div>`; }
-  $('#capLegend').innerHTML = mode==='mes' && scen[1].ok ? `<i></i>Pensión máxima ${scen[1].Y}${net?' neta':''}: ${eur(scen[1].mp*f)}` : '';
+  $('#capLegend').innerHTML = (mode==='mes' && scen[1].ok ? `<i></i>Pensión máxima ${scen[1].Y}${net?' neta':''}: ${eur(scen[1].mp*f)}` : '') + (hayPlan(PLAN_IND) ? `<span class="pl-leg"><b style="display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--teal);vertical-align:-1px"></b> Plan de pensiones ${mode==='mes' ? '(media mensual del rescate, '+(net?'neta':'bruta')+')' : '(total, en euros de hoy)'}</span>` : '');
   $('#bars').innerHTML = h;
-  $('#barsX').innerHTML = STOPS.map(st=>`<span>${st.lab}</span>`).join('');
-  document.querySelectorAll('#bars .bar').forEach(b=>b.onclick=()=>select(+b.dataset.i));
+  $('#barsX').innerHTML = STOPS.map((st,i)=>{ const x = scen[i], af = afinada(i);
+    return `<span>${st.lab}<small>${x && x.ok ? fMY(x.D) : '—'}</small>${af ? '<em class="afin" title="Fecha afinada mes a mes en «Mi simulación»">afinada</em>' : ''}</span>`; }).join('');
+  document.querySelectorAll('#bars .bar').forEach(b=>{ b.onclick = ()=>select(+b.dataset.i);
+    b.onpointerenter = e=>{ if(e.pointerType==='mouse') renderCompare(+b.dataset.i); }; });
+  $('#bars').onpointerleave = e=>{ if(e.pointerType==='mouse') renderCompare(S.sc); };
+  renderCompare(S.sc);
+}
+
+// ¿Esta parada está afinada mes a mes en «Mi simulación»?
+const afinada = i => i===0 ? !!(S.antK && ANT && ANT.K) : (i===S.sc && i>=1 && i<=5 && (S.demK||0) > 0);
+// Punto de equilibrio entre una opción y la ordinaria (en euros de hoy, 14 pagas): edad a la que el total cobrado se iguala
+function equilibrio(s, o){
+  if(!s.ok || !o.ok || Math.abs(s.hoy - o.hoy) < 0.5) return null;
+  const Ds = yf(TODAY, s.D), Do = yf(TODAY, o.D), t = (o.hoy*Do - s.hoy*Ds)/(o.hoy - s.hoy);
+  if(!(t > Math.max(Ds, Do))) return null;
+  const edad = yf(S.birth, TODAY) + t; return {edad, anio: TODAY.getUTCFullYear() + Math.floor(t + TODAY.getUTCMonth()/12), antes: Ds < Do};
+}
+// Detalle de una opción del gráfico «Comparar opciones» (como el de «Ingresos del hogar» del modo pareja)
+function renderCompare(i){
+  const box = $('#bSel'); if(!box || !scen.length || !scen[i]) return;
+  const s = scen[i], ord = REF || scen[1], net = S.netMode==='neto', f = net ? 1 - S.irpf : 1, bn = net ? 'netos' : 'brutos';
+  document.querySelectorAll('#bTabla tr[data-i]').forEach(tr=>tr.classList.toggle('sel', +tr.dataset.i===S.sc));
+  if(!s.ok){ box.innerHTML = `<div class="hs-h"><span class="yr">${STOPS[i].lab}</span><span>${s.reason || 'Esta opción no está disponible'}</span></div>`; $('#bPhases').innerHTML = ''; return; }
+  const R = planInd(s), extraM = S.reg==='cp' ? 11 : 10, Y1 = s.D.getUTCFullYear() + 1;
+  const pY = R ? R.ys.find(r=>r.y===Y1) : null, plMes = pY ? (net ? pY.neto : pY.bruto)/12 : 0;
+  const meses = Array.from({length:12}, (_,m)=>({pa: s.total*f*(m===5 || m===extraM ? 2 : 1), la: plMes}));
+  meses.forEach((r,m)=>{ r.t = r.pa + r.la; r.ex = m===5 || m===extraM; });
+  const mx = Math.max(...meses.map(r=>r.t), 1), hh = x => (x/mx*100).toFixed(1)+'%';
+  const tira = meses.map((r,m)=>`<div class="hm${r.ex ? ' ex' : ''}" title="${MES3[m]} ${Y1}: ${eur0(r.t)}"><span class="hm-v">${r.ex ? eur0(r.t) : ''}</span><div class="hm-c"><div class="hm-b" style="height:${hh(r.t)}">${['pa','la'].map(q=>`<i class="s-${q}" style="height:${r.t ? (r[q]/r.t*100).toFixed(1) : 0}%"></i>`).join('')}</div></div><span class="hm-l">${MES3[m]}</span>${r.ex ? '<span class="hm-x">extra</span>' : ''}</div>`).join('');
+  const refPura = k => k===1 && !(S.sc===1 && S.demK), d = (s.total - ord.total)*f, dp = ord.total ? (s.total/ord.total - 1)*100 : 0, esRef = refPura(i);
+  const det = s.type==='Anticipada' ? `${plural(s.months,'mes','meses')} de adelanto · coeficiente reductor −${pct(s.coef)} para toda la vida`
+    : s.type==='Voluntaria' ? `${plural(s.months,'mes','meses')} antes de la forzosa · sin coeficientes reductores`
+    : s.demM ? `${plural(s.demM,'mes','meses')} de demora · +${s.pctDem} % por demora` : 'A tu edad ordinaria';
+  const tope = s.capped ? ` · limitada por la pensión máxima de ${s.Y}` : '';
+  box.innerHTML = `<div class="hs-h"><span class="yr">${s.type}</span><span><b>${fDate(s.D)}</b> · a los ${fAge(s.age)}${afinada(i) ? ' · <em class="afin">afinada mes a mes</em>' : ''}</span></div>
+    <div class="hs-p" data-p="A" style="--pc:${TYPES[s.type] || 'var(--navy)'}"><i></i><div><b>Pensión ${bn}</b><small>${det}${tope}</small></div>
+      <div class="hs-v"><span><b>${eur(s.total*f)}/mes</b> <small>14 pagas</small></span><span><b>${eur0(s.total*14*f)}</b> <small>al año</small></span>${net ? '' : `<span>neta aprox. <b>${eur(s.neto)}</b>/mes</span>`}</div>
+      <b class="hs-t">${esRef ? '<small>Referencia</small>' : `<span class="${d >= 0 ? 'pos' : 'neg'}">${d >= 0 ? '+' : '−'}${eur0(Math.abs(d))}/mes</span><small>${d >= 0 ? '+' : '−'}${Math.abs(dp).toFixed(1).replace('.',',')} % frente a la ordinaria</small>`}</b></div>
+    ${R ? `<div class="hs-p" data-p="A" style="--pc:var(--teal)"><i></i><div><b style="color:var(--teal)">Plan de pensiones</b><small>${MODOS_PLAN[PLAN_IND.modo].toLowerCase()} · ${R.anos===1 ? R.Y0 : R.Y0+'–'+(R.Y0+R.anos-1)}</small></div>
+      <div class="hs-v"><span><b style="color:var(--teal)">${eur((net ? R.neto : R.total)/(R.anos*12))}/mes</b> <small>de media, ${net ? 'neto' : 'bruto'}</small></span><span>IRPF del rescate <b>${eur0(R.irpf)}</b></span></div><b class="hs-t"></b></div>` : ''}
+    <div class="hs-mes">
+      <div class="hs-norm"><span>Un mes normal en ${Y1} (sin paga extra)</span><b>${eur0(meses[0].t)}</b><small>Pensión ${eur0(meses[0].pa)}${plMes ? ' + plan '+eur0(plMes) : ''}</small></div>
+      <div class="hs-ext"><span>Meses con paga extra</span><b>jun: ${eur0(meses[5].t)}</b><b>${MES3[extraM]}: ${eur0(meses[extraM].t)}</b><small>La pensión se cobra en 14 pagas: extras en junio y ${S.reg==='cp' ? 'diciembre' : 'noviembre'}${plMes ? '; el plan, repartido en 12 meses' : ''}</small></div>
+    </div>
+    <div class="hmeses" aria-label="Ingresos mes a mes en ${Y1}">${tira}</div>`;
+  // Etapas
+  const eq = esRef ? null : equilibrio(s, ord), hoyF = f;
+  const planHoy = X => X ? (net ? X.neto : X.total)/Math.pow(1.02, Math.max(0, X.Y0 - TODAY.getUTCFullYear())) : 0;
+  const t85 = s.to85*hoyF + planHoy(R), o85 = ord.to85*hoyF + planHoy(planInd(ord));
+  const eqTxt = esRef ? '<b>—</b><small>Es la opción de referencia</small>'
+    : !eq ? `<b>${s.hoy >= ord.hoy ? 'Siempre por delante' : 'Nunca'}</b><small>${s.hoy >= ord.hoy ? 'Cobras más al mes y desde antes o a la vez' : 'Cobras menos al mes y no empiezas antes'}</small>`
+    : eq.edad > 100 ? `<b>Después de los 100</b><small>${eq.antes ? 'La ordinaria no te alcanzaría en la práctica' : 'No recuperarías lo que dejas de cobrar'}</small>`
+    : eq.antes ? `<b>A los ${Math.floor(eq.edad)} años</b><small>(${eq.anio}) La ordinaria te alcanza: si vives más, habrías cobrado más con ella</small>`
+    : `<b>A los ${Math.floor(eq.edad)} años</b><small>(${eq.anio}) Recuperas lo que dejas de cobrar por esperar; a partir de ahí, ganas</small>`;
+  $('#bPhases').innerHTML = `<div><span>Empiezas a cobrar</span><b>${fShort(s.D)}</b><small>A los ${fAgeShort(s.age)}</small></div>
+    <div><span>Cobrado hasta los 85 (${bn}, € de hoy)</span><b>${eur0(t85)}</b><small>${esRef ? 'Referencia' : (t85 - o85 >= 0 ? '+' : '−') + eur0(Math.abs(t85 - o85)) + ' frente a la ordinaria'}${R && !esRef ? ' · con el plan en las dos' : ''}</small></div>
+    <div><span>Punto de equilibrio frente a la ordinaria</span>${eqTxt}</div>`;
+  // Tabla de todas las opciones
+  const pl = R !== undefined && hayPlan(PLAN_IND);
+  $('#bTabla').innerHTML = `<tr><th>Opción</th><th>Fecha</th><th>Edad</th><th>€/mes ${net ? 'netos' : 'brutos'}</th><th>Frente a la ordinaria</th><th>Hasta los 85</th>${pl ? '<th>Plan €/mes</th>' : ''}</tr>` +
+    scen.map((x,k)=>{ if(!x.ok) return `<tr class="off"><td>${STOPS[k].lab}</td><td colspan="${pl ? 6 : 5}">${x.reason || 'No disponible'}</td></tr>`;
+      const dd = (x.total - ord.total)*f, Rk = pl ? planInd(x) : null;
+      return `<tr data-i="${k}" class="${k===S.sc ? 'sel' : ''}"><td>${STOPS[k].lab}${afinada(k) ? ' <em class="afin">afinada</em>' : ''}</td><td>${fShort(x.D)}</td><td>${fAgeShort(x.age)}</td><td><b>${eur0(x.total*f)}</b></td><td class="${refPura(k) ? '' : dd >= 0 ? 'pos' : 'neg'}">${refPura(k) ? 'Referencia' : (dd >= 0 ? '+' : '−') + eur0(Math.abs(dd))}</td><td>${eur0(x.to85*f)}</td>${pl ? `<td style="color:var(--teal)">${Rk ? '+'+eur0((net ? Rk.neto : Rk.total)/(Rk.anos*12)) : '—'}</td>` : ''}</tr>`; }).join('');
+  document.querySelectorAll('#bTabla tr[data-i]').forEach(tr=>tr.onclick = ()=>select(+tr.dataset.i));
 }
 
 /* ---------- Desglose ---------- */
@@ -2091,8 +2279,8 @@ const IDS = ['fNac','fDias','fBase','fBR','rHijos','rIrpf'];
 // IND_FUENTE = 'sim' si los datos vienen de una simulación oficial: una vida laboral posterior de la misma
 // persona no los sustituye (la simulación ya lo trae todo y sus días incluyen la bonificación por hijos).
 let IND_FUENTE = '';
-function snapshot(){ const o={fNombre:$('#fNombre').value.trim().slice(0,60),fuente:IND_FUENTE,reg:IND_REG,tipo:IND_TIPO,cp:JSON.parse(JSON.stringify(IND_CP)),brMode:S.brMode,early:S.early,antK:S.antK,demK:S.demK||0,sc:S.sc,barMode:S.barMode,netMode:S.netMode,fCont:$('#fCont').checked,fBrecha:$('#fBrecha').checked,fSubs:$('#fSubs').checked,fDT34:$('#fDT34').checked}; IDS.forEach(i=>o[i]=$('#'+i).value); return o; }
-const dataKey = o => JSON.stringify([o.fNombre||'',o.fNac,o.fDias,o.fBase,o.fBR,o.rHijos,o.rIrpf,o.fCont,o.fBrecha,!!o.fSubs,!!o.fDT34,o.brMode,o.early||'vol',o.reg||'ss',o.reg==='cp' ? JSON.stringify(o.cp) : '',o.tipo||'lab']);
+function snapshot(){ const o={plan:cleanPlan(PLAN_IND),fNombre:$('#fNombre').value.trim().slice(0,60),fuente:IND_FUENTE,reg:IND_REG,tipo:IND_TIPO,cp:JSON.parse(JSON.stringify(IND_CP)),brMode:S.brMode,early:S.early,antK:S.antK,demK:S.demK||0,sc:S.sc,barMode:S.barMode,netMode:S.netMode,fCont:$('#fCont').checked,fBrecha:$('#fBrecha').checked,fSubs:$('#fSubs').checked,fDT34:$('#fDT34').checked}; IDS.forEach(i=>o[i]=$('#'+i).value); return o; }
+const dataKey = o => JSON.stringify([JSON.stringify(cleanPlan(o.plan)),o.fNombre||'',o.fNac,o.fDias,o.fBase,o.fBR,o.rHijos,o.rIrpf,o.fCont,o.fBrecha,!!o.fSubs,!!o.fDT34,o.brMode,o.early||'vol',o.reg||'ss',o.reg==='cp' ? JSON.stringify(o.cp) : '',o.tipo||'lab']);
 function getSaved(){ try{ return JSON.parse(localStorage.getItem(KEY)||'null'); }catch(e){ return null; } }
 // Borrador de la pestaña (sessionStorage, se borra al cerrarla): Safari en iPhone a veces recarga la página
 // (al cambiar de página, volver a la pestaña o liberar memoria); así se recupera lo que había en pantalla
@@ -2100,7 +2288,7 @@ function getSaved(){ try{ return JSON.parse(localStorage.getItem(KEY)||'null'); 
 const WKEY = 'simJubBorrador', WPKEY = 'simJubBorradorPareja';
 const ssSet = (k,v) => { try{ sessionStorage.setItem(k,v); }catch(e){} };
 const ssJSON = k => { try{ return JSON.parse(sessionStorage.getItem(k)||'null'); }catch(e){ return null; } };
-function apply(o){ IND_FUENTE = o.fuente==='sim' ? 'sim' : ''; $('#fNombre').value = typeof o.fNombre==='string' ? o.fNombre.slice(0,60) : ''; IDS.forEach(i=>{ $('#'+i).value = o[i]!=null ? o[i] : ''; }); IND_CP = cleanCP(o.cp); setReg(o.reg); setTipo(o.tipo); drawCPInd(); $('#fCont').checked=!!o.fCont; $('#fBrecha').checked=!!o.fBrecha; $('#fSubs').checked=!!o.fSubs; $('#fDT34').checked=!!o.fDT34; S.brMode=o.brMode||'est'; setEarly(o.early||'vol'); S.antK = Number.isInteger(o.antK) && o.antK>0 ? o.antK : null; S.demK = Number.isInteger(o.demK) && o.demK>0 && o.demK<12 ? o.demK : 0; S.sc=o.sc!=null&&o.sc!==''?+o.sc:1; S.barMode=o.barMode||'mes'; S.netMode=o.netMode||'bruto'; setMode(S.brMode); setBarMode(S.barMode); setNetMode(S.netMode); }
+function apply(o){ PLAN_IND = cleanPlan(o.plan); IND_FUENTE = o.fuente==='sim' ? 'sim' : ''; $('#fNombre').value = typeof o.fNombre==='string' ? o.fNombre.slice(0,60) : ''; IDS.forEach(i=>{ $('#'+i).value = o[i]!=null ? o[i] : ''; }); IND_CP = cleanCP(o.cp); setReg(o.reg); setTipo(o.tipo); drawCPInd(); $('#fCont').checked=!!o.fCont; $('#fBrecha').checked=!!o.fBrecha; $('#fSubs').checked=!!o.fSubs; $('#fDT34').checked=!!o.fDT34; S.brMode=o.brMode||'est'; setEarly(o.early||'vol'); S.antK = Number.isInteger(o.antK) && o.antK>0 ? o.antK : null; S.demK = Number.isInteger(o.demK) && o.demK>0 && o.demK<12 ? o.demK : 0; S.sc=o.sc!=null&&o.sc!==''?+o.sc:1; S.barMode=o.barMode||'mes'; S.netMode=o.netMode||'bruto'; setMode(S.brMode); setBarMode(S.barMode); setNetMode(S.netMode); }
 function updateSaveState(){
   const saved = getSaved(), same = saved && dataKey(saved)===dataKey(snapshot());
   const b = $('#btnSave'); b.classList.toggle('saved', !!same); b.classList.toggle('primary', !same);
@@ -2205,9 +2393,9 @@ document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) checkUp
 
 // Navegación por páginas (04.00): cada página es un hash (#sim, #comparar…). Todas las secciones siguen en el
 // DOM y cada una dice en data-pg en qué página(s) aparece; showPage() solo muestra las de la página activa.
-const PAGES = {inicio:'Inicio', sim:'Mi simulación', comparar:'Comparar opciones', desglose:'Desglose y fechas clave', parcial:'Jubilación parcial', requisitos:'Requisitos y normativa', ayuda:'Ayuda'};
+const PAGES = {inicio:'Inicio', sim:'Mi simulación', comparar:'Comparar opciones', desglose:'Desglose y fechas clave', parcial:'Jubilación parcial', plan:'Plan de pensiones', requisitos:'Requisitos y normativa', ayuda:'Ayuda'};
 const PAGES_PAR = {sim:'Nuestra simulación', comparar:'Ingresos del hogar', desglose:'Desglose de cada uno'};
-const NEED = ['comparar','desglose','parcial'];
+const NEED = ['comparar','desglose','parcial','plan'];
 const isPar = () => document.body.classList.contains('par');
 const noData = () => document.body.classList.contains(isPar() ? 'par-empty' : 'is-empty');
 const pageTitle = pg => (isPar() && PAGES_PAR[pg]) || PAGES[pg];
@@ -2254,11 +2442,222 @@ function updMini(){
   } else {
     const s = scen[S.sc];
     if(s && !document.body.classList.contains('is-empty')) h = `<span class="mb-pill">${s.type}</span><b>${fShort(s.D)}</b><span class="mb-s mb-age">${s.age ? fAgeShort(s.age) : ''}</span>`
-      + (s.ok ? `<span class="mb-m">${eur(s.total)}/mes</span>${document.body.classList.contains('base-def') ? '<span class="mb-warn" title="Calculado con la base de cotización máxima">⚠️ base máx.</span>' : ''}<span class="mb-r">neto aprox. ${eur(s.neto)}</span>` : '<span class="mb-m">—</span>');
+      + (s.ok ? `<span class="mb-m">${eur(s.total)}/mes</span>${(()=>{ const R = planInd(s); return R ? `<span class="mb-plan" title="Media neta de tu plan de pensiones">+${eur0(R.mes)} plan</span>` : ''; })()}${document.body.classList.contains('base-def') ? '<span class="mb-warn" title="Calculado con la base de cotización máxima">⚠️ base máx.</span>' : ''}<span class="mb-r">neto aprox. ${eur(s.neto)}</span>` : '<span class="mb-m">—</span>');
   }
   $('#minibar').innerHTML = h;
 }
 $('#minibar').onclick = () => { if(PAGE!=='sim') return go('sim'); $(MODE==='par' ? '#pPlan' : '#mainCard').scrollIntoView({behavior:'smooth', block:'start'}); };
+
+/* ---------- Plan de pensiones: rescate y su IRPF (Andalucía, escalas 2026) ----------
+   · El rescate tributa como rendimiento del trabajo (art. 17.2.a.3.º LIRPF) y se suma a la pensión de ese año.
+   · Reducción del 40 % (DT 12.ª LIRPF) solo para la parte de aportaciones hasta el 31-12-2006 cobrada en forma de
+     capital, en el año de la jubilación o en los dos siguientes; una sola vez por plan (DGT V1546-25) y, con varios
+     planes, cada uno en el año que se quiera dentro de ese plazo (DGT V1823-23 y V0710-26).
+   · Cuota = escala estatal + escala andaluza sobre (rendimientos − 2.000 € de otros gastos, art. 19.2.f), menos la
+     de cada escala sobre el mínimo personal (5.550 €; 6.700 € desde 65 años; 8.100 € desde 75).
+   · Supuestos: sin otros ingresos, mínimos familiares, deducciones ni la reducción por rentas bajas (art. 20); se usa
+     la pensión del año de jubilación todos los años (como si la escala se actualizara al ritmo de las pensiones). */
+const IRPF_EST = [[12450,9.5],[20200,12],[35200,15],[60000,18.5],[300000,22.5],[Infinity,24.5]];
+const IRPF_AND = [[13000,9.5],[21100,12],[35200,15],[60000,18.5],[Infinity,22.5]];
+const IRPF_GASTOS = 2000, RED40 = 0.4;
+const escalaIRPF = (T, b) => { let t = 0, prev = 0; for(const [lim, r] of T){ if(b > prev) t += (Math.min(b, lim) - prev)*r/100; prev = lim; } return t; };
+const minPersonal = edad => edad >= 75 ? 8100 : edad >= 65 ? 6700 : 5550;
+function cuotaIRPF(bruto, edad){
+  const base = Math.max(0, bruto - IRPF_GASTOS), m = minPersonal(edad);
+  return Math.max(0, escalaIRPF(IRPF_EST, base) - escalaIRPF(IRPF_EST, m)) + Math.max(0, escalaIRPF(IRPF_AND, base) - escalaIRPF(IRPF_AND, m));
+}
+const LIMITES_IRPF = [...new Set([...IRPF_EST, ...IRPF_AND].map(x=>x[0]))].filter(Number.isFinite).sort((a,b)=>a-b);
+const tipoMarginal = bruto => { const b = Math.max(0, bruto - IRPF_GASTOS), f = T => T.find(([l])=>b < l)[1]; return f(IRPF_EST) + f(IRPF_AND); };
+// Ingresos brutos a partir de los cuales empieza el tramo siguiente
+const finTramo = bruto => { const b = Math.max(0, bruto - IRPF_GASTOS), l = LIMITES_IRPF.find(x=>x > b + 0.01); return l ? l + IRPF_GASTOS : Infinity; };
+const pctTxt = n => n.toLocaleString('es-ES', {maximumFractionDigits:1}) + ' %';
+
+// Datos del plan: varios planes (hasta 3) con su valor al jubilarse y la parte con derecho al 40 %
+const PLAN0 = () => ({planes:[{v:'', p:''}], modo:'opt', anos:10, anosOpt:0, anual:'', anioPre:0});
+function cleanPlan(o){
+  const n = v => { const x = Math.round((+v || 0)*100)/100; return x > 0 && x < 1e8 ? String(x) : ''; };
+  const pl = (o && Array.isArray(o.planes) ? o.planes : []).slice(0,3).map(q=>({v: n(q && q.v), p: n(q && q.p)}));
+  return {planes: pl.length ? pl : [{v:'', p:''}], modo: ['opt','golpe','renta','pers'].includes(o && o.modo) ? o.modo : 'opt',
+          anos: Math.min(25, Math.max(2, parseInt(o && o.anos, 10) || 10)), anosOpt: Math.min(25, Math.max(0, parseInt(o && o.anosOpt, 10) || 0)), anual: n(o && o.anual),
+          anioPre: [0,1,2].includes(+(o && o.anioPre)) ? +o.anioPre : 0};
+}
+const planesDe = pl => (pl && pl.planes || []).map(q=>({v: +q.v || 0, p: Math.min(+q.p || 0, +q.v || 0)})).filter(q=>q.v > 0);
+const hayPlan = pl => planesDe(pl).length > 0;
+
+// Calcula el rescate con una estrategia. ctx = {Y0: año de jubilación, pension: bruta anual que tributa, nac: fecha}
+// Devuelve el detalle año a año: rescate bruto, parte con 40 %, parte que tributa, IRPF extra, tipos marginales y neto.
+function rescatePlan(pl, ctx, modo){
+  const planes = planesDe(pl); if(!planes.length || !ctx) return null;
+  const total = planes.reduce((s,q)=>s+q.v, 0), preTot = planes.reduce((s,q)=>s+q.p, 0), postTot = total - preTot;
+  const P = ctx.pension, edad = t => ctx.Y0 + t - ctx.nac.getUTCFullYear();
+  const armar = filas => {   // filas[t] = {bruto, pre}
+    const ys = filas.map((f,t)=>{
+      const trib = f.bruto - RED40*f.pre, irpf = cuotaIRPF(P + trib, edad(t)) - cuotaIRPF(P, edad(t));
+      return {y: ctx.Y0 + t, bruto: f.bruto, pre: f.pre, trib, irpf, neto: f.bruto - irpf, m0: tipoMarginal(P), m1: tipoMarginal(P + Math.max(0, trib - 0.01))}   // tipo del último euro cobrado;
+    }).filter(r=>r.bruto > 0.5);
+    const irpf = ys.reduce((s,r)=>s+r.irpf, 0), anos = ys.length ? ys[ys.length-1].y - ctx.Y0 + 1 : 0;
+    return {modo, ys, total, pre: preTot, irpf, neto: total - irpf, anos, Y0: ctx.Y0, mes: anos ? (total - irpf)/(anos*12) : 0, pension: P};
+  };
+  const vacio = n => Array.from({length:n}, ()=>({bruto:0, pre:0}));
+  if(modo==='golpe'){ const f = vacio(1); f[0] = {bruto: total, pre: preTot}; return armar(f); }
+  if(modo==='renta'){ const n = pl.anos || 10; return armar(Array.from({length:n}, ()=>({bruto: total/n, pre: 0}))); }
+  // «Rellenar» cada año hasta el final del tramo de la pensión (sin saltar al siguiente), como mucho 15 años
+  const rellenar = (f, resto) => {
+    const lim = finTramo(P);
+    // Si todo cabe sin cambiar de tramo (o ya se está en el 45 %), repartir no cambia el IRPF: se reparte en los años
+    // de renta elegidos (10 por defecto) para que funcione como un complemento mensual
+    if(lim - P >= resto){ const n = Math.max(1, +pl.anos || 10); for(let t = 0; t < n; t++){ if(!f[t]) f[t] = {bruto:0, pre:0}; f[t].bruto += resto/n; } return f; }
+    for(let t = 0; resto > 0.5 && t < 15; t++){
+      if(!f[t]) f[t] = {bruto:0, pre:0};
+      const usado = P + f[t].bruto - RED40*f[t].pre, hueco = Math.max(0, lim - usado), x = Math.min(resto, hueco);
+      f[t].bruto += x; resto -= x;
+    }
+    if(resto > 0.5){ const n = Math.max(f.length, 15); for(let t = 0; t < n; t++){ if(!f[t]) f[t] = {bruto:0, pre:0}; f[t].bruto += resto/n; } }
+    return f;
+  };
+  // Con un número de años fijado: reparte lo aportado desde 2007 «nivelando» (water-filling) para que los ingresos que
+  // tributan sean lo más iguales posible cada año; con un IRPF por tramos, es el reparto que menos impuesto paga.
+  const nivelar = (f, resto, n) => {
+    for(let t = 0; t < n; t++) if(!f[t]) f[t] = {bruto:0, pre:0};
+    const base = f.slice(0, n).map(x=>P + x.bruto - RED40*x.pre);
+    const cabe = L => base.reduce((s,b)=>s + Math.max(0, L - b), 0);
+    let lo = Math.min(...base), hi = Math.max(...base) + resto;
+    for(let i = 0; i < 60; i++){ const m = (lo + hi)/2; if(cabe(m) < resto) lo = m; else hi = m; }
+    base.forEach((b,t)=>{ f[t].bruto += Math.max(0, hi - b); });
+    return f;
+  };
+  if(modo==='pers'){
+    const f = vacio(3), k = pl.anioPre || 0; planes.forEach(q=>{ f[k].bruto += q.p; f[k].pre += q.p; });
+    const A = +pl.anual > 0 ? +pl.anual : Math.max(1000, finTramo(P) - P);
+    let resto = postTot; for(let t = 0; resto > 0.5 && t < 40; t++){ if(!f[t]) f[t] = {bruto:0, pre:0}; const x = Math.min(A, resto); f[t].bruto += x; resto -= x; }
+    return armar(f);
+  }
+  // Óptima: prueba en qué año del plazo (0, +1, +2) cobrar en capital la parte anterior a 2007 de cada plan
+  let mejor = null;
+  const combos = planes.reduce((acc)=>acc.flatMap(c=>[0,1,2].map(k=>[...c, k])), [[]]);
+  const N = +pl.anosOpt || 0;
+  combos.forEach(asig=>{
+    if(N && asig.some(k=>k >= N)) return;   // la parte anterior a 2007 tiene que caer dentro de los años elegidos
+    const f = vacio(N ? Math.min(3, N) : 3); planes.forEach((q,i)=>{ f[asig[i]].bruto += q.p; f[asig[i]].pre += q.p; });
+    const r = armar(N ? nivelar(f, postTot, N) : rellenar(f, postTot));
+    if(!mejor || r.irpf < mejor.irpf - 0.5 || (Math.abs(r.irpf - mejor.irpf) <= 0.5 && r.anos < mejor.anos)) mejor = r;
+  });
+  return mejor;
+}
+// Las cuatro estrategias, para compararlas
+const comparaPlan = (pl, ctx) => ({opt: rescatePlan(pl, ctx, 'opt'), golpe: rescatePlan(pl, ctx, 'golpe'),
+  renta: rescatePlan(pl, ctx, 'renta'), pers: rescatePlan(pl, ctx, 'pers'), auto: +pl.anosOpt ? rescatePlan({...pl, anosOpt:0}, ctx, 'opt') : null});
+const MODOS_PLAN = {opt:'Óptima', golpe:'Todo de golpe', renta:'En rentas', pers:'A tu medida'};
+
+// ---------- Pantalla del plan (sirve para el modo individual y para cada persona de la pareja) ----------
+function planFormHTML(pl, quien){
+  const tu = quien ? 'su' : 'tu', filas = pl.planes.map((q,i)=>`<div class="pl-row">
+      <div class="pf"><label>Valor ${pl.planes.length > 1 ? 'del plan '+(i+1) : 'del plan'} al jubilar${quien ? 'se' : 'te'}</label><div class="input-suffix"><input type="number" data-pl="v" data-i="${i}" min="0" step="100" inputmode="decimal" placeholder="0" value="${q.v}"><span>€</span></div></div>
+      <div class="pf"><label>Parte con derecho al 40 % <span class="opt">(aportado hasta 2006)</span></label><div class="input-suffix"><input type="number" data-pl="p" data-i="${i}" min="0" step="100" inputmode="decimal" placeholder="0" value="${q.p}"><span>€</span></div></div>
+      ${pl.planes.length > 1 ? `<button type="button" class="pl-del" data-del="${i}" title="Quitar este plan" aria-label="Quitar este plan">×</button>` : ''}</div>`).join('');
+  return `${filas}
+    <div class="pl-acts">${pl.planes.length < 3 ? '<button type="button" class="btn pl-add" data-add>+ Añadir otro plan</button>' : ''}</div>
+    <div class="hint">Pide a ${tu} gestora el certificado del plan: los <b>derechos consolidados</b> y la parte que corresponde a <b>aportaciones hasta el 31/12/2006</b>. Si aún faltan años para ${quien ? 'su' : 'tu'} jubilación, pon el valor que ${quien ? 'calcule' : 'calcules'} que tendrá entonces.</div>
+    <div class="lbl" style="margin-top:16px">Cómo rescatarlo</div>
+    <div class="seg seg4" data-plmodo>${Object.entries(MODOS_PLAN).map(([v,t])=>`<button type="button" data-v="${v}" class="${pl.modo===v ? 'on' : ''}">${t}</button>`).join('')}</div>
+    <div class="pl-extra"></div>`;
+}
+function planExtraHTML(pl, R){
+  if(pl.modo==='opt'){ const N = +pl.anosOpt || 0, auto = R && R.modo==='opt' ? R.anos : 0, v = N || auto || 10;
+    return `<div class="field" style="margin:12px 0 0"><div class="lbl"><label>Años para cobrarlo</label><span class="pill" data-plv="anosOpt">${N ? N+(N===1 ? ' año' : ' años') : 'Automático'+(auto ? ' ('+auto+(auto===1 ? ' año' : ' años')+')' : '')}</span></div>
+      <input type="range" data-plr="anosOpt" min="1" max="25" step="1" value="${v}" style="--c:var(--teal);--p:${(v-1)/24*100}%"><div class="scale"><span>1 año</span><span>25 años</span></div>
+      <div class="hint">${N ? 'La app busca el reparto que menos IRPF paga en esos años: lo anterior a 2007 en capital, en el mejor año del plazo, y el resto repartido para que cada año tribute lo mismo. Con menos años pagas más, porque subes de tramo.' : 'Automático: reparte hasta el final del tramo de tu pensión, sin saltar al siguiente. Mueve el deslizador para fijar tú los años.'}</div>
+      ${N ? '<button type="button" class="btn pl-add" data-auto style="margin-top:8px">Volver a automático</button>' : ''}</div>`; }
+  if(pl.modo==='renta') return `<div class="field" style="margin:12px 0 0"><div class="lbl"><label>Años de renta</label><span class="pill" data-plv="anos">${pl.anos} años</span></div>
+      <input type="range" data-plr="anos" min="2" max="25" step="1" value="${pl.anos}" style="--c:var(--teal);--p:${(pl.anos-2)/23*100}%"><div class="scale"><span>2</span><span>25</span></div>
+      <div class="hint">Cobras lo mismo cada año. En forma de renta <b>no se aplica la reducción del 40 %</b>.</div></div>`;
+  if(pl.modo!=='pers' || !R) return '';
+  const post = Math.max(0, R.total - R.pre), mx = Math.max(1000, Math.ceil(post/500)*500), A = Math.min(mx, +pl.anual > 0 ? +pl.anual : Math.round(Math.max(1000, finTramo(R.pension) - R.pension)/100)*100);
+  return `<div class="field" style="margin:12px 0 0"><div class="lbl"><label>Rescate cada año de lo aportado desde 2007</label><span class="pill" data-plv="anual">${eur0(A)}/año</span></div>
+      <input type="range" data-plr="anual" min="500" max="${mx}" step="500" value="${A}" style="--c:var(--teal);--p:${(A-500)/Math.max(1,mx-500)*100}%"><div class="scale"><span>500 €</span><span>${eur0(mx)}</span></div></div>
+    ${R.pre > 0 ? `<div class="lbl" style="margin-top:10px">Año para cobrar en capital lo aportado hasta 2006 (con el 40 %)</div>
+      <div class="seg seg3" data-plpre>${[0,1,2].map(k=>`<button type="button" data-v="${k}" class="${(pl.anioPre||0)===k ? 'on' : ''}">${R.Y0 + k}</button>`).join('')}</div>` : ''}`;
+}
+function planResHTML(pl, C, quien){
+  const R = C[pl.modo]; if(!R) return `<div class="pl-vacio">Indica el valor ${quien ? 'de su plan' : 'de tu plan'} para ver cuánto ${quien ? 'le' : 'te'} aportaría cada mes y cuánto IRPF pagaría${quien ? '' : 's'}.</div>`;
+  const opt = C.opt, golpe = C.golpe, fin = R.Y0 + R.anos - 1;
+  const avisos = [];
+  const salto = R.ys.filter(r=>r.m1 > r.m0);
+  if(salto.length) avisos.push(`⚠️ <b>Cambias de tramo</b> en ${salto.map(r=>r.y).join(', ')}: ${quien ? 'sus' : 'tus'} ingresos pasan del tramo del <b>${pctTxt(salto[0].m0)}</b> al del <b>${pctTxt(Math.max(...salto.map(r=>r.m1)))}</b>. Cada euro que entra en el tramo más alto paga más IRPF.`);
+  if(R.pre > 0 && pl.modo==='renta') avisos.push(`⚠️ En forma de renta se <b>pierde la reducción del 40 %</b> de lo aportado hasta 2006 (${eur0(R.pre)}).`);
+  if(R.pre > 0) avisos.push(`⏳ Para la reducción del 40 %, lo aportado hasta 2006 debe cobrarse <b>en capital, de una vez por plan</b>, y como tarde el <b>31/12/${R.Y0 + 2}</b> (el año de la jubilación o los dos siguientes).`);
+  if(pl.modo==='opt' && C.auto && +pl.anosOpt > C.auto.anos && Math.abs(R.irpf - C.auto.irpf) < 50) avisos.push(`💡 Con <b>${C.auto.anos} ${C.auto.anos===1 ? 'año' : 'años'}</b> ya se paga el mínimo de IRPF: más años no lo reducen, solo reparten el dinero en más meses.`);
+  if(pl.modo==='opt' && C.auto && +pl.anosOpt < C.auto.anos && R.irpf > C.auto.irpf + 50) avisos.push(`💡 En ${C.auto.anos} años pagarías <b>${eur0(R.irpf - C.auto.irpf)}</b> menos de IRPF (automático).`);
+  if(pl.modo!=='opt' && opt && R.irpf > opt.irpf + 50) avisos.push(`💡 La estrategia <b>óptima</b> pagaría <b>${eur0(R.irpf - opt.irpf)}</b> menos de IRPF.`);
+  const filas = R.ys.map(r=>`<tr class="${r.m1 > r.m0 ? 'up' : ''}"><td>${r.y}</td><td>${eur0(r.bruto)}</td><td>${r.pre ? eur0(r.pre) : '—'}</td><td>${eur0(r.trib)}</td><td>${eur0(r.irpf)}</td><td>${pctTxt(r.m1)}</td><td><b>${eur0(r.neto)}</b></td></tr>`).join('');
+  const cmp = ['opt','golpe','renta','pers'].map(k=>{ const x = C[k]; if(!x) return ''; return `<tr class="${k===pl.modo ? 'sel' : ''}${k==='opt' ? ' best' : ''}"><td>${MODOS_PLAN[k]}${k==='renta' ? ` (${pl.anos} años)` : k==='opt' && +pl.anosOpt ? ` (${pl.anosOpt} ${+pl.anosOpt===1 ? 'año' : 'años'})` : ''}</td><td>${x.anos} ${x.anos===1 ? 'año' : 'años'}</td><td>${eur0(x.irpf)}</td><td>${pctTxt(x.irpf/x.total*100)}</td><td><b>${eur0(x.neto)}</b></td></tr>`; }).join('');
+  return `<div class="pl-big"><span class="label">${MODOS_PLAN[pl.modo]} · ${R.anos===1 ? 'en '+R.Y0 : `de ${R.Y0} a ${fin}`}</span>
+      <div class="pl-mes">+ ${eur(R.mes)}<small>/mes netos</small></div>
+      <div class="meta">${R.anos===1 ? 'Cobrado de una vez: equivale a' : 'De media durante '+R.anos+' años:'} lo que sumaría${quien ? '' : 's'} cada mes a ${quien ? 'su' : 'tu'} pensión</div>
+      <div class="pl-kpis"><div><span>Plan</span><b>${eur0(R.total)}</b></div><div><span>IRPF del rescate</span><b>${eur0(R.irpf)}</b><small>${pctTxt(R.irpf/R.total*100)} del plan</small></div><div><span>${quien ? 'Se queda' : 'Te quedas'}</span><b>${eur0(R.neto)}</b></div>${golpe && pl.modo!=='golpe' ? `<div><span>Ahorro frente a todo de golpe</span><b class="${golpe.irpf - R.irpf >= 0 ? 'pos' : 'neg'}">${golpe.irpf - R.irpf >= 0 ? '' : '−'}${eur0(Math.abs(golpe.irpf - R.irpf))}</b></div>` : ''}</div></div>
+    ${avisos.length ? `<div class="pl-avisos">${avisos.map(a=>`<p>${a}</p>`).join('')}</div>` : ''}
+    <div class="label" style="margin:14px 0 6px">Año a año</div>
+    <div class="scroll-x"><table class="tbl pl-tbl"><tr><th>Año</th><th>Rescate</th><th>Con 40 %</th><th>Tributa</th><th>IRPF</th><th>Tramo</th><th>Neto</th></tr>${filas}</table></div>
+    <div class="hint">«Tributa» = rescate − 40 % de la parte aportada hasta 2006. «IRPF» = lo que sube el impuesto de ese año por el rescate, con una pensión de ${eur0(R.pension)}/año (tramo del ${pctTxt(tipoMarginal(R.pension))} sin el plan). «Tramo» = tipo marginal con el rescate.</div>
+    <div class="label" style="margin:14px 0 6px">Comparativa de estrategias</div>
+    <div class="scroll-x"><table class="tbl pl-cmp"><tr><th>Estrategia</th><th>Duración</th><th>IRPF</th><th>% del plan</th><th>Te quedas</th></tr>${cmp}</table></div>`;
+}
+// Resumen del plan para el Informe PDF
+function planInformeHTML(R, titulo, pl){
+  return `<h2>${titulo}</h2><p class="sub">Estrategia: <b>${MODOS_PLAN[pl.modo]}</b> · plan ${eur0(R.total)} (${eur0(R.pre)} aportados hasta 2006) · IRPF del rescate ${eur0(R.irpf)} · neto ${eur0(R.neto)} · media ${eur(R.mes)}/mes durante ${R.anos} ${R.anos===1 ? 'año' : 'años'}</p>
+    <table><tr><th>Año</th><th class="n">Rescate</th><th class="n">Con 40 %</th><th class="n">Tributa</th><th class="n">IRPF</th><th class="n">Tramo</th><th class="n">Neto</th></tr>${R.ys.map(r=>`<tr><td>${r.y}</td><td class="n">${eur0(r.bruto)}</td><td class="n">${r.pre ? eur0(r.pre) : '—'}</td><td class="n">${eur0(r.trib)}</td><td class="n">${eur0(r.irpf)}</td><td class="n">${pctTxt(r.m1)}</td><td class="n">${eur0(r.neto)}</td></tr>`).join('')}</table>
+    <p class="rp-alert">IRPF con las escalas de 2026 (Estado + Andalucía), 2.000 € de gastos y mínimo personal, sin otros ingresos ni deducciones. Reducción del 40 % solo para lo aportado hasta 2006 cobrado en capital, una vez por plan, hasta el 31/12/${R.Y0 + 2}. Orientativo: confírmalo con tu gestora y un asesor fiscal.</p>`;
+}
+const PLAN_AVISO = `<div class="tip pl-legal">⚖️ <b>Simulación orientativa, no es asesoramiento fiscal.</b> Usa las escalas del IRPF de 2026 (Estado + Andalucía), los 2.000 € de gastos y el mínimo personal, y supone que no tienes otros ingresos, mínimos familiares ni deducciones. Antes de pedir el rescate, confírmalo con tu gestora (importe con derecho al 40 %) y con un asesor fiscal. Más detalles en <a href="#ayuda" class="js-help-plan" style="color:var(--navy)">Ayuda › Plan de pensiones</a>.</div>`;
+// Monta la pantalla en un contenedor. get/set = acceso al plan; ctx() = contexto fiscal; onChange = recalcular fuera
+function montaPlan(box, get, set, ctx, onChange, quien){
+  box.innerHTML = `<div class="pl-grid"><div class="pl-form">${planFormHTML(get(), quien)}</div><div class="pl-res"></div></div>`;
+  const pinta = () => {
+    const pl = get(), c = ctx(), C = c ? comparaPlan(pl, c) : {};
+    box.querySelector('.pl-extra').innerHTML = planExtraHTML(pl, pl.modo==='opt' ? (C.auto || C.opt) : (C.pers || C.opt));
+    box.querySelector('.pl-res').innerHTML = c ? planResHTML(pl, C, quien) : '<div class="pl-vacio">Completa antes los datos de la jubilación.</div>';
+  };
+  const pintaRes = () => { const pl = get(), c = ctx(), C = c ? comparaPlan(pl, c) : {}; box.querySelector('.pl-res').innerHTML = c ? planResHTML(pl, C, quien) : ''; };
+  box.oninput = e => {
+    const t = e.target, pl = get();
+    if(t.dataset.pl){ pl.planes[+t.dataset.i][t.dataset.pl] = t.value; set(pl); pintaRes(); onChange(); }
+    else if(t.dataset.plr==='anosOpt'){ pl.anosOpt = +t.value; set(pl); const v = box.querySelector('[data-plv="anosOpt"]'); if(v) v.textContent = t.value + (+t.value===1 ? ' año' : ' años');
+      t.style.setProperty('--p', ((t.value - 1)/24*100)+'%'); if(!box.querySelector('[data-auto]')){ pinta(); onChange(); return; } pintaRes(); onChange(); }
+    else if(t.dataset.plr){ pl[t.dataset.plr] = t.value; set(pl); const v = box.querySelector(`[data-plv="${t.dataset.plr}"]`);
+      if(v) v.textContent = t.dataset.plr==='anual' ? eur0(+t.value)+'/año' : t.value + (+t.value===1 ? ' año' : ' años'); t.style.setProperty('--p', ((t.value - t.min)/(t.max - t.min)*100)+'%'); pintaRes(); onChange(); }
+  };
+  box.onchange = e => { if(e.target.dataset.pl) pinta(); };
+  box.onclick = e => {
+    const b = e.target.closest('button'); if(!b) return; const pl = get();
+    if(b.hasAttribute('data-add')){ pl.planes.push({v:'', p:''}); set(pl); montaPlan(box, get, set, ctx, onChange, quien); onChange(); }
+    else if(b.dataset.del != null){ pl.planes.splice(+b.dataset.del, 1); set(pl); montaPlan(box, get, set, ctx, onChange, quien); onChange(); }
+    else if(b.closest('[data-plmodo]')){ pl.modo = b.dataset.v; set(pl); b.parentNode.querySelectorAll('button').forEach(x=>x.classList.toggle('on', x===b)); pinta(); onChange(); }
+    else if(b.closest('[data-plpre]')){ pl.anioPre = +b.dataset.v; set(pl); pinta(); onChange(); }
+    else if(b.hasAttribute('data-auto')){ pl.anosOpt = 0; set(pl); pinta(); onChange(); }
+  };
+  box._pinta = pinta; pinta();
+}
+
+// Plan del modo individual
+let PLAN_IND = PLAN0();
+const ctxInd = s => { s = s || scen[S.sc]; return s && s.ok && S.birth ? {Y0: s.D.getUTCFullYear(), pension: (s.pension + (s.comp || 0))*14, nac: S.birth} : null; };
+const planInd = s => hayPlan(PLAN_IND) ? rescatePlan(PLAN_IND, ctxInd(s), PLAN_IND.modo) : null;
+function planIndChanged(){
+  updateSaveState(); ssSet(WKEY, JSON.stringify(snapshot())); updPlanChip(); updMini();
+  if(scen.length){ buildBars(); document.querySelectorAll('#bars .bar').forEach((b,k)=>b.classList.toggle('on', k===S.sc)); document.querySelectorAll('#barsX span').forEach((b,k)=>b.classList.toggle('on', k===S.sc)); }
+}
+function updPlanChip(){
+  const R = scen.length ? planInd() : null, c = $('#oPlan'); if(!c) return;
+  c.hidden = !R; if(!R) return;
+  c.innerHTML = `<span>+ <b>${eur(R.mes)}/mes</b> netos de tu plan de pensiones</span><small>${MODOS_PLAN[PLAN_IND.modo].toLowerCase()} · ${R.anos===1 ? 'en '+R.Y0 : 'media '+R.Y0+'–'+(R.Y0+R.anos-1)} · IRPF ${eur0(R.irpf)}</small><button type="button" class="linkbtn" data-go="plan">Ver</button>`;
+}
+function pintaPlanInd(){
+  const box = $('#planIndBody'); if(!box) return;
+  if(box._ref !== PLAN_IND){ box._ref = PLAN_IND; montaPlan(box, ()=>PLAN_IND, v=>{ PLAN_IND = v; box._ref = v; }, ()=>ctxInd(), planIndChanged, false); }
+  else if(box._pinta) box._pinta();
+  updPlanChip();
+}
+document.addEventListener('click', e=>{ const a = e.target.closest && e.target.closest('.js-help-plan'); if(a){ e.preventDefault(); showTab('plan'); go('ayuda'); } });
 
 /* ---------- Compartir escenario por enlace ---------- */
 const APP_URL = 'https://cjgaland.github.io/simulador-jubilacion/';
@@ -2272,6 +2671,7 @@ function cleanShared(o){ // solo campos conocidos y valores válidos
   r.brMode = o.brMode==='man'?'man':'est'; r.early = o.early==='inv'?'inv':'vol';
   r.antK = Number.isInteger(o.antK) && o.antK>0 && o.antK<=48 ? o.antK : null;
   r.demK = Number.isInteger(o.demK) && o.demK>0 && o.demK<12 ? o.demK : 0;
+  r.plan = cleanPlan(o.plan);
   r.reg = o.reg==='cp' ? 'cp' : 'ss'; r.cp = cleanCP(o.cp); r.tipo = ['est','fun'].includes(o.tipo) ? o.tipo : 'lab';
   r.barMode = o.barMode==='tot'?'tot':'mes'; r.netMode = o.netMode==='neto'?'neto':'bruto';
   const sc = parseInt(o.sc,10); r.sc = Number.isNaN(sc) ? 1 : Math.min(6,Math.max(0,sc));
@@ -2332,6 +2732,7 @@ function buildReport(){
     </div>
     <h2>Comparativa de escenarios</h2>
     <table><tr><th>Escenario</th><th>Fecha</th><th>Edad</th><th class="n">Bruto/mes</th><th class="n">Neto/mes</th><th class="n">vs ordinaria</th><th class="n">Hasta los 85 (€ hoy)</th></tr>${rows}</table>
+    ${(()=>{ const R = planInd(); return R ? planInformeHTML(R, 'Plan de pensiones', PLAN_IND) : ''; })()}
     <div class="rp-note">Simulación orientativa y sin validez oficial, basada en la normativa vigente en 2026 (LGSS, Ley 27/2011, Ley 21/2021 y RDL 2/2023) y en la metodología de proyección de «Tu Seguridad Social» (+2 % anual). Para una cifra definitiva, solicita tu simulación oficial al organismo que gestiona tu pensión (Seguridad Social o Clases Pasivas).</div>
     <div class="rp-foot">Simulador de Jubilación · ${APP_URL} · Creado por Carlos J. Galán Doval – Ver. ${APP_VERSION} – 2026</div>`;
   return true;
@@ -2667,11 +3068,11 @@ async function cargarVL(file){
    temporalmente los datos de cada persona en S (withPerson): no hay fórmulas duplicadas.
    ===================================================================== */
 const PKEY = 'simJubPareja', MKEY = 'simJubModo';
-const PERSONA0 = {fuente:'',name:'',fNac:'',dias:'',cont:true,early:'vol',brMode:'est',base:'',brMan:'',irpf:'23',sueldo:'',sueldoB:'',pagas:'14',derecho:true,reg:'ss',tipo:'lab',cp:CP0()};
+const PERSONA0 = {plan:PLAN0(),fuente:'',name:'',fNac:'',dias:'',cont:true,early:'vol',brMode:'est',base:'',brMan:'',irpf:'23',sueldo:'',sueldoB:'',pagas:'14',derecho:true,reg:'ss',tipo:'lab',cp:CP0()};
 const PEMPTY = {A:JSON.parse(JSON.stringify(PERSONA0)), B:JSON.parse(JSON.stringify(PERSONA0)), hc:0, ha:0, hb:0, asig:'auto', selA:null, selB:null, link:false, net:'bruto'};
 // Pareja de ejemplo 100 % ficticia
-const PDEMO = {A:{name:'Antonio',fNac:'1964-11-10',dias:'14200',cont:true,early:'vol',brMode:'est',base:'4400.00',brMan:'',irpf:'21',sueldo:'2660',sueldoB:'3730',pagas:'14',derecho:false,reg:'ss',tipo:'lab',cp:CP0()},
-               B:{name:'Lucía',fNac:'1968-05-22',dias:'',cont:true,early:'vol',brMode:'est',base:'5101.20',brMan:'',irpf:'15',sueldo:'2270',sueldoB:'3085',pagas:'14',derecho:true,reg:'cp',cp:{t:[{g:'A1',a:'24',m:'0'}],ssA:'3',ssM:'0'}},
+const PDEMO = {A:{plan:PLAN0(),name:'Antonio',fNac:'1964-11-10',dias:'14200',cont:true,early:'vol',brMode:'est',base:'4400.00',brMan:'',irpf:'21',sueldo:'2660',sueldoB:'3730',pagas:'14',derecho:false,reg:'ss',tipo:'lab',cp:CP0()},
+               B:{plan:PLAN0(),name:'Lucía',fNac:'1968-05-22',dias:'',cont:true,early:'vol',brMode:'est',base:'5101.20',brMan:'',irpf:'15',sueldo:'2270',sueldoB:'3085',pagas:'14',derecho:true,reg:'cp',cp:{t:[{g:'A1',a:'24',m:'0'}],ssA:'3',ssM:'0'}},
                hc:2, ha:0, hb:0, asig:'auto', selA:null, selB:null, link:false, net:'bruto'};
 const clonar = o => JSON.parse(JSON.stringify(o));
 const isoD = d => d.toISOString().slice(0,10);
@@ -2836,6 +3237,7 @@ function buildPairUI(){
     <label class="switch plink"><input type="checkbox" id="pLink"><span class="tg"></span><span class="tx">Mover las dos fechas a la vez<small>Al mover una, la otra se desplaza lo mismo y mantenéis la distancia entre ambas.</small></span></label>
     <div class="alert gold basewarn-card" id="pBaseWarn" hidden></div>
     <div id="pSum"></div>
+    <div class="plan-chip" id="pPlanChip" hidden></div>
     <div class="advice" id="pAdvice"></div>
     <div class="share-row">
       <button class="btn" id="pSaveRep" title="Guarda el plan en PDF en la carpeta que elijas; después podréis abrirlo aquí para seguir con los mismos datos"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v6h8V3M8 21v-7h8v7"/></svg>Guardar informe</button>
@@ -2856,6 +3258,12 @@ function buildPairUI(){
     <h2>Desglose de cada uno</h2>
     <p>Cómo se calcula cada pensión en la fecha elegida.</p>
     <div id="pDetBody"></div>
+  </section>
+  <section class="card plan-card needs-pair" id="planPar" data-pg="plan">
+    <div class="bars-head"><div><h2>Planes de pensiones</h2><p>Cuánto aportaría el plan de cada uno al hogar y cómo rescatarlo pagando el menor IRPF posible (escalas de Andalucía, 2026), con las fechas del plan elegido.</p></div></div>
+    <div class="pl-person" data-p="A"><h3 class="pl-who"><i></i><span class="js-nA"></span></h3><div id="planParA"></div></div>
+    <div class="pl-person" data-p="B"><h3 class="pl-who"><i></i><span class="js-nB"></span></h3><div id="planParB"></div></div>
+    <div class="tip pl-legal">⚖️ <b>Simulación orientativa, no es asesoramiento fiscal.</b> Usa las escalas del IRPF de 2026 (Estado + Andalucía), los 2.000 € de gastos y el mínimo personal, y supone que no tienes otros ingresos, mínimos familiares ni deducciones. Antes de pedir el rescate, confírmalo con tu gestora (importe con derecho al 40 %) y con un asesor fiscal. Más detalles en <a href="#ayuda" class="js-help-plan" style="color:var(--navy)">Ayuda › Plan de pensiones</a>.</div>
   </section>`;
 
   let pT; const pRecalc = () => { clearTimeout(pT); pT = setTimeout(computePair, 150); };
@@ -2916,6 +3324,8 @@ function fillPairForm(){
   document.querySelectorAll('#pAsig button').forEach(b=>b.classList.toggle('on', b.dataset.v===PS.asig));
   $('#pLink').checked = !!PS.link;
   refreshNames(); paintNet();
+  ['A','B'].forEach(k=>{ const box = $('#planPar'+k); if(box) box._ref = null; });
+  if(PR) pintaPlanPar();
 }
 function refreshNames(){
   document.querySelectorAll('.js-nA').forEach(e=>e.textContent = pName('A'));
@@ -2944,10 +3354,24 @@ function pairBaseWarn(){
   box.hidden = !who.length;
   if(who.length) box.innerHTML = `<div>⚠️ <b>${who.join(' y ')}: calculado con la base de cotización máxima</b> (5.101,20 €), porque no se ha indicado la ${who.length > 1 ? 'suya' : 'suya'}. Si cotiza${who.length > 1 ? 'n' : ''} por menos, la pensión será <b>menor</b>. Indicadla en «Base de cotización», en la ficha de cada uno.</div>`;
 }
+// Planes de pensiones de la pareja
+const ctxPar = k => { const e = PR && PR.ev; if(!e || !e.ok) return null; const x = e[k]; return {Y0: x.o.D.getUTCFullYear(), pension: (x.o.pension + (x.o.comp || 0))*14, nac: PR[k].P.birth}; };
+const planPar = k => PS[k].plan && hayPlan(PS[k].plan) ? rescatePlan(PS[k].plan, ctxPar(k), PS[k].plan.modo) : null;
+function pintaPlanPar(){
+  ['A','B'].forEach(k=>{ const box = $('#planPar'+k); if(!box) return;
+    if(!PS[k].plan) PS[k].plan = PLAN0();
+    if(box._ref !== PS[k].plan){ box._ref = PS[k].plan; montaPlan(box, ()=>PS[k].plan || (PS[k].plan = PLAN0()), v=>{ PS[k].plan = v; box._ref = v; }, ()=>ctxPar(k), pairPlanChanged, true); }
+    else if(box._pinta) box._pinta(); });
+  const c = $('#pPlanChip'); if(!c) return;
+  const RA = planPar('A'), RB = planPar('B'); c.hidden = !(RA || RB); if(c.hidden) return;
+  const txt = (k, R) => R ? `${escH(pName(k))} +${eur0(R.mes)}/mes (${R.anos===1 ? R.Y0 : R.Y0+'–'+(R.Y0+R.anos-1)})` : '';
+  c.innerHTML = `<span>+ <b>${eur((RA ? RA.mes : 0) + (RB ? RB.mes : 0))}/mes</b> netos de los planes de pensiones</span><small>${[txt('A', RA), txt('B', RB)].filter(Boolean).join(' · ')}</small><button type="button" class="linkbtn" data-go="plan">Ver</button>`;
+}
+function pairPlanChanged(){ updatePairSaveState(); ssSet(WPKEY, JSON.stringify(PS)); if(PR && PR.ev && PR.ev.ok){ renderHogar(); pintaPlanPar(); } }
 function refreshSelection(){
   if(!PR) return;
   PR.ev = evalPair(PR, PR.ia, PR.ib);
-  paintTracks(); markPresets(); renderSummary(); renderHogar(); renderPDetail(); updatePairSaveState(); updMini(); ssSet(WPKEY, JSON.stringify(PS));
+  paintTracks(); markPresets(); renderSummary(); renderHogar(); renderPDetail(); pintaPlanPar(); updatePairSaveState(); updMini(); ssSet(WPKEY, JSON.stringify(PS));
 }
 function renderTracks(){
   ['A','B'].forEach(k=>{
@@ -3059,19 +3483,21 @@ function renderHogar(){
   const y0 = TODAY.getUTCFullYear() + 1;
   const y1 = Math.max(PR.A.P.birth.getUTCFullYear(), PR.B.P.birth.getUTCFullYear()) + 85;
   const years = [];
+  // Plan de pensiones de cada uno, año a año, en euros de hoy (bruto o neto según el selector), repartido en 12 meses
+  const PLH = {A:{}, B:{}}; ['A','B'].forEach(k=>{ const R = planPar(k); if(R) R.ys.forEach(r=>{ PLH[k][r.y] = (isNet() ? r.neto : r.bruto)/Math.pow(1.02, Math.max(0, r.y - TODAY.getUTCFullYear())); }); });
   // Mes a mes, con las pagas extra en su mes (sueldo: junio y diciembre si son 14 pagas; pensión: ver extrasPen)
   for(let y=y0; y<=y1; y++){
-    const v = {y, sa:0, pa:0, sb:0, pb:0, m:[]};
+    const v = {y, sa:0, pa:0, sb:0, pb:0, la:0, lb:0, m:[]};
     for(let m=0; m<12; m++){
-      const D = U(y,m,15), r = {sa:0, pa:0, sb:0, pb:0};
+      const D = U(y,m,15), r = {sa:0, pa:0, sb:0, pb:0, la:(PLH.A[y]||0)/12, lb:(PLH.B[y]||0)/12};
       if(D < e.A.o.D) r.sa = salMes('A', m); else r.pa = penMes(e.A, m);
       if(D < e.B.o.D) r.sb = salMes('B', m); else r.pb = penMes(e.B, m);
       for(const q in r) v[q] += r[q];
-      r.t = r.sa + r.pa + r.sb + r.pb;
+      r.t = r.sa + r.pa + r.sb + r.pb + r.la + r.lb;
       r.ex = (r.sa && salMes('A', m) > sal('A')) || (r.sb && salMes('B', m) > sal('B')) || (r.pa && penMes(e.A, m) > pv(e.A)) || (r.pb && penMes(e.B, m) > pv(e.B));
       v.m.push(r);
     }
-    v.t = v.sa + v.pa + v.sb + v.pb; years.push(v);
+    v.t = v.sa + v.pa + v.sb + v.pb + v.la + v.lb; years.push(v);
   }
   HYEARS = years;
   const n = years.length, mx = Math.max(...years.map(v=>v.t), 1), h = x => (x/mx*86).toFixed(2)+'%';
@@ -3081,7 +3507,7 @@ function renderHogar(){
   // alturas anteriores (mismo número de barras) para animar desde ellas
   const prev = [...body.querySelectorAll('.hchart .hbar')].map(bb=>[...bb.children].map(i=>i.style.height));
   const old = (i,j) => prev.length===n ? prev[i][j] : '0%';
-  const segs = ['pa','sa','pb','sb'];
+  const segs = ['pa','sa','pb','sb','la','lb'];
   const bars = years.map((v,i)=>`<button type="button" class="hbar${v.y===HSEL ? ' on' : ''}" data-i="${i}" aria-label="${v.y}: ${eur0(v.t)} al año">${segs.map((k,j)=>`<i class="s-${k}" style="height:${old(i,j)}" data-h="${h(v[k])}"></i>`).join('')}</button>`).join('');
   const mk = (x, row) => { const d = x.o.D, i = d.getUTCFullYear() - y0; if(i < 0 || i >= n) return '';
     const l = (i + d.getUTCMonth()/12)/n*100;
@@ -3100,7 +3526,7 @@ function renderHogar(){
       <div data-y="${clampY(yS + 1)}"><span>Los dos jubilados · desde ${fShort(second.o.D).slice(3)}</span><b>${eur0(ph3)}/año</b>${chg(ph3)}<small>${pp('A', maP(e.A))}${pp('B', maP(e.B))}</small></div>
     </div>`;
   body.innerHTML = `<div class="hchart">${bars}${mk(e.A,0)}${mk(e.B,1)}</div><div class="hx">${xs}</div>
-    <div class="hleg"><span><i class="s-sa"></i>Sueldo ${escH(pName('A'))}</span><span><i class="s-pa"></i>Pensión ${escH(pName('A'))}</span><span><i class="s-sb"></i>Sueldo ${escH(pName('B'))}</span><span><i class="s-pb"></i>Pensión ${escH(pName('B'))}</span></div>
+    <div class="hleg"><span><i class="s-sa"></i>Sueldo ${escH(pName('A'))}</span><span><i class="s-pa"></i>Pensión ${escH(pName('A'))}</span><span><i class="s-sb"></i>Sueldo ${escH(pName('B'))}</span><span><i class="s-pb"></i>Pensión ${escH(pName('B'))}</span>${Object.keys(PLH.A).length ? `<span><i class="s-la"></i>Plan ${escH(pName('A'))}</span>` : ''}${Object.keys(PLH.B).length ? `<span><i class="s-lb"></i>Plan ${escH(pName('B'))}</span>` : ''}</div>
     <div class="hsel" id="hSel" aria-live="polite"></div>
     ${phases}
     <p class="hint" style="margin-top:10px">En euros de hoy: se supone que sueldos y pensiones mantienen su poder adquisitivo. Hasta que el más joven cumpla 85 años. Toca una etapa para ver su primer año completo.</p>`;
@@ -3121,15 +3547,15 @@ function renderHogar(){
 // Desglose de un año del gráfico del hogar: qué aporta cada uno (sueldo y/o pensión)
 function hInspect(i){
   const v = HYEARS[i], box = $('#hSel'), e = PR && PR.ev; if(!v || !box || !e || !e.ok) return;
-  const who = (k, sv, pvv) => {
+  const who = (k, sv, pvv, plv) => {
     const x = e[k], yJ = x.o.D.getUTCFullYear();
     const est = yJ > v.y ? 'Trabajando' : yJ < v.y ? `Jubilado/a · ${x.o.type.toLowerCase()}` : `Se jubila en ${x.o.D.toLocaleDateString('es-ES', {month:'long', timeZone:'UTC'})}`;
     // Primero lo que cobra un mes normal (sin paga extra), luego sus pagas extra y el total del año
     const salM = sal(k), n = pagas(k);
     const salTxt = sv ? `${eur0(salM)}/mes` : yJ >= v.y && !salM ? 'sin indicar' : '—';
     return `<div class="hs-p" data-p="${k}"><i></i><div><b>${escH(pName(k))}</b><small>${est}</small></div>
-      <div class="hs-v"><span>Sueldo <b>${salTxt}</b>${sv ? ` <small>${n===14 ? '+ extras en junio y diciembre' : '12 pagas (extras prorrateadas)'}</small>` : ''}</span><span>Pensión <b>${pvv ? eur0(pv(x))+'/mes' : '—'}</b>${pvv ? ` <small>+ extras en ${extrasTxt(x)}</small>` : ''}</span></div>
-      <b class="hs-t">${eur0(sv + pvv)}<small>al año</small></b></div>`;
+      <div class="hs-v"><span>Sueldo <b>${salTxt}</b>${sv ? ` <small>${n===14 ? '+ extras en junio y diciembre' : '12 pagas (extras prorrateadas)'}</small>` : ''}</span><span>Pensión <b>${pvv ? eur0(pv(x))+'/mes' : '—'}</b>${pvv ? ` <small>+ extras en ${extrasTxt(x)}</small>` : ''}</span>${plv ? `<span style="color:var(--teal)">Plan <b style="color:var(--teal)">${eur0(plv/12)}/mes</b> <small>${eur0(plv)} en el año</small></span>` : ''}</div>
+      <b class="hs-t">${eur0(sv + pvv + (plv||0))}<small>al año</small></b></div>`;
   };
   // Mes normal = el importe sin paga extra que más se repite ese año; y los meses con paga extra
   const cnt = {}; v.m.forEach(r=>{ if(r.ex) return; const key = Math.round(r.t); cnt[key] = (cnt[key]||0) + 1; });
@@ -3139,14 +3565,14 @@ function hInspect(i){
   const mxM = Math.max(...v.m.map(r=>r.t), 1), hh = x => (x/mxM*100).toFixed(1)+'%';
   const meses = v.m.map((r,i)=>{ const ex = r.ex;
     return `<div class="hm${ex ? ' ex' : ''}" title="${MES3[i]} ${v.y}: ${eur0(r.t)}"><span class="hm-v">${ex ? eur0(r.t) : ''}</span>
-      <div class="hm-c"><div class="hm-b" style="height:${hh(r.t)}">${['pa','sa','pb','sb'].map(q=>`<i class="s-${q}" style="height:${r.t ? (r[q]/r.t*100).toFixed(1) : 0}%"></i>`).join('')}</div></div><span class="hm-l">${MES3[i]}</span>${ex ? '<span class="hm-x">extra</span>' : ''}</div>`; }).join('');
+      <div class="hm-c"><div class="hm-b" style="height:${hh(r.t)}">${['pa','sa','pb','sb','la','lb'].map(q=>`<i class="s-${q}" style="height:${r.t ? (r[q]/r.t*100).toFixed(1) : 0}%"></i>`).join('')}</div></div><span class="hm-l">${MES3[i]}</span>${ex ? '<span class="hm-x">extra</span>' : ''}</div>`; }).join('');
   box.innerHTML = `<div class="hs-h"><span class="yr">${v.y}</span><span>Hogar: <b>${eur0(v.t)}</b> ${bn()} al año</span></div>
     <div class="hs-mes">
-      <div class="hs-norm"><span>Un mes normal (sin paga extra)</span><b>${eur0(normal)}</b><small>${escH(pName('A'))} ${eur0(normA.sa + normA.pa)} · ${escH(pName('B'))} ${eur0(normA.sb + normA.pb)}</small></div>
+      <div class="hs-norm"><span>Un mes normal (sin paga extra)</span><b>${eur0(normal)}</b><small>${escH(pName('A'))} ${eur0(normA.sa + normA.pa + normA.la)} · ${escH(pName('B'))} ${eur0(normA.sb + normA.pb + normA.lb)}${normA.la + normA.lb ? ' (con el plan)' : ''}</small></div>
       <div class="hs-ext"><span>Meses con paga extra</span>${extras.length ? extras.map(q=>`<b>${MES3[q.i]}: ${eur0(q.r.t)}</b>`).join('') : '<b>—</b>'}<small>${extras.length ? 'Esos meses se suma la paga extra de quien la cobra (sueldo: junio y diciembre; pensión de la Seguridad Social: junio y noviembre; de Clases Pasivas: junio y diciembre)' : 'Sin pagas extra aparte (prorrateadas)'}</small></div>
     </div>
     <div class="hmeses" aria-label="Ingresos del hogar mes a mes en ${v.y}">${meses}</div>
-    ${who('A', v.sa, v.pa)}${who('B', v.sb, v.pb)}`;
+    ${who('A', v.sa, v.pa, v.la)}${who('B', v.sb, v.pb, v.lb)}`;
 }
 // Pensión de viudedad del que queda (en € de hoy): 52 % de la base reguladora del fallecido,
 // limitada para que su pensión propia + viudedad no superen la pensión máxima.
@@ -3253,7 +3679,7 @@ function updatePairSaveState(){
 function cleanPair(o){
   if(!o || typeof o!=='object' || !o.A || !o.B) return null;
   const txt = v => typeof v==='string' ? v.slice(0,24) : '';
-  const per = p => ({fuente: p.fuente==='sim' ? 'sim' : '', name: txt(p.name), fNac: txt(p.fNac), dias: txt(String(p.dias ?? '')), cont: p.cont!==false, early: p.early==='inv' ? 'inv' : 'vol',
+  const per = p => ({plan: cleanPlan(p.plan), fuente: p.fuente==='sim' ? 'sim' : '', name: txt(p.name), fNac: txt(p.fNac), dias: txt(String(p.dias ?? '')), cont: p.cont!==false, early: p.early==='inv' ? 'inv' : 'vol',
                      brMode: p.brMode==='man' ? 'man' : 'est', base: txt(String(p.base ?? '')), brMan: txt(String(p.brMan ?? '')),
                      irpf: txt(String(p.irpf ?? '23')), sueldo: txt(String(p.sueldo ?? '')), sueldoB: txt(String(p.sueldoB ?? '')), pagas: p.pagas==='12' || p.pagas==='14' ? p.pagas : (p.sueldo || p.sueldoB ? '12' : '14'), derecho: p.derecho!==false, subsidio: !!p.subsidio, dt34: !!p.dt34, reg: p.reg==='cp' ? 'cp' : 'ss', tipo: ['est','fun'].includes(p.tipo) ? p.tipo : 'lab', cp: cleanCP(p.cp)});
   const n = v => Math.min(6, Math.max(0, parseInt(v,10) || 0)), d = v => typeof v==='string' && /^\d{4}-\d{2}-\d{2}$/.test(v) ? v : null;
@@ -3300,6 +3726,7 @@ function buildPairReport(){
     ${$('#pHogarBody').innerHTML}
     <h2>Desglose y viudedad</h2>
     ${$('#pDetBody').innerHTML}
+    ${['A','B'].map(k=>{ const R = planPar(k); return R ? planInformeHTML(R, 'Plan de pensiones de ' + escH(pName(k)), PS[k].plan) : ''; }).join('')}
     <div class="rp-note">Simulación orientativa y sin validez oficial, basada en la normativa vigente en 2026 y en la metodología de proyección de «Tu Seguridad Social» (+2 % anual). Los dos estaréis jubilados desde el ${fDate(later)}. Para cifras definitivas, solicitad vuestras simulaciones oficiales al organismo que gestiona la pensión de cada uno (Seguridad Social o Clases Pasivas).</div>
     <div class="rp-foot">Simulador de Jubilación · ${APP_URL} · Creado por Carlos J. Galán Doval – Ver. ${APP_VERSION} – 2026</div>`;
   return true;

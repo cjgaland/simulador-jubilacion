@@ -6,6 +6,11 @@ Formato de versión `XX.YY` (cambios menores `01.01`, cambios grandes `02.00`).
 > Al publicar una versión nueva, actualiza también `APP_VERSION` y `CHANGES` en `index.html`
 > y `version.json`. Los usuarios verán el aviso «Ha habido cambios» y, al actualizar, las novedades.
 
+## [04.07] - 2026-09-30
+
+- **Plan de pensiones** (página `#plan`, individual y pareja, verde petróleo): motor IRPF 2026 Estado + Andalucía (`cuotaIRPF`), estrategias óptima (con `anosOpt`: nivelado en N años), todo de golpe, rentas y a tu medida; reducción del 40 % (DT 12.ª LIRPF, una vez por plan, varios planes en años distintos: DGT V1546-25, V1823-23, V0710-26); avisos de tramo y plazo; chip en la tarjeta principal, barras, minibarra, «Ingresos del hogar», informes PDF y guardar/abrir informes. Ayuda › «Plan de pensiones» con fuentes.
+- **«Comparar opciones»** (individual): fechas en el eje y marca «afinada», detalle por opción (`renderCompare`), etapas con punto de equilibrio frente a la ordinaria y tabla de todas las opciones.
+
 ## [04.06] - 2026-09-29
 
 - **Guardar y abrir informes**: `#fNombre` (nombre y apellidos, desde el titular del PDF oficial con `nombreBonito()`); el PDF incrusta los datos en «Keywords» (`REP_TAG` 'SIMJUB1:' + base64url); `nombreInforme()` → NOMBRE_APELLIDOS_DDMMAAAA_HHMM.pdf; «Guardar informe» con `showSaveFilePicker` (Chrome/Edge) o descarga; «Abrir un informe guardado» (`abrirInforme` / `aplicarInforme`), también arrastrando el PDF.
